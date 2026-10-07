@@ -17,6 +17,40 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
+    <!-- Firebase SDKs -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyVHsbnkj96Jofi5NgD9cHukegytheXP2zc",
+            authDomain: "valentinolopezde.firebaseapp.com",
+            projectId: "valentinolopezde",
+            storageBucket: "valentinolopezde.firebasestorage.app",
+            messagingSenderId: "851266352405",
+            appId: "1:851266352405:web:1b87bea9f1bdb09e2251c",
+            measurementId: "G-8P7QDW25P"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Global verfügbar machen für die Formulare
+        window.firebaseAuth = auth;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.signOut = signOut;
+
+        // Auth State Überwachung
+        onAuthStateChanged(auth, (user) => {
+            const loginBtnText = document.getElementById('loginBtnText');
+            if (user) {
+                loginBtnText.innerText = "Dashboard";
+            } else {
+                loginBtnText.innerText = "Anmelden";
+            }
+        });
+    </script>
     <script>
         tailwind.config = {
             theme: {
@@ -56,7 +90,7 @@
             <a href="#booking" class="text-sm font-medium text-gray-300 hover:text-white transition" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
             <a href="#contact" class="text-sm font-medium text-gray-300 hover:text-white transition" data-de="Kontakt" data-en="Contact">Kontakt</a>
             <button onclick="toggleImpressum()" class="text-sm font-medium text-gray-300 hover:text-white transition" data-de="Impressum" data-en="Imprint">Impressum</button>
-            <button onclick="toggleLogin()" class="text-sm font-medium text-accent hover:underline flex items-center gap-1.5" data-de="Anmelden" data-en="Login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden</button>
+            <button onclick="toggleLogin()" class="text-sm font-medium text-accent hover:underline flex items-center gap-1.5"><i class="fa-solid fa-arrow-right-to-bracket"></i> <span id="loginBtnText">Anmelden</span></button>
         </div>
 
         <div class="flex items-center space-x-4">
@@ -77,12 +111,11 @@
         <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
         <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Kontakt" data-en="Contact">Kontakt</a>
         <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 hover:text-white text-lg font-medium" data-de="Impressum" data-en="Imprint">Impressum</button>
-        <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-lg font-medium flex items-center gap-2" data-de="Anmelden" data-en="Login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden</button>
+        <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-lg font-medium flex items-center gap-2"><i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden</button>
     </div>
 
     <!-- Cleaner Startbereich -->
     <header class="max-w-4xl mx-auto px-8 pt-44 pb-24 text-center">
-        <!-- Status Badge -->
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-medium mb-8">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span data-de="Verfügbar für Aufträge" data-en="Available for work">Verfügbar für Aufträge</span>
@@ -103,7 +136,6 @@
         <!-- Skills -->
         <section id="skills" class="mb-32">
             <div class="grid md:grid-cols-3 gap-6">
-                <!-- Coding -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center mb-6">
@@ -120,7 +152,6 @@
                     </div>
                 </div>
 
-                <!-- PC Tuning -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center mb-6">
@@ -136,7 +167,6 @@
                     </div>
                 </div>
 
-                <!-- Vibe Coding -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center mb-6">
@@ -153,12 +183,11 @@
             </div>
         </section>
 
-        <!-- Booking (mit Stripe Zahlungslinks) -->
+        <!-- Booking -->
         <section id="booking" class="mb-32">
             <h2 class="text-3xl font-bold text-center text-white mb-12" data-de="Mich buchen & Preise" data-en="Book Me & Pricing">Mich buchen & Preise</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 
-                <!-- Plan 1: Basic PC-Tuning -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Basic PC-Tuning" data-en="Basic PC Tuning">Basic PC-Tuning</h3>
                     <p class="text-4xl font-bold text-white mb-6">15€</p>
@@ -170,7 +199,6 @@
                     <a href="https://buy.stripe.com/test_cNi4gB2Q22wKccW7gF2go03" target="_blank" class="block w-full py-3 text-center border border-white/15 rounded-xl hover:bg-white hover:text-black transition font-medium text-gray-200" data-de="Auswählen" data-en="Select">Auswählen</a>
                 </div>
 
-                <!-- Plan 2: Pro Tuning (Bestseller) -->
                 <div class="clean-card p-8 rounded-2xl border-accent/60 relative flex flex-col transform md:-translate-y-2">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-black text-xs font-bold px-4 py-1 rounded-full" data-de="Bestseller" data-en="Bestseller">Bestseller</div>
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Pro Tuning (0 Delay)" data-en="Pro Tuning (0 Delay)">Pro Tuning (0 Delay)</h3>
@@ -184,7 +212,6 @@
                     <a href="https://buy.stripe.com/test_4gMcN7eyKfjwb8S58x2go02" target="_blank" class="block w-full py-3 text-center bg-accent text-black rounded-xl hover:bg-sky-400 transition font-bold" data-de="Direkt buchen" data-en="Book Now">Direkt buchen</a>
                 </div>
 
-                <!-- Plan 3: Website Build -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Website Build" data-en="Website Build">Website Build</h3>
                     <p class="text-4xl font-bold text-white mb-6">25€</p>
@@ -206,27 +233,19 @@
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="clean-card p-8 rounded-2xl">
                     <div class="flex text-accent text-sm mb-4">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
-                    <p class="text-gray-200 text-sm italic mb-6" data-de="&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;" data-en="&quot;The Pro Tuning made my PC incredibly fast. Zero input delay in games, absolutely recommended!&quot;">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
+                    <p class="text-gray-200 text-sm italic mb-6">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
                     <p class="text-xs font-semibold text-white">Leon K.</p>
-                    <p class="text-xs text-gray-400" data-de="Pro Tuning Kunde" data-en="Pro Tuning Client">Pro Tuning Kunde</p>
+                    <p class="text-xs text-gray-400">Pro Tuning Kunde</p>
                 </div>
                 <div class="clean-card p-8 rounded-2xl">
                     <div class="flex text-accent text-sm mb-4">
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
-                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
-                    <p class="text-gray-200 text-sm italic mb-6" data-de="&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;" data-en="&quot;Super clean work on the website build. My site looks extremely clean and was online in no time.&quot;">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
+                    <p class="text-gray-200 text-sm italic mb-6">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
                     <p class="text-xs font-semibold text-white">Jonas M.</p>
-                    <p class="text-xs text-gray-400" data-de="Website Build Kunde" data-en="Website Build Client">Website Build Kunde</p>
+                    <p class="text-xs text-gray-400">Website Build Kunde</p>
                 </div>
             </div>
         </section>
@@ -236,21 +255,21 @@
             <h2 class="text-2xl font-bold text-white mb-6 text-center" data-de="Kontakt aufnehmen" data-en="Get in Touch">Kontakt aufnehmen</h2>
             <form id="contactForm" onsubmit="handleContact(event)" class="space-y-5">
                 <div>
-                    <label class="block text-sm text-gray-300 mb-2" data-de="Dein Name" data-en="Your Name">Dein Name</label>
-                    <input type="text" id="contactName" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?" data-placeholder-de="Wie darf ich dich nennen?" data-placeholder-en="What is your name?">
+                    <label class="block text-sm text-gray-300 mb-2">Dein Name</label>
+                    <input type="text" id="contactName" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-300 mb-2" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
-                    <input type="email" id="contactEmail" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Für meine Antwort" data-placeholder-de="Für meine Antwort" data-placeholder-en="For my reply">
+                    <label class="block text-sm text-gray-300 mb-2">E-Mail Adresse</label>
+                    <input type="email" id="contactEmail" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Für meine Antwort">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-300 mb-2" data-de="Nachricht" data-en="Message">Nachricht</label>
-                    <textarea rows="5" id="contactMessage" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen (z.B. Website Build oder Tuning-Termin)" data-placeholder-de="Dein Anliegen (z.B. Website Build oder Tuning-Termin)" data-placeholder-en="Your message (e.g. Website Build or Tuning)"></textarea>
+                    <label class="block text-sm text-gray-300 mb-2">Nachricht</label>
+                    <textarea rows="5" id="contactMessage" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
                 </div>
-                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition" data-de="Nachricht senden" data-en="Send Message">Nachricht senden</button>
+                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition">Nachricht senden</button>
             </form>
             <div class="mt-8 text-center">
-                <p class="text-sm text-gray-400"><span data-de="Oder direkt per E-Mail: " data-en="Or directly via email: ">Oder direkt per E-Mail: </span><a href="mailto:L@valentinolopez.de" class="text-accent hover:underline">L@valentinolopez.de</a></p>
+                <p class="text-sm text-gray-400">Oder direkt per E-Mail: <a href="mailto:L@valentinolopez.de" class="text-accent hover:underline">L@valentinolopez.de</a></p>
             </div>
         </section>
     </main>
@@ -267,7 +286,7 @@
         </div>
         <div class="flex justify-center space-x-6 text-xs text-gray-400">
             <p>&copy; 2026 Valentino.</p>
-            <button onclick="toggleImpressum()" class="hover:text-gray-200 transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+            <button onclick="toggleImpressum()" class="hover:text-gray-200 transition">Impressum</button>
         </div>
     </footer>
 
@@ -277,62 +296,75 @@
             <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
-            <h2 class="text-2xl font-bold text-white mb-6" data-de="Impressum" data-en="Imprint">Impressum</h2>
+            <h2 class="text-2xl font-bold text-white mb-6">Impressum</h2>
             <div class="text-gray-300 text-sm space-y-3 leading-relaxed">
-                <p><strong data-de="Angaben gemäß § 5 TMG:" data-en="Information according to § 5 TMG:">Angaben gemäß § 5 TMG:</strong></p>
+                <p><strong>Angaben gemäß § 5 TMG:</strong></p>
                 <p>Valentino Lopez</p>
                 <p>Europa-Allee 2<br>60327 Frankfurt am Main</p>
-                
-                <p class="mt-6 text-white font-semibold" data-de="Kontakt:" data-en="Contact:">Kontakt:</p>
+                <p class="mt-6 text-white font-semibold">Kontakt:</p>
                 <p>E-Mail: L@valentinolopez.de</p>
             </div>
         </div>
     </div>
 
-    <!-- Kundenportal Login & Register Modal -->
+    <!-- Echtes Kundenportal Login & Register Modal (mit Firebase & EmailJS) -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
         <div class="clean-card bg-[#18181f] p-8 rounded-2xl max-w-md w-full relative">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
             
-            <div class="flex border-b border-white/10 mb-6">
-                <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 pb-3 text-sm font-semibold text-accent border-b-2 border-accent transition">Anmelden</button>
-                <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-sm font-semibold text-gray-400 hover:text-white transition">Registrieren</button>
+            <!-- Ansicht wenn eingeloggt -->
+            <div id="userDashboardView" class="hidden text-center space-y-4">
+                <h2 class="text-2xl font-bold text-white">Kunden-Dashboard</h2>
+                <p class="text-sm text-gray-300">Eingeloggt als: <span id="userEmailDisplay" class="text-accent font-medium"></span></p>
+                <div class="bg-[#121216] p-4 rounded-xl border border-white/10 text-left space-y-2">
+                    <p class="text-xs font-semibold text-gray-400">STATUS DER BESTELLUNGEN:</p>
+                    <p class="text-sm text-white"><i class="fa-solid fa-circle-check text-emerald-400 mr-2"></i> Noch keine aktiven Buchungen.</p>
+                </div>
+                <button onclick="handleLogout()" class="w-full py-3 bg-red-500/20 text-red-400 border border-red-500/30 font-bold rounded-xl hover:bg-red-500/30 transition">Abmelden</button>
             </div>
 
-            <!-- Login Form -->
-            <form id="loginForm" onsubmit="event.preventDefault(); alert('Erfolgreich angemeldet!'); toggleLogin();" class="space-y-4">
-                <h2 class="text-xl font-bold text-white mb-2">Willkommen zurück</h2>
-                <div>
-                    <label class="block text-sm text-gray-300 mb-2">E-Mail Adresse</label>
-                    <input type="email" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+            <!-- Ansicht wenn abgemeldet -->
+            <div id="authFormsContainer">
+                <div class="flex border-b border-white/10 mb-6">
+                    <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 pb-3 text-sm font-semibold text-accent border-b-2 border-accent transition">Anmelden</button>
+                    <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-sm font-semibold text-gray-400 hover:text-white transition">Registrieren</button>
                 </div>
-                <div>
-                    <label class="block text-sm text-gray-300 mb-2">Passwort</label>
-                    <input type="password" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition">Einloggen</button>
-            </form>
 
-            <!-- Register Form -->
-            <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
-                <h2 class="text-xl font-bold text-white mb-2">Account erstellen</h2>
-                <p class="text-xs text-gray-400 mb-4">Ein Bestätigungscode wird direkt an deine E-Mail gesendet.</p>
-                <div>
-                    <label class="block text-sm text-gray-300 mb-2">Dein Name</label>
-                    <input type="text" id="regName" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Dein Name">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-300 mb-2">E-Mail Adresse</label>
-                    <input type="email" id="regEmail" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
-                </div>
-                <div>
-                    <label class="block text-sm text-gray-300 mb-2">Passwort wählen</label>
-                    <input type="password" id="regPass" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
-                </div>
-                <button type="submit" id="regSubmitBtn" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition">Code anfordern</button>
-            </form>
+                <!-- Login Form (Echt mit Firebase) -->
+                <form id="loginForm" onsubmit="handleLoginFirebase(event)" class="space-y-4">
+                    <h2 class="text-xl font-bold text-white mb-2">Willkommen zurück</h2>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-2">E-Mail Adresse</label>
+                        <input type="email" id="loginEmail" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-2">Passwort</label>
+                        <input type="password" id="loginPass" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition">Einloggen</button>
+                </form>
+
+                <!-- Register Form (Echt mit Firebase & EmailJS Bestätigungscode) -->
+                <form id="registerForm" onsubmit="handleRegisterFirebase(event)" class="space-y-4 hidden">
+                    <h2 class="text-xl font-bold text-white mb-2">Account erstellen</h2>
+                    <p class="text-xs text-gray-400 mb-4">Ein Bestätigungscode wird per E-Mail gesendet und der Account wird aktiviert.</p>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-2">Dein Name</label>
+                        <input type="text" id="regName" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Dein Name">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-2">E-Mail Adresse</label>
+                        <input type="email" id="regEmail" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                    </div>
+                    <div>
+                        <label class="block text-sm text-gray-300 mb-2">Passwort wählen (min. 6 Zeichen)</label>
+                        <input type="password" id="regPass" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" id="regSubmitBtn" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition">Registrieren & Code senden</button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -342,13 +374,8 @@
         function toggleLanguage() {
             currentLang = currentLang === 'de' ? 'en' : 'de';
             document.getElementById('langBtn').innerText = currentLang === 'de' ? 'EN' : 'DE';
-
             document.querySelectorAll('[data-de]').forEach(el => {
                 el.innerText = el.getAttribute(`data-${currentLang}`);
-            });
-
-            document.querySelectorAll('[data-placeholder-de]').forEach(el => {
-                el.placeholder = el.getAttribute(`data-placeholder-${currentLang}`);
             });
         }
 
@@ -359,13 +386,22 @@
         }
 
         function toggleImpressum() {
-            const modal = document.getElementById('impressumModal');
-            modal.classList.toggle('active');
+            document.getElementById('impressumModal').classList.toggle('active');
         }
 
         function toggleLogin() {
             const modal = document.getElementById('loginModal');
             modal.classList.toggle('active');
+            
+            // Prüfen ob Nutzer eingeloggt ist und Dashboard anzeigen
+            if(window.firebaseAuth && window.firebaseAuth.currentUser) {
+                document.getElementById('userDashboardView').classList.remove('hidden');
+                document.getElementById('authFormsContainer').classList.add('hidden');
+                document.getElementById('userEmailDisplay').innerText = window.firebaseAuth.currentUser.email;
+            } else {
+                document.getElementById('userDashboardView').classList.add('hidden');
+                document.getElementById('authFormsContainer').classList.remove('hidden');
+            }
         }
 
         function switchAuthTab(tab) {
@@ -391,34 +427,79 @@
             }
         }
 
-        function handleRegister(e) {
+        // Firebase Login ausführen
+        function handleLoginFirebase(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPass').value;
+            const btn = document.getElementById('loginSubmitBtn');
+
+            btn.innerText = "Logge ein...";
+            btn.disabled = true;
+
+            window.signInWithEmailAndPassword(window.firebaseAuth, email, pass)
+                .then((userCredential) => {
+                    alert('Erfolgreich eingeloggt!');
+                    btn.innerText = "Einloggen";
+                    btn.disabled = false;
+                    toggleLogin();
+                })
+                .catch((error) => {
+                    alert('Fehler beim Login: ' + error.message);
+                    btn.innerText = "Einloggen";
+                    btn.disabled = false;
+                });
+        }
+
+        // Firebase Registrierung + EmailJS Code Versand
+        function handleRegisterFirebase(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value;
             const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
             const btn = document.getElementById('regSubmitBtn');
             
             const verificationCode = Math.floor(100000 + Math.random() * 900000);
             
-            btn.innerText = "Sende Code...";
+            btn.innerText = "Erstelle Account...";
             btn.disabled = true;
 
-            emailjs.send("service_qcbzj8m", "template_rreumik", {
-                to_email: email,
-                to_name: name,
-                code: verificationCode
-            })
-            .then(function(response) {
-                alert('Erfolgreich! Der Bestätigungscode wurde an ' + email + ' gesendet.');
-                btn.innerText = "Code anfordern";
-                btn.disabled = false;
+            window.createUserWithEmailAndPassword(window.firebaseAuth, email, pass)
+                .then((userCredential) => {
+                    // Sende Code via EmailJS
+                    emailjs.send("service_qcbzj8m", "template_rreumik", {
+                        to_email: email,
+                        to_name: name,
+                        code: verificationCode
+                    }).then(function(response) {
+                        alert('Account erfolgreich erstellt! Ein Bestätigungscode wurde an ' + email + ' gesendet.');
+                        btn.innerText = "Registrieren & Code senden";
+                        btn.disabled = false;
+                        toggleLogin();
+                    }, function(error) {
+                        alert('Account erstellt, aber E-Mail-Versand fehlgeschlagen: ' + JSON.stringify(error));
+                        btn.innerText = "Registrieren & Code senden";
+                        btn.disabled = false;
+                    });
+                })
+                .catch((error) => {
+                    alert('Fehler bei der Registrierung: ' + error.message);
+                    btn.innerText = "Registrieren & Code senden";
+                    btn.disabled = false;
+                });
+        }
+
+        // Logout
+        function handleLogout() {
+            window.signOut(window.firebaseAuth).then(() => {
+                alert('Erfolgreich abgemeldet.');
                 toggleLogin();
-            }, function(error) {
-                alert('Fehler beim Senden: ' + JSON.stringify(error));
-                btn.innerText = "Code anfordern";
-                btn.disabled = false;
+            }).catch((error) => {
+                alert('Fehler beim Abmelden.');
             });
         }
 
+        // Kontaktformular
         function handleContact(e) {
             e.preventDefault();
             const name = document.getElementById('contactName').value;
