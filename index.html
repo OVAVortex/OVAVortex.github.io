@@ -26,7 +26,6 @@
     </script>
     <style>
         body { background-color: #09090b; color: #e4e4e7; overflow-x: hidden; }
-        /* Versteckt die Scrollbar für einen cleaneren Look im Formular/Modal */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #09090b; }
         ::-webkit-scrollbar-thumb { background: #27272a; border-radius: 4px; }
@@ -37,7 +36,7 @@
 
     <!-- Navigation -->
     <nav class="fixed top-0 w-full z-40 bg-bgDark/80 backdrop-blur-md border-b border-white/5 py-5 px-8">
-        <div class="max-w-5xl mx-auto flex justify-between items-center">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
             <a href="#" class="text-xl font-bold tracking-tight text-white hover:text-accent transition">Valentino.</a>
             <div class="flex gap-6 text-sm font-medium text-gray-400">
                 <a href="#skills" class="hover:text-white transition hidden md:block">Skills</a>
@@ -116,26 +115,78 @@
         </div>
     </main>
 
-    <!-- Booking / Leistungen Sektion -->
+    <!-- Booking / Leistungen Sektion (PREISPLÄNE) -->
     <section id="buchen" class="bg-cardDark border-y border-white/5 py-24">
-        <div class="max-w-4xl mx-auto px-8 text-center">
-            <h2 class="text-3xl font-bold text-white mb-6">Bereit für ein Upgrade?</h2>
-            <p class="text-gray-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                Egal ob du jemanden für ein neues Code-Projekt suchst, ein Script benötigst oder dein PC-Setup professionell tunen lassen möchtest, um jeden Millisekunden-Delay loszuwerden – du kannst meine Expertise buchen.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <div class="px-6 py-4 bg-bgDark border border-white/10 rounded-xl">
-                    <i class="fa-solid fa-code text-accent mb-2"></i>
-                    <h4 class="text-white font-medium">Custom Coding</h4>
+        <div class="max-w-6xl mx-auto px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Dienste & Buchung</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                    Hol dir maximale Performance für dein System oder lass uns gemeinsam deine Online-Präsenz aufbauen. Wähle deinen Plan und bezahle direkt online.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Basic Tuning Plan -->
+                <div class="bg-bgDark border border-white/10 rounded-2xl p-8 flex flex-col hover:border-white/20 transition relative">
+                    <h3 class="text-xl font-bold text-white mb-2">Basic PC Tuning</h3>
+                    <p class="text-gray-400 text-sm mb-6">Für flüssigeres Gaming und einen sauberen PC.</p>
+                    <div class="text-4xl font-extrabold text-white mb-6">49€ <span class="text-lg text-gray-500 font-normal">/ Session</span></div>
+                    
+                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Windows Debloat</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Treiber Optimierung</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Standard Registry Tweaks</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> FPS Boost Check</li>
+                    </ul>
+                    
+                    <!-- Platzhalter Link für PayPal.me oder Stripe -->
+                    <a href="mailto:L@valentinolopez.de?subject=Buchung:%20Basic%20PC%20Tuning" class="w-full block text-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 rounded-lg transition duration-300 border border-white/5">
+                        Jetzt anfragen
+                    </a>
                 </div>
-                <div class="px-6 py-4 bg-bgDark border border-white/10 rounded-xl">
-                    <i class="fa-solid fa-gauge-high text-accent mb-2"></i>
-                    <h4 class="text-white font-medium">PC Tuning</h4>
+
+                <!-- Pro Tuning Plan (Highlight) -->
+                <div class="bg-bgDark border border-accent rounded-2xl p-8 flex flex-col transform md:-translate-y-4 shadow-[0_0_30px_rgba(56,189,248,0.1)] relative">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                        Bestseller
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Pro 0-Delay Tuning</h3>
+                    <p class="text-gray-400 text-sm mb-6">Kompromisslose E-Sports Performance.</p>
+                    <div class="text-4xl font-extrabold text-white mb-6">89€ <span class="text-lg text-gray-500 font-normal">/ Session</span></div>
+                    
+                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Alles aus dem Basic Plan</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> BIOS Deep Config</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> 0 Input Delay Tweaks</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Network Ping Optimierung</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Custom Hardware Config</li>
+                    </ul>
+                    
+                    <!-- Hier z.B. einen Stripe Checkout Link reinpacken bei href="" -->
+                    <a href="#" class="w-full block text-center bg-accent text-black hover:bg-accent/80 font-bold py-3 rounded-lg transition duration-300">
+                        <i class="fa-solid fa-credit-card mr-2"></i> Direkt buchen
+                    </a>
                 </div>
-                <div class="px-6 py-4 bg-bgDark border border-white/10 rounded-xl">
-                    <i class="fa-solid fa-server text-accent mb-2"></i>
-                    <h4 class="text-white font-medium">Server Setup</h4>
+
+                <!-- Web Development Plan -->
+                <div class="bg-bgDark border border-white/10 rounded-2xl p-8 flex flex-col hover:border-white/20 transition relative">
+                    <h3 class="text-xl font-bold text-white mb-2">Website Build</h3>
+                    <p class="text-gray-400 text-sm mb-6">Dein eigenes Portfolio oder Projekt im Web.</p>
+                    <div class="text-4xl font-extrabold text-white mb-6">249€ <span class="text-lg text-gray-500 font-normal">/ Projekt</span></div>
+                    
+                    <ul class="space-y-4 mb-8 text-sm text-gray-300 flex-grow">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Custom HTML/CSS/Tailwind</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Modernes & Cleanes Design</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Responsive (Handy & PC)</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-check text-accent"></i> Hosting Setup (z.B. GitHub)</li>
+                    </ul>
+                    
+                    <a href="mailto:L@valentinolopez.de?subject=Buchung:%20Website%20Build" class="w-full block text-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 rounded-lg transition duration-300 border border-white/5">
+                        Details besprechen
+                    </a>
                 </div>
+
             </div>
         </div>
     </section>
@@ -143,7 +194,7 @@
     <!-- Kontaktformular -->
     <section id="kontakt" class="py-24 max-w-3xl mx-auto px-8">
         <h2 class="text-3xl font-bold text-white mb-2 text-center">Lass uns reden.</h2>
-        <p class="text-gray-500 text-center mb-10">Schreib mir eine E-Mail oder nutze das Formular für Anfragen und Buchungen.</p>
+        <p class="text-gray-500 text-center mb-10">Schreib mir eine E-Mail oder nutze das Formular für individuelle Anfragen.</p>
 
         <form action="mailto:L@valentinolopez.de" method="POST" enctype="text/plain" class="space-y-6">
             <div class="grid md:grid-cols-2 gap-6">
@@ -158,11 +209,10 @@
             </div>
             
             <div>
-                <label class="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Was möchtest du buchen? (Optional)</label>
+                <label class="block text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Betreff (Optional)</label>
                 <select name="Service" class="w-full bg-cardDark border border-white/10 rounded-lg p-4 text-white focus:outline-none focus:border-accent transition appearance-none">
                     <option value="Allgemeine Anfrage">Allgemeine Anfrage / Kontakt</option>
-                    <option value="PC Tuning Session">PC Tuning & Optimierung</option>
-                    <option value="Coding Projekt">Code-Projekt / Scripting</option>
+                    <option value="Custom Code Projekt">Custom Code / Scripting</option>
                     <option value="Vibe Coding / Co-Working">Vibe Coding / Zusammenarbeiten</option>
                 </select>
             </div>
@@ -200,8 +250,8 @@
                 <p><strong>Angaben gemäß § 5 TMG:</strong></p>
                 <p>
                     Valentino Lopez<br>
-                    Musterstraße 123<br>
-                    60311 Frankfurt am Main<br>
+                    Mustergasse 99<br>
+                    60313 Frankfurt am Main<br>
                     Deutschland
                 </p>
                 <p><strong>Kontakt:</strong></p>
