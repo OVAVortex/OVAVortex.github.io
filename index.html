@@ -479,7 +479,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.61</p>
+            <p class="font-mono text-accent/70">v1.62</p>
         </div>
     </footer>
 
@@ -573,21 +573,23 @@
                     <span class="text-[10px] text-emerald-400 font-bold">Pay Now →</span>
                 </button>
 
-                <a id="paypalPayLink" href="#" target="_blank" onclick="completePurchase('PayPal')" class="block w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between">
+                <!-- PayPal Gateway (Öffnet erst das Gateway-Modal statt direkt zu kaufen) -->
+                <button onclick="openGatewayModal('PayPal')" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-paypal text-sky-400 text-lg"></i>
                         <span class="text-xs font-bold text-white">PayPal & Credit Card</span>
                     </div>
                     <span class="text-[10px] text-accent">Select →</span>
-                </a>
+                </button>
 
-                <div onclick="toggleCryptoSelection()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition cursor-pointer flex items-center justify-between">
+                <!-- Krypto Gateway (Öffnet Krypto-Adressen-Modal mit Pending-Status) -->
+                <button onclick="toggleCryptoSelection()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-coins text-amber-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">Cryptocurrency (Pending Verification)</span>
+                        <span class="text-xs font-bold text-white">Cryptocurrency (Pending Payment)</span>
                     </div>
                     <span class="text-[10px] text-accent" id="cryptoToggleText">Expand ▼</span>
-                </div>
+                </button>
 
                 <div id="cryptoListContainer" class="hidden space-y-2 bg-[#030305] p-3 rounded-2xl border border-white/10 text-xs">
                     <button onclick="selectCryptoCoin('Litecoin (LTC)', 'LTC1QVAL3NTINOCRYPTOADDRESS998877')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Litecoin (LTC)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
@@ -598,10 +600,33 @@
         </div>
     </div>
 
+    <!-- Professionelles Zahlungs-Gateway-Modal (Echtes Bestätigen statt direktem Redirect) -->
+    <div id="gatewayModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
+            <button onclick="document.getElementById('gatewayModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center mx-auto text-sky-400 text-2xl">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <h2 class="text-lg font-bold text-white">Sichere Zahlungsabwicklung</h2>
+            <p class="text-xs text-gray-400">Betrag: <span id="gatewayAmount" class="text-accent font-bold">€0.00</span></p>
+            
+            <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-3 text-left text-xs">
+                <p class="text-gray-300">1. Klicke auf den Link, um die Zahlung im sicheren Portal durchzuführen:</p>
+                <a id="gatewayExternalLink" href="#" target="_blank" class="block py-2.5 px-4 bg-sky-500 text-black font-bold text-center rounded-xl">Zum PayPal / Zahlungsportal →</a>
+                <p class="text-gray-300 pt-2">2. Klicke erst nach erfolgreicher Überweisung hier auf Bestätigen:</p>
+            </div>
+
+            <button onclick="confirmGatewayPayment()" class="w-full py-3.5 bg-accent text-black font-extrabold rounded-xl text-xs shadow-lg">Zahlung abgeschlossen & Bestätigen</button>
+        </div>
+    </div>
+
     <!-- Krypto Überweisungs-Modal mit Adresse -->
     <div id="cryptoAddressModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
             <button onclick="document.getElementById('cryptoAddressModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400 text-2xl">
+                <i class="fa-solid fa-coins"></i>
+            </div>
             <h2 class="text-lg font-bold text-white">Krypto Zahlung (Pending)</h2>
             <p class="text-xs text-gray-400">Bitte überweise den genauen Betrag von <span id="cryptoPayAmount" class="text-accent font-bold">€0.00</span> an folgende Adresse:</p>
             
@@ -609,9 +634,9 @@
                 ADDRESS_HERE
             </div>
             
-            <p class="text-[10px] text-amber-400">Nach Eingang der Transaktion wird die Bestellung von Valentino bestätigt.</p>
+            <p class="text-[10px] text-amber-400">Deine Bestellung bleibt im Status "Pending", bis Valentino den Zahlungseingang manuell bestätigt.</p>
             
-            <button onclick="confirmCryptoPending()" class="w-full py-3 bg-accent text-black font-bold rounded-xl text-xs">Ich habe bezahlt (Pending einreichen)</button>
+            <button onclick="confirmCryptoPending()" class="w-full py-3.5 bg-accent text-black font-bold rounded-xl text-xs shadow-lg">Bestellung als Pending einreichen</button>
         </div>
     </div>
 
@@ -759,13 +784,13 @@
             <p class="text-xs text-gray-400">Gewählter Betrag: <span id="topUpAmountDisplay" class="text-accent font-bold">€0.00</span></p>
             
             <div class="space-y-3 pt-2">
-                <a id="topUpPaypalLink" href="#" target="_blank" onclick="completeTopUp('PayPal')" class="block w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between">
+                <button onclick="openGatewayModal('Top Up PayPal', selectedTopUpValue)" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-paypal text-sky-400 text-lg"></i>
                         <span class="text-xs font-bold text-white">PayPal & Credit Card</span>
                     </div>
                     <span class="text-[10px] text-accent">Pay →</span>
-                </a>
+                </button>
 
                 <div onclick="toggleTopUpCrypto()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition cursor-pointer flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -788,8 +813,8 @@
     <script>
         let currentLang = 'de';
         let selectedTopUpValue = 0;
-        let pendingCryptoCoin = "";
-        let pendingCryptoAddress = "";
+        let pendingGatewayMethod = "";
+        let pendingGatewayAmount = "";
 
         const translations = {
             de: {
@@ -1055,7 +1080,8 @@
             let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
             
             document.getElementById('userAvatarLetter').innerText = email.charAt(0).toUpperCase();
-            document.getElementById('statOrdersCount').innerText = orders.length;
+            let completedOrders = orders.filter(o => o.status === 'Completed');
+            document.getElementById('statOrdersCount').innerText = completedOrders.length;
             document.getElementById('statBalanceAmount').innerText = '€' + balance.toFixed(2);
             document.getElementById('checkoutBalanceDisplay').innerText = `Available: €` + balance.toFixed(2);
             
@@ -1105,7 +1131,6 @@
         function selectTopUpAmount(amount) {
             selectedTopUpValue = amount;
             document.getElementById('topUpAmountDisplay').innerText = '€' + amount.toFixed(2);
-            document.getElementById('topUpPaypalLink').href = `https://paypal.me/valentinolopez1e/${amount.toFixed(2)}`;
             document.getElementById('topUpModal').classList.remove('active');
             document.getElementById('topUpPaymentModal').classList.add('active');
         }
@@ -1167,28 +1192,34 @@
             }
         }
 
-        function selectCryptoCoin(coinName, address) {
-            pendingCryptoCoin = coinName;
-            pendingCryptoAddress = address;
-            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
-            document.getElementById('cryptoPayAmount').innerText = totalAmount;
-            document.getElementById('cryptoAddressBox').innerText = address;
+        function openGatewayModal(method, amount) {
+            pendingGatewayMethod = method;
+            pendingGatewayAmount = amount || document.getElementById('cartSubtotalDisplay').innerText;
+            document.getElementById('gatewayAmount').innerText = pendingGatewayAmount;
+            
+            let payUrl = method.includes('PayPal') ? `https://paypal.me/valentinolopez1e/${pendingGatewayAmount.replace('€','')}` : '#';
+            document.getElementById('gatewayExternalLink').href = payUrl;
+
             document.getElementById('paymentModal').classList.remove('active');
-            document.getElementById('cryptoAddressModal').classList.add('active');
+            document.getElementById('gatewayModal').classList.add('active');
         }
 
-        function confirmCryptoPending() {
+        function confirmGatewayPayment() {
             const emailInput = document.getElementById('checkoutEmail').value;
+            if (!emailInput || !emailInput.includes('@')) {
+                showToast('Bitte E-Mail eingeben!');
+                return;
+            }
             let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
-            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
+            let totalAmount = pendingGatewayAmount;
             let rawNum = totalAmount.replace('€', '');
 
             let newOrder = {
                 items: orderSummary,
                 total: totalAmount,
                 rawTotal: rawNum,
-                method: `Crypto (${pendingCryptoCoin})`,
-                status: 'Pending',
+                method: pendingGatewayMethod,
+                status: 'Completed',
                 invoice: Math.floor(100000000000 + Math.random() * 900000000000),
                 date: new Date().toLocaleDateString('de-DE')
             };
@@ -1196,11 +1227,57 @@
             existingOrders.unshift(newOrder);
             localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
 
-            showToast('Bestellung als Pending eingereicht. Warten auf Bestätigung.');
+            emailjs.send("service_qcbzj8m", "template_rreumik", {
+                to_email: emailInput,
+                to_name: emailInput.split('@')[0],
+                message: `Bestellbestätigung: ${orderSummary}. Summe: ${totalAmount}. Zahlung: ${pendingGatewayMethod}.`,
+                code: "Bestellbestätigung"
+            });
+
+            showToast('Zahlung bestätigt & Bestellung abgeschlossen!');
+            document.getElementById('gatewayModal').classList.remove('active');
+            cart = [];
+            appliedDiscount = 0;
+            updateCartUI();
+            if(window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
+        }
+
+        function selectCryptoCoin(coinName, address) {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            if (!emailInput || !emailInput.includes('@')) {
+                showToast('Bitte E-Mail angeben!');
+                return;
+            }
+            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
+            document.getElementById('cryptoPayAmount').innerText = totalAmount;
+            document.getElementById('cryptoAddressBox').innerText = address;
+            document.getElementById('paymentModal').classList.remove('active');
+            document.getElementById('cryptoAddressModal').classList.add('active');
+
+            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let rawNum = totalAmount.replace('€', '');
+
+            let newOrder = {
+                items: orderSummary,
+                total: totalAmount,
+                rawTotal: rawNum,
+                method: `Crypto (${coinName})`,
+                status: 'Pending',
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+        }
+
+        function confirmCryptoPending() {
+            showToast('Bestellung als Pending eingereicht. Warten auf Blockchain-Bestätigung.');
             document.getElementById('cryptoAddressModal').classList.remove('active');
             cart = [];
             appliedDiscount = 0;
             updateCartUI();
+            if(window.firebaseAuth.currentUser) loadDashboardStats(window.firebaseAuth.currentUser.email);
         }
 
         function payWithBalance() {
@@ -1333,8 +1410,6 @@
                     checkoutBtn.disabled = true;
                     checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
                 }
-
-                document.getElementById('paypalPayLink').href = `https://paypal.me/valentinolopez1e/${finalTotal.toFixed(2)}`;
             }
             badge.innerText = totalCount;
             badgeMobile.innerText = totalCount;
@@ -1349,43 +1424,6 @@
         function toggleCartModal() { document.getElementById('cartModal').classList.toggle('active'); }
         function proceedToCheckout() { toggleCartModal(); togglePaymentModal(); }
         function togglePaymentModal() { document.getElementById('paymentModal').classList.toggle('active'); }
-
-        function completePurchase(method) {
-            const emailInput = document.getElementById('checkoutEmail').value;
-            if (!emailInput || !emailInput.includes('@')) {
-                showToast(currentLang === 'de' ? 'Bitte gib eine gültige E-Mail-Adresse ein!' : 'Please enter a valid email address!');
-                return;
-            }
-            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
-            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
-            let rawNum = totalAmount.replace('€', '');
-
-            let newOrder = {
-                items: orderSummary,
-                total: totalAmount,
-                rawTotal: rawNum,
-                method: method,
-                status: 'Completed',
-                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
-                date: new Date().toLocaleDateString('de-DE')
-            };
-            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
-            existingOrders.unshift(newOrder);
-            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
-
-            emailjs.send("service_qcbzj8m", "template_rreumik", {
-                to_email: emailInput,
-                to_name: emailInput.split('@')[0],
-                message: `Bestellbestätigung: ${orderSummary}. Summe: ${totalAmount}. Zahlung: ${method}.`,
-                code: "Bestellbestätigung"
-            });
-
-            showToast(currentLang === 'de' ? 'Bestellung erfolgreich! E-Mail gesendet.' : 'Order successful! Email sent.');
-            cart = [];
-            appliedDiscount = 0;
-            updateCartUI();
-            togglePaymentModal();
-        }
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
