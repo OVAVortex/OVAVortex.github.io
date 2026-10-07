@@ -62,7 +62,6 @@
             const loginBtnText = document.getElementById('loginBtnText');
             if (user) {
                 loginBtnText.innerText = "Dashboard";
-                // E-Mail im Checkout direkt vorbelegen, wenn eingeloggt
                 const checkoutEmailInput = document.getElementById('checkoutEmail');
                 if (checkoutEmailInput && !checkoutEmailInput.value) {
                     checkoutEmailInput.value = user.email;
@@ -146,7 +145,6 @@
             <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
             <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Kontakt" data-en="Contact">Kontakt</a>
             
-            <!-- Warenkorb Icon Button -->
             <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-white transition flex items-center justify-center">
                 <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
                 <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-accent text-black text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
@@ -554,7 +552,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript für Warenkorb, E-Mail Abfrage & EmailJS Bestätigung -->
+    <!-- JavaScript -->
     <script>
         let quantities = { basic: 1, pro: 1, web: 1 };
 
@@ -641,7 +639,6 @@
             document.getElementById('paymentModal').classList.toggle('active');
         }
 
-        // Nach dem Klick auf Zahlung (PayPal oder Krypto) wird die E-Mail validiert und Bestätigung gesendet
         function completePurchase(method) {
             const emailInput = document.getElementById('checkoutEmail').value;
             if (!emailInput || !emailInput.includes('@')) {
@@ -652,16 +649,11 @@
             let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
             let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
 
-            // EmailJS Bestätigung senden
             emailjs.send("service_qcbzj8m", "template_rreumik", {
                 to_email: emailInput,
                 to_name: emailInput.split('@')[0],
                 message: `Vielen Dank für deine Bestellung (${orderSummary}). Gesamtsumme: ${totalAmount}. Zahlungsmethode: ${method}. Wir bearbeiten deinen Auftrag umgehend!`,
                 code: "Bestellbestätigung"
-            }).then(function(response) {
-                console.log('Bestätigung gesendet.');
-            }, function(error) {
-                console.log('Fehler beim E-Mail-Versand.');
             });
 
             alert('Bestellung erfolgreich! Eine Bestätigung wurde an ' + emailInput + ' gesendet.');
@@ -750,6 +742,17 @@
                 .catch((error) => { alert('Fehler: ' + error.message); });
         }
 
+        function handleRegisterFirebase(e) {
+            e.preventDefault();
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+            import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js").then(({ createUserWithEmailAndPassword }) => {
+                createUserWithEmailAndPassword(window.firebaseAuth, email, pass)
+                    .then(() => { alert('Account erfolgreich erstellt!'); toggleLogin(); })
+                    .catch((error) => { alert('Fehler: ' + error.message); });
+            });
+        }
+
         function handleLogout() {
             window.signOut(window.firebaseAuth).then(() => { alert('Abgemeldet.'); toggleLogin(); });
         }
@@ -773,7 +776,7 @@
                 code: "Kontaktanfrage"
             }).then(() => {
                 alert('Nachricht gesendet!');
-                document.getElementById('contactForm'].reset();
+                document.getElementById('contactForm').reset();
                 btn.innerText = "Nachricht senden";
                 btn.disabled = false;
             }).catch(() => {
