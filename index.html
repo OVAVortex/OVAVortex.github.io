@@ -119,7 +119,7 @@
         onAuthStateChanged(auth, (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
             const loginBtnTextMobile = document.getElementById('loginBtnTextMobile');
-            const adminPanel = document.getElementById('adminPanelSection');
+            const adminSection = document.getElementById('adminControlCenter');
             
             if (user) {
                 if(loginBtnText) loginBtnText.innerText = translations[currentLang].dashboard;
@@ -129,12 +129,13 @@
                     checkoutEmailInput.value = user.email || '';
                 }
                 
-                if (adminPanel) {
+                // Admin Erkennung für L@valentinolopez.de
+                if (adminSection) {
                     if (user.email === 'L@valentinolopez.de' || user.email?.includes('admin')) {
-                        adminPanel.classList.remove('hidden');
-                        renderAdminCoupons();
+                        adminSection.classList.remove('hidden');
+                        renderAdminPanelData();
                     } else {
-                        adminPanel.classList.add('hidden');
+                        adminSection.classList.add('hidden');
                     }
                 }
 
@@ -142,7 +143,7 @@
             } else {
                 if(loginBtnText) loginBtnText.innerText = translations[currentLang].login;
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = translations[currentLang].login;
-                if(adminPanel) adminPanel.classList.add('hidden');
+                if(adminSection) adminSection.classList.add('hidden');
             }
         });
     </script>
@@ -479,7 +480,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.64</p>
+            <p class="font-mono text-accent/70">v1.65</p>
         </div>
     </footer>
 
@@ -561,7 +562,6 @@
             <div class="space-y-3 pt-2">
                 <p id="labelPaymentMethod" class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Payment Method</p>
                 
-                <!-- Guthaben-Bezahlung -->
                 <button onclick="payWithBalance()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-wallet text-emerald-400 text-lg"></i>
@@ -573,7 +573,6 @@
                     <span class="text-[10px] text-emerald-400 font-bold">Pay Now →</span>
                 </button>
 
-                <!-- PayPal Gateway (Öffnet PayPal Proof Modal mit Pending Status) -->
                 <button onclick="openPayPalProofModal()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-paypal text-sky-400 text-lg"></i>
@@ -582,7 +581,6 @@
                     <span class="text-[10px] text-accent">Select →</span>
                 </button>
 
-                <!-- Krypto Gateway -->
                 <button onclick="toggleCryptoSelection()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-coins text-amber-400 text-lg"></i>
@@ -603,7 +601,7 @@
         </div>
     </div>
 
-    <!-- PayPal Zahlungsnachweis Modal (Pending) -->
+    <!-- PayPal Zahlungsnachweis Modal -->
     <div id="paypalProofModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-4 shadow-2xl text-center">
             <button onclick="document.getElementById('paypalProofModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -611,12 +609,12 @@
                 <i class="fa-brands fa-paypal"></i>
             </div>
             <h2 class="text-base font-bold text-white">PayPal Zahlung (Pending)</h2>
-            <p class="text-xs text-gray-400">Bitte überweise <span id="paypalPayAmount" class="text-accent font-bold">€0.00</span> an:</p>
+            <p class="text-xs text-gray-400">Überweise <span id="paypalPayAmount" class="text-accent font-bold">€0.00</span> an:</p>
             
-            <a id="paypalDirectLink" href="#" target="_blank" class="block py-2.5 px-4 bg-sky-500 text-black font-bold text-center rounded-xl text-xs shadow-lg">paypal.me/valentinolopez1e →</a>
+            <a href="https://paypal.me/valentinolopez1e" target="_blank" class="block py-2.5 px-4 bg-sky-500 text-black font-bold text-center rounded-xl text-xs shadow-lg">paypal.me/valentinolopez1e →</a>
             
             <div class="text-left space-y-1 pt-2">
-                <label class="block text-[11px] font-medium text-gray-400">PayPal Transaktionscode / Name (Proof of Payment) *</label>
+                <label class="block text-[11px] font-medium text-gray-400">PayPal Transaktionscode / Name (Proof) *</label>
                 <input type="text" id="paypalProofInput" class="w-full bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="Transaktions-ID oder Absender-Name...">
             </div>
 
@@ -647,11 +645,12 @@
         </div>
     </div>
 
-    <!-- Nivex Dashboard -->
+    <!-- Nivex Dashboard & Echtes Admin-Kontrollzentrum -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-lg w-full relative space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-xl w-full relative space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             
+            <!-- Dashboard Ansicht -->
             <div id="userDashboardView" class="hidden space-y-5">
                 <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 flex justify-between items-center">
                     <div class="flex items-center gap-3">
@@ -721,13 +720,31 @@
                     <button onclick="sendSupportTicket()" class="w-full py-2.5 bg-accent text-black font-bold rounded-xl text-xs hover:bg-sky-400 transition">Send ticket →</button>
                 </div>
 
-                <!-- ADMIN PANEL -->
-                <div id="adminPanelSection" class="hidden bg-[#030305] p-4 rounded-2xl border border-accent/40 space-y-3 shadow-xl">
-                    <p class="text-xs font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Panel (Coupons)</p>
-                    <input type="text" id="newCouponCode" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase" placeholder="CODE">
-                    <input type="number" id="newCouponDiscount" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="Rabatt €">
-                    <button onclick="createCoupon()" class="w-full py-2 bg-accent text-black font-bold rounded-xl text-xs">Gutschein erstellen</button>
-                    <div id="adminCouponsList" class="space-y-1 max-h-20 overflow-y-auto text-xs text-gray-300"></div>
+                <!-- ECHTES ADMIN KONTROLLZENTRUM (Nur sichtbar für L@valentinolopez.de) -->
+                <div id="adminControlCenter" class="hidden bg-[#030305] p-5 rounded-2xl border border-accent/40 space-y-4 shadow-xl">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                        <p class="text-xs font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Control Center</p>
+                        <span class="text-[9px] bg-accent/20 text-accent px-2 py-0.5 rounded font-bold">L@valentinolopez.de</span>
+                    </div>
+
+                    <!-- Pending Zahlungen bestätigen -->
+                    <div class="space-y-2">
+                        <p class="text-[11px] font-bold text-white">Ausstehende Zahlungen (Pending / Beweise prüfen)</p>
+                        <div id="adminPendingList" class="space-y-2 max-h-36 overflow-y-auto text-xs">
+                            <p class="text-gray-400 text-center py-2">Keine ausstehenden Zahlungen.</p>
+                        </div>
+                    </div>
+
+                    <!-- Coupons verwalten -->
+                    <div class="space-y-2 pt-2 border-t border-white/10">
+                        <p class="text-[11px] font-bold text-white">Gutschein erstellen</p>
+                        <div class="flex gap-2">
+                            <input type="text" id="newAdminCoupon" class="flex-1 bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase" placeholder="CODE">
+                            <input type="number" id="newAdminDiscount" class="w-20 bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="€">
+                            <button onclick="createAdminCoupon()" class="px-4 py-2 bg-accent text-black font-bold rounded-xl text-xs">Add</button>
+                        </div>
+                        <div id="adminCouponsList" class="space-y-1 max-h-20 overflow-y-auto text-xs text-gray-300"></div>
+                    </div>
                 </div>
 
                 <button onclick="handleLogout()" id="btnLogout" class="w-full py-3 bg-red-500/10 text-red-400 rounded-2xl text-xs font-semibold hover:bg-red-500/20 transition flex items-center justify-center gap-2"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
@@ -831,7 +848,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Steuerung -->
+    <!-- JavaScript Steuerung & Admin Funktionen -->
     <script>
         let currentLang = 'de';
         let selectedTopUpValue = 0;
@@ -1074,26 +1091,84 @@
             }
         }
 
-        function createCoupon() {
-            let code = document.getElementById('newCouponCode').value.trim().toUpperCase();
-            let discount = parseFloat(document.getElementById('newCouponDiscount').value);
+        function createAdminCoupon() {
+            let code = document.getElementById('newAdminCoupon').value.trim().toUpperCase();
+            let discount = parseFloat(document.getElementById('newAdminDiscount').value);
             if(code && discount > 0) {
                 coupons[code] = discount;
                 showToast('Coupon ' + code + ' (€' + discount + ') created!');
-                document.getElementById('newCouponCode').value = '';
-                document.getElementById('newCouponDiscount').value = '';
-                renderAdminCoupons();
+                document.getElementById('newAdminCoupon').value = '';
+                document.getElementById('newAdminDiscount').value = '';
+                renderAdminPanelData();
             } else {
                 showToast('Please enter valid data.');
             }
         }
 
-        function renderAdminCoupons() {
-            const list = document.getElementById('adminCouponsList');
-            if(!list) return;
-            list.innerHTML = '';
-            for (let code in coupons) {
-                list.innerHTML += `<div class="flex justify-between bg-[#12121c] px-2.5 py-1.5 rounded-lg border border-white/5"><span>${code}</span><span class="text-accent font-bold">€${coupons[code].toFixed(2)}</span></div>`;
+        function renderAdminPanelData() {
+            // Coupons anzeigen
+            const couponList = document.getElementById('adminCouponsList');
+            if(couponList) {
+                couponList.innerHTML = '';
+                for (let code in coupons) {
+                    couponList.innerHTML += `<div class="flex justify-between bg-[#12121c] px-2.5 py-1.5 rounded-lg border border-white/5"><span>${code}</span><span class="text-accent font-bold">€${coupons[code].toFixed(2)}</span></div>`;
+                }
+            }
+
+            // Alle Pending Bestellungen aller Nutzer im LocalStorage für den Admin sammeln
+            const pendingList = document.getElementById('adminPendingList');
+            if(pendingList) {
+                pendingList.innerHTML = '';
+                let foundAny = false;
+
+                for (let i = 0; i < localStorage.length; i++) {
+                    let key = localStorage.key(i);
+                    if (key && key.startsWith('orders_')) {
+                        let userEmail = key.replace('orders_', '');
+                        let userOrders = JSON.parse(localStorage.getItem(key) || '[]');
+                        
+                        userOrders.forEach((ord, index) => {
+                            if (ord.status === 'Pending') {
+                                foundAny = true;
+                                pendingList.innerHTML += `
+                                    <div class="bg-[#12121c] p-2.5 rounded-xl border border-white/5 space-y-1">
+                                        <div class="flex justify-between text-white font-bold">
+                                            <span>${ord.items}</span>
+                                            <span class="text-accent">${ord.total}</span>
+                                        </div>
+                                        <p class="text-[10px] text-gray-400">User: ${userEmail} • Proof: <span class="text-sky-400">${ord.proof || 'Keiner'}</span></p>
+                                        <button onclick="adminApproveOrder('${userEmail}', ${index})" class="w-full mt-1 py-1 bg-emerald-500 text-black font-bold rounded-lg text-[10px]">Freigeben & Bestätigen (Approve)</button>
+                                    </div>
+                                `;
+                            }
+                        });
+                    }
+                }
+
+                if(!foundAny) {
+                    pendingList.innerHTML = '<p class="text-gray-400 text-center py-2">Keine ausstehenden Zahlungen.</p>';
+                }
+            }
+        }
+
+        function adminApproveOrder(userEmail, orderIndex) {
+            let userOrders = JSON.parse(localStorage.getItem('orders_' + userEmail) || '[]');
+            if(userOrders[orderIndex]) {
+                userOrders[orderIndex].status = 'Completed';
+
+                // Wenn es ein Top-Up war, jetzt dem Account gutschreiben!
+                if(userOrders[orderIndex].isTopUp) {
+                    let currentBal = parseFloat(localStorage.getItem('balance_' + userEmail) || '0.00');
+                    let addedVal = parseFloat(userOrders[orderIndex].topUpValue || 0);
+                    localStorage.setItem('balance_' + userEmail, (currentBal + addedVal).toFixed(2));
+                }
+
+                localStorage.setItem('orders_' + userEmail, JSON.stringify(userOrders));
+                showToast('Bestellung erfolgreich freigegeben!');
+                renderAdminPanelData();
+                if(window.firebaseAuth.currentUser && window.firebaseAuth.currentUser.email === userEmail) {
+                    loadDashboardStats(userEmail);
+                }
             }
         }
 
