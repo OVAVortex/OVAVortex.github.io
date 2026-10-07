@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentino | Val3ntino Portfolio & Services</title>
+    <title>Valentino | Val3ntino</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome für Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS -->
@@ -25,11 +25,7 @@
             createUserWithEmailAndPassword, 
             signInWithEmailAndPassword, 
             signOut, 
-            onAuthStateChanged,
-            GoogleAuthProvider,
-            GithubAuthProvider,
-            TwitterAuthProvider,
-            signInWithPopup 
+            onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -50,24 +46,6 @@
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
         window.signOut = signOut;
 
-        window.loginWithProvider = function(providerName) {
-            let provider;
-            if (providerName === 'google') provider = new GoogleAuthProvider();
-            else if (providerName === 'github') provider = new GithubAuthProvider();
-            else if (providerName === 'twitter') provider = new TwitterAuthProvider();
-
-            if (provider) {
-                signInWithPopup(auth, provider)
-                    .then((result) => {
-                        alert('Erfolgreich angemeldet als ' + result.user.email);
-                        toggleLogin();
-                    })
-                    .catch((error) => {
-                        alert('Fehler beim Login: ' + error.message);
-                    });
-            }
-        };
-
         onAuthStateChanged(auth, (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
             if (user) {
@@ -81,419 +59,226 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        bgDark: '#030305',
-                        cardDark: '#0a0a0f',
-                        accent: '#38bdf8',
-                        accentPurple: '#818cf8'
+                        bgDark: '#0a0a0c',
+                        cardDark: '#121217',
+                        accent: '#38bdf8'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #030305; color: #f4f4f5; overflow-x: hidden; }
+        body { background-color: #0a0a0c; color: #f4f4f5; font-family: 'Inter', sans-serif; }
         .modal { display: none; }
         .modal.active { display: flex; }
-        
-        .bg-grid {
-            background-size: 40px 40px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-        }
-
-        .hero-glow {
-            position: absolute;
-            top: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 700px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(129, 140, 248, 0.06) 45%, transparent 75%);
-            filter: blur(90px);
-            z-index: -1;
-            pointer-events: none;
-        }
-
         .clean-card {
-            background: rgba(13, 13, 20, 0.7);
-            backdrop-filter: blur(12px);
+            background: #121217;
             border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
         }
         .clean-card:hover {
-            border-color: rgba(56, 189, 248, 0.35);
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.12);
-            background: rgba(18, 18, 28, 0.85);
-        }
-        
-        .bestseller-card {
-            background: linear-gradient(145deg, rgba(19, 19, 32, 0.9) 0%, rgba(11, 11, 20, 0.9) 100%);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(56, 189, 248, 0.5);
-            box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.15);
+            border-color: rgba(56, 189, 248, 0.3);
         }
     </style>
 </head>
-<body class="antialiased selection:bg-accent selection:text-black bg-grid">
+<body class="antialiased selection:bg-accent selection:text-black">
 
-    <div class="hero-glow"></div>
-
-    <!-- Navigation -->
-    <nav class="w-full py-5 px-8 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#030305]/80 backdrop-blur-2xl z-50">
-        <a href="#" class="text-xl font-extrabold tracking-tight text-white hover:text-accent transition flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></span> Val3ntino<span class="text-accent">.</span>
-        </a>
+    <!-- Navbar -->
+    <nav class="w-full py-6 px-8 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#0a0a0c]/80 backdrop-blur-md z-50">
+        <a href="#" class="text-lg font-bold tracking-tight text-white hover:text-accent transition">Val3ntino<span class="text-accent">.</span></a>
         
         <div class="hidden md:flex items-center space-x-8">
-            <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition">Skills</a>
-            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition">Preise & Buchen</a>
-            <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition">Kontakt</a>
-            <button onclick="toggleImpressum()" class="text-sm font-medium text-gray-400 hover:text-white transition">Impressum</button>
-            <button onclick="toggleLogin()" class="text-sm font-semibold text-accent hover:text-white transition flex items-center gap-2 bg-accent/10 px-4.5 py-2 rounded-xl border border-accent/25 shadow-sm shadow-sky-500/10"><i class="fa-solid fa-user text-xs"></i> <span id="loginBtnText">Anmelden</span></button>
+            <a href="#skills" class="text-xs font-medium text-gray-400 hover:text-white transition">Skills</a>
+            <a href="#booking" class="text-xs font-medium text-gray-400 hover:text-white transition">Preise</a>
+            <a href="#contact" class="text-xs font-medium text-gray-400 hover:text-white transition">Kontakt</a>
+            <button onclick="toggleImpressum()" class="text-xs font-medium text-gray-400 hover:text-white transition">Impressum</button>
+            <button onclick="toggleLogin()" class="text-xs font-semibold text-accent hover:underline flex items-center gap-1.5"><i class="fa-solid fa-arrow-right-to-bracket"></i> <span id="loginBtnText">Anmelden</span></button>
         </div>
 
         <div class="flex items-center space-x-3 md:hidden">
-            <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-xl p-2">
+            <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg p-2">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
     </nav>
 
-    <!-- Mobile Dropdown Menü -->
-    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[77px] bg-[#0a0a0f] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-xl">
-        <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium">Skills</a>
-        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium">Preise & Buchen</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium">Kontakt</a>
-        <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 hover:text-white text-base font-medium">Impressum</button>
-        <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium flex items-center gap-2"><i class="fa-solid fa-user"></i> Anmelden</button>
+    <!-- Mobile Menü -->
+    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[73px] bg-[#121217] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl">
+        <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 text-sm font-medium">Skills</a>
+        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 text-sm font-medium">Preise</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 text-sm font-medium">Kontakt</a>
+        <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 text-sm font-medium">Impressum</button>
+        <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-sm font-medium">Anmelden</button>
     </div>
 
     <!-- Hero Header -->
-    <header class="max-w-4xl mx-auto px-8 pt-56 pb-28 text-center relative">
-        <div class="inline-flex items-center gap-2 px-4.5 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-8 shadow-xl shadow-emerald-500/5 backdrop-blur-md">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Verfügbar für Aufträge & High-End Projekte</span>
+    <header class="max-w-3xl mx-auto px-8 pt-48 pb-20 text-center">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[11px] font-medium mb-6">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+            Verfügbar für Aufträge
         </div>
-
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6">
+        <h1 class="text-4xl md:text-6xl font-extrabold text-white tracking-tight mb-4">
             Hi, ich bin Valentino.
         </h1>
-        <p class="text-2xl md:text-3xl text-gray-400 font-light mb-8">
-            aka <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-sky-300 to-accentPurple font-bold">Val3ntino</span>
-        </p>
-        <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light">
-            Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts.
+        <p class="text-sm md:text-base text-gray-400 max-w-xl mx-auto leading-relaxed font-light">
+            Entwickler, Hardware-Tuner und Performance-Enthusiast aus Frankfurt.
         </p>
     </header>
 
-    <main class="max-w-5xl mx-auto px-8 pb-32">
-        <!-- Skills Sektion -->
-        <section id="skills" class="mb-32">
+    <main class="max-w-4xl mx-auto px-8 pb-32 space-y-28">
+        <!-- Skills -->
+        <section id="skills">
+            <div class="grid md:grid-cols-3 gap-5">
+                <div class="clean-card p-6 rounded-2xl">
+                    <i class="fa-solid fa-code text-accent text-base mb-4 block"></i>
+                    <h3 class="text-sm font-bold text-white mb-2">Coding & Dev</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed font-light">Web-Entwicklung, Python, C++ und Game-Scripts.</p>
+                </div>
+                <div class="clean-card p-6 rounded-2xl">
+                    <i class="fa-solid fa-microchip text-accent text-base mb-4 block"></i>
+                    <h3 class="text-sm font-bold text-white mb-2">PC Tuning</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed font-light">0 Input Delay, Windows Tweaks und BIOS Optimierungen.</p>
+                </div>
+                <div class="clean-card p-6 rounded-2xl">
+                    <i class="fa-solid fa-headphones-simple text-accent text-base mb-4 block"></i>
+                    <h3 class="text-sm font-bold text-white mb-2">Vibe Coding</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed font-light">Fokus auf saubere, effiziente Lösungen im perfekten Flow.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking -->
+        <section id="booking">
+            <h2 class="text-2xl font-bold text-center text-white mb-10">Preise & Services</h2>
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between group">
+                <!-- Basic -->
+                <div class="clean-card p-6 rounded-2xl flex flex-col justify-between">
                     <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-code text-accent text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-3">Coding & Dev</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
+                        <h3 class="text-sm font-bold text-white mb-1">Basic PC-Tuning</h3>
+                        <p class="text-3xl font-extrabold text-white mb-5">15€</p>
+                        <ul class="text-gray-400 text-xs space-y-2.5 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> Windows Optimierung</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> Hintergrunddienste stoppen</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> Standard FPS Boost</li>
+                        </ul>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">HTML & CSS</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">C++</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Python</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Luau</span>
+                    <div class="space-y-2">
+                        <a href="https://paypal.me/valentinolopez1e/15" target="_blank" class="block w-full py-2.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-medium text-white text-xs">PayPal (15€)</a>
+                        <button onclick="toggleCryptoModal()" class="w-full py-2.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/20 rounded-xl transition font-medium text-accent text-xs">Krypto</button>
                     </div>
                 </div>
 
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between group">
+                <!-- Pro (Bestseller) -->
+                <div class="clean-card p-6 rounded-2xl border-accent/40 flex flex-col justify-between relative bg-gradient-to-b from-[#121217] to-[#171720]">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-black text-[10px] font-bold px-3 py-0.5 rounded-full">BELIEBT</div>
                     <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-microchip text-accent text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-3">PC Tuning</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
+                        <h3 class="text-sm font-bold text-white mb-1 mt-1">Pro Tuning</h3>
+                        <p class="text-3xl font-extrabold text-white mb-5">35€</p>
+                        <ul class="text-gray-300 text-xs space-y-2.5 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> Alles aus Basic</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> BIOS & Registry Edits</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> 0 Input Delay Setup</li>
+                        </ul>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">0 Input Delay</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Windows Tweaks</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">BIOS Edits</span>
+                    <div class="space-y-2">
+                        <a href="https://paypal.me/valentinolopez1e/35" target="_blank" class="block w-full py-2.5 text-center bg-accent text-black rounded-xl hover:bg-sky-400 transition font-bold text-xs">PayPal (35€)</a>
+                        <button onclick="toggleCryptoModal()" class="w-full py-2.5 text-center bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition font-medium text-white text-xs">Krypto</button>
                     </div>
                 </div>
 
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between group">
+                <!-- Website Build -->
+                <div class="clean-card p-6 rounded-2xl flex flex-col justify-between">
                     <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-3">Vibe Coding</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
+                        <h3 class="text-sm font-bold text-white mb-1">Website Build</h3>
+                        <p class="text-3xl font-extrabold text-white mb-5">25€</p>
+                        <ul class="text-gray-400 text-xs space-y-2.5 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> Cleanes Portfolio Design</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> Responsive (Handy & PC)</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2"></i> GitHub Pages Setup</li>
+                        </ul>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Flow State</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Creative</span>
+                    <div class="space-y-2">
+                        <a href="https://paypal.me/valentinolopez1e/25" target="_blank" class="block w-full py-2.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-medium text-white text-xs">PayPal (25€)</a>
+                        <button onclick="toggleCryptoModal()" class="w-full py-2.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/20 rounded-xl transition font-medium text-accent text-xs">Krypto</button>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Booking Sektion (Direkt mit PayPal & Krypto verknüpft) -->
-        <section id="booking" class="mb-32">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3">Mich buchen & Preise</h2>
-                <p class="text-gray-400 text-sm font-light">Wähle dein gewünschtes Paket und zahle direkt via PayPal oder Krypto.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 items-stretch">
-                <!-- Plan 1 -->
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold text-white mb-2">Basic PC-Tuning</h3>
-                        <p class="text-4xl font-black text-white mb-6">15€</p>
-                        <ul class="text-gray-400 text-sm space-y-3.5 mb-8 font-light">
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
-                        </ul>
-                    </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/15" target="_blank" class="block w-full py-3.5 text-center bg-white/10 hover:bg-white/20 border border-white/15 rounded-2xl transition font-bold text-white text-xs">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/25 rounded-2xl transition font-semibold text-accent text-xs">Mit Krypto zahlen</button>
-                    </div>
-                </div>
-
-                <!-- Plan 2 (Bestseller) -->
-                <div class="bestseller-card p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-xs font-extrabold px-4.5 py-1.5 rounded-full shadow-lg">BELIEBT</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning (0 Delay)</h3>
-                        <p class="text-4xl font-black text-white mb-6">35€</p>
-                        <ul class="text-gray-300 text-sm space-y-3.5 mb-8 font-light">
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
-                        </ul>
-                    </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/35" target="_blank" class="block w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg shadow-sky-500/30">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-white/10 hover:bg-white/20 border border-white/25 rounded-2xl transition font-semibold text-white text-xs">Mit Krypto zahlen</button>
-                    </div>
-                </div>
-
-                <!-- Plan 3 -->
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-lg font-bold text-white mb-2">Website Build</h3>
-                        <p class="text-4xl font-black text-white mb-6">25€</p>
-                        <ul class="text-gray-400 text-sm space-y-3.5 mb-8 font-light">
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
-                        </ul>
-                    </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/25" target="_blank" class="block w-full py-3.5 text-center bg-white/10 hover:bg-white/20 border border-white/15 rounded-2xl transition font-bold text-white text-xs">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/25 rounded-2xl transition font-semibold text-accent text-xs">Mit Krypto zahlen</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Testimonials -->
-        <section class="mb-32">
-            <h2 class="text-3xl font-bold text-center text-white mb-12">Was Kunden sagen</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="clean-card p-8 rounded-3xl">
-                    <div class="flex text-accent text-xs mb-4 space-x-1">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-300 text-sm italic mb-6 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
-                    <p class="text-xs font-bold text-white">Leon K.</p>
-                    <p class="text-xs text-gray-500">Pro Tuning Kunde</p>
-                </div>
-                <div class="clean-card p-8 rounded-3xl">
-                    <div class="flex text-accent text-xs mb-4 space-x-1">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-300 text-sm italic mb-6 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
-                    <p class="text-xs font-bold text-white">Jonas M.</p>
-                    <p class="text-xs text-gray-500">Website Build Kunde</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Kontaktformular -->
-        <section id="contact" class="max-w-xl mx-auto clean-card p-8 md:p-10 rounded-3xl mb-20 shadow-2xl">
-            <h2 class="text-2xl font-bold text-white mb-2 text-center">Kontakt aufnehmen</h2>
-            <p class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
-            <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
-                    <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
-                    <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
-                    <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
-                </div>
-                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-sm shadow-xl">Nachricht senden</button>
+        <!-- Kontakt -->
+        <section id="contact" class="max-w-md mx-auto clean-card p-8 rounded-2xl">
+            <h2 class="text-xl font-bold text-white mb-2 text-center">Kontakt</h2>
+            <p class="text-xs text-gray-400 text-center mb-6 font-light">Schreib mir direkt eine Nachricht.</p>
+            <form id="contactForm" onsubmit="handleContact(event)" class="space-y-3.5">
+                <input type="text" id="contactName" class="w-full bg-[#0a0a0c] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-accent" required placeholder="Dein Name">
+                <input type="email" id="contactEmail" class="w-full bg-[#0a0a0c] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-accent" required placeholder="E-Mail Adresse">
+                <textarea rows="3" id="contactMessage" class="w-full bg-[#0a0a0c] border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-accent" required placeholder="Deine Nachricht..."></textarea>
+                <button type="submit" id="contactSubmitBtn" class="w-full py-3 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition text-xs">Senden</button>
             </form>
-            <div class="mt-6 text-center">
-                <p class="text-xs text-gray-500">Oder direkt per E-Mail: <a href="mailto:L@valentinolopez.de" class="text-accent hover:underline">L@valentinolopez.de</a></p>
-            </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="py-12 text-center border-t border-white/5 space-y-4">
-        <div class="flex justify-center items-center space-x-8 text-sm">
-            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2 text-xs">
-                <i class="fa-brands fa-x-twitter text-accent"></i> Twitter / X
-            </a>
-            <span class="text-gray-400 flex items-center gap-2 text-xs">
-                <i class="fa-brands fa-discord text-accent"></i> Discord: dri.c
-            </span>
-        </div>
-        <div class="flex justify-center space-x-6 text-xs text-gray-500">
-            <p>&copy; 2026 Valentino.</p>
-            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
-        </div>
+    <footer class="py-10 text-center border-t border-white/5 space-y-3 text-xs text-gray-500">
+        <p>&copy; 2026 Valentino Lopez</p>
+        <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
     </footer>
 
     <!-- Krypto Modal -->
-    <div id="cryptoModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-lg w-full relative border border-white/10 space-y-4 shadow-2xl">
-            <button onclick="toggleCryptoModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <h2 class="text-xl font-bold text-white mb-1">Krypto Wallet-Adressen</h2>
-            <p class="text-xs text-gray-400 font-light">Kopiere die gewünschte Adresse für die Überweisung:</p>
-            
-            <div class="space-y-3 text-xs">
-                <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
-                    <div>
-                        <p class="text-accent font-bold mb-1">Solana (SOL)</p>
-                        <p class="text-gray-300 font-mono break-all text-[11px]">5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD</p>
-                    </div>
-                    <button onclick="copyWallet('5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
+    <div id="cryptoModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#121217] p-6 rounded-2xl max-w-sm w-full relative space-y-3">
+            <button onclick="toggleCryptoModal()" class="absolute top-3 right-3 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-sm font-bold text-white">Krypto Adressen</h3>
+            <div class="space-y-2 text-[11px]">
+                <div class="bg-[#0a0a0c] p-2.5 rounded-xl border border-white/10 flex justify-between items-center">
+                    <div><span class="text-accent font-semibold">SOL:</span> <span class="text-gray-300 font-mono">5fzfBA...</span></div>
+                    <button onclick="copyWallet('5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD')" class="text-white hover:text-accent p-1"><i class="fa-regular fa-copy"></i></button>
                 </div>
-                <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
-                    <div>
-                        <p class="text-accent font-bold mb-1">Bitcoin (BTC)</p>
-                        <p class="text-gray-300 font-mono break-all text-[11px]">bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a</p>
-                    </div>
-                    <button onclick="copyWallet('bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
+                <div class="bg-[#0a0a0c] p-2.5 rounded-xl border border-white/10 flex justify-between items-center">
+                    <div><span class="text-accent font-semibold">BTC:</span> <span class="text-gray-300 font-mono">bc1q6j...</span></div>
+                    <button onclick="copyWallet('bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a')" class="text-white hover:text-accent p-1"><i class="fa-regular fa-copy"></i></button>
                 </div>
-                <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
-                    <div>
-                        <p class="text-accent font-bold mb-1">EVM (ETH / Polygon / BNB / Base)</p>
-                        <p class="text-gray-300 font-mono break-all text-[11px]">0xf47809985C85446bcb744F3FFEa7dC314f39E235</p>
-                    </div>
-                    <button onclick="copyWallet('0xf47809985C85446bcb744F3FFEa7dC314f39E235')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
+                <div class="bg-[#0a0a0c] p-2.5 rounded-xl border border-white/10 flex justify-between items-center">
+                    <div><span class="text-accent font-semibold">EVM:</span> <span class="text-gray-300 font-mono">0xf478...</span></div>
+                    <button onclick="copyWallet('0xf47809985C85446bcb744F3FFEa7dC314f39E235')" class="text-white hover:text-accent p-1"><i class="fa-regular fa-copy"></i></button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Impressum Modal -->
-    <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
-            <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            <h2 class="text-xl font-bold text-white mb-6">Impressum</h2>
-            <div class="text-gray-300 text-sm space-y-3 font-light leading-relaxed">
-                <p><strong class="text-white font-medium">Angaben gemäß § 5 TMG:</strong></p>
-                <p>Valentino Lopez</p>
-                <p>Europa-Allee 2<br>60327 Frankfurt am Main</p>
-                <p class="mt-6 text-white font-medium">Kontakt:</p>
-                <p>E-Mail: L@valentinolopez.de</p>
-            </div>
+    <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#121217] p-6 rounded-2xl max-w-sm w-full relative space-y-3 text-xs text-gray-300">
+            <button onclick="toggleImpressum()" class="absolute top-3 right-3 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-sm font-bold text-white">Impressum</h3>
+            <p><strong>Angaben gemäß § 5 TMG:</strong></p>
+            <p>Valentino Lopez<br>Europa-Allee 2<br>60327 Frankfurt am Main</p>
+            <p>E-Mail: L@valentinolopez.de</p>
         </div>
     </div>
 
-    <!-- Kundenportal Login & Register Modal -->
-    <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
-            <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#121217] p-6 rounded-2xl max-w-sm w-full relative space-y-4">
+            <button onclick="toggleLogin()" class="absolute top-3 right-3 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             
-            <div id="userDashboardView" class="hidden text-center space-y-5">
-                <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/25 flex items-center justify-center mx-auto text-accent text-xl">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <div>
-                    <h2 class="text-xl font-bold text-white">Kunden-Dashboard</h2>
-                    <p class="text-xs text-gray-400 mt-1" id="userEmailDisplay"></p>
-                </div>
-                <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 text-left space-y-2">
-                    <p class="text-[10px] font-semibold text-gray-500 tracking-wider uppercase">STATUS</p>
-                    <p class="text-xs text-gray-300 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Erfolgreich eingeloggt.</p>
-                </div>
-                <button onclick="handleLogout()" class="w-full py-3 bg-red-500/10 text-red-400 border border-red-500/20 font-semibold rounded-2xl hover:bg-red-500/20 transition text-sm">Abmelden</button>
+            <div id="userDashboardView" class="hidden text-center space-y-3">
+                <h3 class="text-sm font-bold text-white">Dashboard</h3>
+                <p class="text-xs text-gray-400" id="userEmailDisplay"></p>
+                <button onclick="handleLogout()" class="w-full py-2 bg-red-500/10 text-red-400 rounded-xl text-xs font-semibold">Abmelden</button>
             </div>
 
-            <div id="authFormsContainer">
-                <div class="flex border-b border-white/10 mb-6">
-                    <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 pb-3 text-xs font-semibold text-accent border-b-2 border-accent transition">Anmelden</button>
-                    <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-xs font-semibold text-gray-400 hover:text-white transition">Registrieren</button>
-                </div>
-
-                <div class="space-y-2.5 mb-6">
-                    <button onclick="loginWithProvider('google')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition text-xs font-semibold text-white flex items-center justify-center gap-2.5">
-                        <i class="fa-brands fa-google text-accent"></i> Mit Google anmelden
-                    </button>
-                    <div class="grid grid-cols-2 gap-2.5">
-                        <button onclick="loginWithProvider('github')" class="py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition text-xs font-semibold text-white flex items-center justify-center gap-2">
-                            <i class="fa-brands fa-github"></i> GitHub
-                        </button>
-                        <button onclick="loginWithProvider('twitter')" class="py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition text-xs font-semibold text-white flex items-center justify-center gap-2">
-                            <i class="fa-brands fa-x-twitter"></i> Twitter / X
-                        </button>
-                    </div>
-                </div>
-
-                <div class="relative flex py-2 items-center mb-4">
-                    <div class="flex-grow border-t border-white/10"></div>
-                    <span class="flex-shrink mx-4 text-[10px] text-gray-500 uppercase tracking-wider">Oder per E-Mail</span>
-                    <div class="flex-grow border-t border-white/10"></div>
-                </div>
-
-                <form id="loginForm" onsubmit="handleLoginFirebase(event)" class="space-y-3.5">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5">E-Mail Adresse</label>
-                        <input type="email" id="loginEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Passwort</label>
-                        <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" id="loginSubmitBtn" class="w-full py-3.5 bg-accent text-black font-bold rounded-2xl hover:bg-sky-400 transition text-xs mt-2 shadow-lg">Einloggen</button>
-                </form>
-
-                <form id="registerForm" onsubmit="handleRegisterFirebase(event)" class="space-y-3.5 hidden">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Dein Name</label>
-                        <input type="text" id="regName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="Dein Name">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5">E-Mail Adresse</label>
-                        <input type="email" id="regEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Passwort (min. 6 Zeichen)</label>
-                        <input type="password" id="regPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="••••••••">
-                    </div>
-                    <button type="submit" id="regSubmitBtn" class="w-full py-3.5 bg-accent text-black font-bold rounded-2xl hover:bg-sky-400 transition text-xs mt-2 shadow-lg">Code anfordern & Registrieren</button>
+            <div id="authFormsContainer" class="space-y-3">
+                <h3 class="text-sm font-bold text-white text-center">Anmelden</h3>
+                <button onclick="loginWithGoogle()" class="w-full py-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-white flex items-center justify-center gap-2">
+                    <i class="fa-brands fa-google text-accent"></i> Mit Google anmelden
+                </button>
+                <form id="loginForm" onsubmit="handleLoginFirebase(event)" class="space-y-2.5 pt-2">
+                    <input type="email" id="loginEmail" class="w-full bg-[#0a0a0c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-accent" required placeholder="E-Mail">
+                    <input type="password" id="loginPass" class="w-full bg-[#0a0a0c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-accent" required placeholder="Passwort">
+                    <button type="submit" id="loginSubmitBtn" class="w-full py-2.5 bg-accent text-black font-bold rounded-xl text-xs">Einloggen</button>
                 </form>
             </div>
         </div>
@@ -516,13 +301,12 @@
 
         function copyWallet(text) {
             navigator.clipboard.writeText(text);
-            alert('Wallet-Adresse in die Zwischenablage kopiert!');
+            alert('Wallet-Adresse kopiert!');
         }
 
         function toggleLogin() {
             const modal = document.getElementById('loginModal');
             modal.classList.toggle('active');
-            
             if(window.firebaseAuth && window.firebaseAuth.currentUser) {
                 document.getElementById('userDashboardView').classList.remove('hidden');
                 document.getElementById('authFormsContainer').classList.add('hidden');
@@ -533,93 +317,25 @@
             }
         }
 
-        function switchAuthTab(tab) {
-            const loginForm = document.getElementById('loginForm');
-            const registerForm = document.getElementById('registerForm');
-            const loginBtn = document.getElementById('tabLoginBtn');
-            const registerBtn = document.getElementById('tabRegisterBtn');
-
-            if (tab === 'login') {
-                loginForm.classList.remove('hidden');
-                registerForm.classList.add('hidden');
-                loginBtn.classList.add('text-accent', 'border-b-2', 'border-accent');
-                loginBtn.classList.remove('text-gray-400');
-                registerBtn.classList.remove('text-accent', 'border-b-2', 'border-accent');
-                registerBtn.classList.add('text-gray-400');
-            } else {
-                loginForm.classList.add('hidden');
-                registerForm.classList.remove('hidden');
-                registerBtn.classList.add('text-accent', 'border-b-2', 'border-accent');
-                registerBtn.classList.remove('text-gray-400');
-                loginBtn.classList.remove('text-accent', 'border-b-2', 'border-accent');
-                loginBtn.classList.add('text-gray-400');
-            }
-        }
+        import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js").then(({ GoogleAuthProvider, signInWithPopup }) => {
+            window.loginWithGoogle = function() {
+                signInWithPopup(window.firebaseAuth, new GoogleAuthProvider())
+                    .then((result) => { alert('Erfolgreich angemeldet!'); toggleLogin(); })
+                    .catch((error) => { alert('Fehler: ' + error.message); });
+            };
+        });
 
         function handleLoginFirebase(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPass').value;
-            const btn = document.getElementById('loginSubmitBtn');
-
-            btn.innerText = "Logge ein...";
-            btn.disabled = true;
-
             window.signInWithEmailAndPassword(window.firebaseAuth, email, pass)
-                .then((userCredential) => {
-                    alert('Erfolgreich eingeloggt!');
-                    btn.innerText = "Einloggen";
-                    btn.disabled = false;
-                    toggleLogin();
-                })
-                .catch((error) => {
-                    alert('Fehler beim Login: ' + error.message);
-                    btn.innerText = "Einloggen";
-                    btn.disabled = false;
-                });
-        }
-
-        function handleRegisterFirebase(e) {
-            e.preventDefault();
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPass').value;
-            const btn = document.getElementById('regSubmitBtn');
-            
-            const verificationCode = Math.floor(100000 + Math.random() * 900000);
-            
-            btn.innerText = "Erstelle Account...";
-            btn.disabled = true;
-
-            window.createUserWithEmailAndPassword(window.firebaseAuth, email, pass)
-                .then((userCredential) => {
-                    emailjs.send("service_qcbzj8m", "template_rreumik", {
-                        to_email: email,
-                        to_name: name,
-                        code: verificationCode
-                    }).then(function(response) {
-                        alert('Account erfolgreich erstellt! Bestätigungscode wurde gesendet.');
-                        btn.innerText = "Code anfordern & Registrieren";
-                        btn.disabled = false;
-                        toggleLogin();
-                    }, function(error) {
-                        alert('Account erstellt, aber E-Mail-Versand fehlgeschlagen.');
-                        btn.innerText = "Code anfordern & Registrieren";
-                        btn.disabled = false;
-                    });
-                })
-                .catch((error) => {
-                    alert('Fehler bei der Registrierung: ' + error.message);
-                    btn.innerText = "Code anfordern & Registrieren";
-                    btn.disabled = false;
-                });
+                .then(() => { alert('Erfolgreich eingeloggt!'); toggleLogin(); })
+                .catch((error) => { alert('Fehler: ' + error.message); });
         }
 
         function handleLogout() {
-            window.signOut(window.firebaseAuth).then(() => {
-                alert('Erfolgreich abgemeldet.');
-                toggleLogin();
-            });
+            window.signOut(window.firebaseAuth).then(() => { alert('Abgemeldet.'); toggleLogin(); });
         }
 
         function handleContact(e) {
@@ -629,7 +345,7 @@
             const message = document.getElementById('contactMessage').value;
             const btn = document.getElementById('contactSubmitBtn');
 
-            btn.innerText = "Sende Nachricht...";
+            btn.innerText = "Sende...";
             btn.disabled = true;
 
             emailjs.send("service_qcbzj8m", "template_rreumik", {
@@ -638,16 +354,15 @@
                 from_name: name,
                 from_email: email,
                 message: message,
-                code: "Kontaktanfrage von " + name
-            })
-            .then(function(response) {
-                alert('Vielen Dank! Deine Nachricht wurde gesendet.');
+                code: "Kontaktanfrage"
+            }).then(() => {
+                alert('Nachricht gesendet!');
                 document.getElementById('contactForm').reset();
-                btn.innerText = "Nachricht senden";
+                btn.innerText = "Senden";
                 btn.disabled = false;
-            }, function(error) {
+            }).catch(() => {
                 alert('Fehler beim Senden.');
-                btn.innerText = "Nachricht senden";
+                btn.innerText = "Senden";
                 btn.disabled = false;
             });
         }
