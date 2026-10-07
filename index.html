@@ -17,7 +17,7 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs & Social Logins (Mit deinem echten API-Key) -->
+    <!-- Firebase SDKs (Auth & Firestore) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -31,6 +31,15 @@
             TwitterAuthProvider,
             signInWithPopup 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addQuery, 
+            getDocs, 
+            query, 
+            where, 
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBVHSbnkj96Jofi5NgD9cHukegytHXP2zc",
@@ -44,8 +53,10 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
+        const db = getFirestore(app);
 
         window.firebaseAuth = auth;
+        window.firebaseDb = db;
         window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
         window.signOut = signOut;
@@ -68,14 +79,46 @@
             }
         };
 
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
             if (user) {
                 loginBtnText.innerText = "Dashboard";
+                loadUserOrders(user.email);
             } else {
                 loginBtnText.innerText = "Anmelden";
             }
         });
+
+        // Bestellungen des Nutzers aus Firestore laden
+        async function loadUserOrders(email) {
+            const container = document.getElementById('userOrdersList');
+            if (!container) return;
+            container.innerHTML = '<p class="text-xs text-gray-400">Lade Bestellungen...</p>';
+            
+            try {
+                const q = query(collection(db, "orders"), where("email", "==", email));
+                const querySnapshot = await getDocs(q);
+                if (querySnapshot.empty) {
+                    container.innerHTML = '<p class="text-xs text-gray-300 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Noch keine aktiven Buchungen.</p>';
+                    return;
+                }
+                container.innerHTML = '';
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    container.innerHTML += `
+                        <div class="bg-[#030305] p-3 rounded-xl border border-white/10 flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-white">${data.service}</p>
+                                <p class="text-gray-400">${data.price} - ${data.paymentMethod}</p>
+                            </div>
+                            <span class="px-2.5 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg font-semibold">${data.status || 'Ausstehend'}</span>
+                        </div>
+                    `;
+                });
+            } catch (e) {
+                container.innerHTML = '<p class="text-xs text-gray-300"><i class="fa-solid fa-circle-check text-emerald-400"></i> Keine Bestellungen gefunden.</p>';
+            }
+        }
     </script>
     <script>
         tailwind.config = {
@@ -134,11 +177,6 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(56, 189, 248, 0.5);
             box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.15);
-        }
-        .bestseller-card:hover {
-            border-color: rgba(56, 189, 248, 0.8);
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px -15px rgba(56, 189, 248, 0.25);
         }
     </style>
 </head>
@@ -254,66 +292,57 @@
             </div>
         </section>
 
-        <!-- Booking Sektion -->
+        <!-- Booking Sektion (Öffnet den Checkout) -->
         <section id="booking" class="mb-32">
             <div class="text-center mb-16">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3" data-de="Mich buchen & Preise" data-en="Book Me & Pricing">Mich buchen & Preise</h2>
-                <p class="text-gray-400 text-sm font-light" data-de="Wähle dein gewünschtes Paket und zahle sicher via PayPal oder Krypto." data-en="Choose your preferred package and pay securely via PayPal or Crypto.">Wähle dein gewünschtes Paket und zahle sicher via PayPal oder Krypto.</p>
+                <p class="text-gray-400 text-sm font-light" data-de="Wähle dein gewünschtes Paket und starte den sicheren Checkout." data-en="Choose your preferred package and start the secure checkout.">Wähle dein gewünschtes Paket und starte den sicheren Checkout.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 items-stretch">
                 <!-- Plan 1 -->
                 <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
                     <div>
-                        <h3 class="text-lg font-bold text-white mb-2" data-de="Basic PC-Tuning" data-en="Basic PC Tuning">Basic PC-Tuning</h3>
+                        <h3 class="text-lg font-bold text-white mb-2">Basic PC-Tuning</h3>
                         <p class="text-4xl font-black text-white mb-6">15€</p>
                         <ul class="text-gray-400 text-sm space-y-3.5 mb-8 font-light">
-                            <li data-de="Windows Basis-Optimierung" data-en="Windows Basic Optimization"><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
-                            <li data-de="Hintergrunddienste stoppen" data-en="Stop background services"><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
-                            <li data-de="Standard FPS Boost" data-en="Standard FPS Boost"><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
                         </ul>
                     </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/15" target="_blank" class="block w-full py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-semibold text-white text-xs">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/25 rounded-2xl transition font-semibold text-accent text-xs">Mit Krypto zahlen</button>
-                    </div>
+                    <button onclick="openCheckout('Basic PC-Tuning', '15€', 'https://paypal.me/valentinolopez1e/15')" class="w-full py-4 text-center bg-white/10 hover:bg-white/20 border border-white/15 rounded-2xl transition font-bold text-white text-xs shadow-md">Jetzt buchen</button>
                 </div>
 
                 <!-- Plan 2 (Bestseller) -->
                 <div class="bestseller-card p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-xs font-extrabold px-4.5 py-1.5 rounded-full shadow-lg shadow-sky-500/20" data-de="BELIEBT" data-en="BESTSELLER">BELIEBT</div>
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-xs font-extrabold px-4.5 py-1.5 rounded-full shadow-lg shadow-sky-500/20">BELIEBT</div>
                     <div>
-                        <h3 class="text-xl font-bold text-white mb-2 mt-2" data-de="Pro Tuning (0 Delay)" data-en="Pro Tuning (0 Delay)">Pro Tuning (0 Delay)</h3>
+                        <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning (0 Delay)</h3>
                         <p class="text-4xl font-black text-white mb-6">35€</p>
                         <ul class="text-gray-300 text-sm space-y-3.5 mb-8 font-light">
-                            <li data-de="Alles aus Basic" data-en="Everything in Basic"><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
-                            <li data-de="BIOS & Registry Edits" data-en="BIOS & Registry Edits"><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
-                            <li data-de="0 Input Delay Setup" data-en="0 Input Delay Setup"><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
-                            <li data-de="Max. Performance Garantie" data-en="Max. Performance Guarantee"><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
                         </ul>
                     </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/35" target="_blank" class="block w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg shadow-sky-500/30" data-de="Direkt buchen" data-en="Book Now">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-white/10 hover:bg-white/20 border border-white/25 rounded-2xl transition font-semibold text-white text-xs">Mit Krypto zahlen</button>
-                    </div>
+                    <button onclick="openCheckout('Pro Tuning (0 Delay)', '35€', 'https://paypal.me/valentinolopez1e/35')" class="w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg shadow-sky-500/30">Direkt buchen</button>
                 </div>
 
                 <!-- Plan 3 -->
                 <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
                     <div>
-                        <h3 class="text-lg font-bold text-white mb-2" data-de="Website Build" data-en="Website Build">Website Build</h3>
+                        <h3 class="text-lg font-bold text-white mb-2">Website Build</h3>
                         <p class="text-4xl font-black text-white mb-6">25€</p>
                         <ul class="text-gray-400 text-sm space-y-3.5 mb-8 font-light">
-                            <li data-de="Cleanes Portfolio Design" data-en="Clean Portfolio Design"><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
-                            <li data-de="Responsive (Handy & PC)" data-en="Responsive (Mobile & PC)"><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
-                            <li data-de="Kontaktformular & Setup" data-en="Contact Form & Setup"><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
-                            <li data-de="Hilfe bei GitHub Pages" data-en="GitHub Pages Support"><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
                         </ul>
                     </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/25" target="_blank" class="block w-full py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-semibold text-white text-xs" data-de="Mit PayPal zahlen" data-en="Pay with PayPal">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/25 rounded-2xl transition font-semibold text-accent text-xs">Mit Krypto zahlen</button>
-                    </div>
+                    <button onclick="openCheckout('Website Build', '25€', 'https://paypal.me/valentinolopez1e/25')" class="w-full py-4 text-center bg-white/10 hover:bg-white/20 border border-white/15 rounded-2xl transition font-bold text-white text-xs shadow-md">Jetzt buchen</button>
                 </div>
             </div>
         </section>
@@ -382,6 +411,34 @@
         </div>
     </footer>
 
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-5 shadow-2xl">
+            <button onclick="toggleCheckoutModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h2 class="text-xl font-bold text-white mb-1">Checkout & Zahlung</h2>
+            <p class="text-xs text-gray-400 font-light">Du bist nur noch einen Schritt von deiner Bestellung entfernt.</p>
+            
+            <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-2">
+                <div class="flex justify-between text-xs">
+                    <span class="text-gray-400">Ausgewähltes Paket:</span>
+                    <span class="text-white font-bold" id="checkoutServiceName">-</span>
+                </div>
+                <div class="flex justify-between text-xs">
+                    <span class="text-gray-400">Gesamtpreis:</span>
+                    <span class="text-accent font-bold text-sm" id="checkoutServicePrice">-</span>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <p class="text-xs font-semibold text-gray-300">Wähle deine Zahlungsart:</p>
+                <a id="checkoutPayPalBtn" href="#" target="_blank" onclick="completeOrder('PayPal')" class="block w-full py-3.5 text-center bg-sky-500 text-black font-bold rounded-2xl hover:bg-sky-400 transition text-xs shadow-lg">Mit PayPal bezahlen</a>
+                <button onclick="openCryptoFromCheckout()" class="w-full py-3.5 text-center bg-white/10 hover:bg-white/20 border border-white/15 rounded-2xl transition font-semibold text-white text-xs">Mit Krypto bezahlen</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Krypto Modal -->
     <div id="cryptoModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-lg w-full relative border border-white/10 space-y-4 shadow-2xl">
@@ -389,34 +446,31 @@
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
             <h2 class="text-xl font-bold text-white mb-1">Krypto Wallet-Adressen</h2>
-            <p class="text-xs text-gray-400 font-light">Wähle deine bevorzugte Kryptowährung und kopiere die Adresse für die Überweisung:</p>
+            <p class="text-xs text-gray-400 font-light">Wähle deine bevorzugte Kryptowährung und kopiere die Adresse:</p>
             
             <div class="space-y-3 text-xs">
                 <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
                     <div>
                         <p class="text-accent font-bold mb-1">Solana (SOL)</p>
-                        <p class="text-gray-300 font-mono break-all text-[11px]" id="solAddr">5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD</p>
+                        <p class="text-gray-300 font-mono break-all text-[11px]">5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD</p>
                     </div>
                     <button onclick="copyWallet('5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
                 </div>
-
                 <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
                     <div>
                         <p class="text-accent font-bold mb-1">Bitcoin (BTC)</p>
-                        <p class="text-gray-300 font-mono break-all text-[11px]" id="btcAddr">bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a</p>
+                        <p class="text-gray-300 font-mono break-all text-[11px]">bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a</p>
                     </div>
                     <button onclick="copyWallet('bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
                 </div>
-
                 <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
                     <div>
-                        <p class="text-accent font-bold mb-1">Ethereum / Polygon / BNB / Base (EVM)</p>
-                        <p class="text-gray-300 font-mono break-all text-[11px]" id="ethAddr">0xf47809985C85446bcb744F3FFEa7dC314f39E235</p>
+                        <p class="text-accent font-bold mb-1">EVM (ETH / Polygon / BNB / Base)</p>
+                        <p class="text-gray-300 font-mono break-all text-[11px]">0xf47809985C85446bcb744F3FFEa7dC314f39E235</p>
                     </div>
                     <button onclick="copyWallet('0xf47809985C85446bcb744F3FFEa7dC314f39E235')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
                 </div>
             </div>
-            <p class="text-[10px] text-gray-500 text-center mt-4">Nach der Überweisung schreib mir bitte kurz über das Kontaktformular mit deinem Transaktions-Hash!</p>
         </div>
     </div>
 
@@ -437,7 +491,7 @@
         </div>
     </div>
 
-    <!-- Kundenportal Login & Register Modal -->
+    <!-- Kundenportal Login & Register Modal mit Dashboard -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
@@ -452,9 +506,11 @@
                     <h2 class="text-xl font-bold text-white">Kunden-Dashboard</h2>
                     <p class="text-xs text-gray-400 mt-1" id="userEmailDisplay"></p>
                 </div>
-                <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 text-left space-y-2">
-                    <p class="text-[10px] font-semibold text-gray-500 tracking-wider uppercase">STATUS DER BESTELLUNGEN</p>
-                    <p class="text-xs text-gray-300 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Noch keine aktiven Buchungen.</p>
+                <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 text-left space-y-3">
+                    <p class="text-[10px] font-semibold text-gray-500 tracking-wider uppercase">DEINE BESTELLUNGEN</p>
+                    <div id="userOrdersList" class="space-y-2">
+                        <p class="text-xs text-gray-400">Lade Bestellungen...</p>
+                    </div>
                 </div>
                 <button onclick="handleLogout()" class="w-full py-3 bg-red-500/10 text-red-400 border border-red-500/20 font-semibold rounded-2xl hover:bg-red-500/20 transition text-sm">Abmelden</button>
             </div>
@@ -465,7 +521,6 @@
                     <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-xs font-semibold text-gray-400 hover:text-white transition">Registrieren</button>
                 </div>
 
-                <!-- Social Logins -->
                 <div class="space-y-2.5 mb-6">
                     <button onclick="loginWithProvider('google')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition text-xs font-semibold text-white flex items-center justify-center gap-2.5">
                         <i class="fa-brands fa-google text-accent"></i> Mit Google anmelden
@@ -518,8 +573,49 @@
     </div>
 
     <script>
-        let currentLang = 'de';
+        let currentSelectedService = '';
+        let currentSelectedPrice = '';
 
+        function openCheckout(service, price, paypalLink) {
+            currentSelectedService = service;
+            currentSelectedPrice = price;
+            document.getElementById('checkoutServiceName').innerText = service;
+            document.getElementById('checkoutServicePrice').innerText = price;
+            document.getElementById('checkoutPayPalBtn').href = paypalLink;
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function toggleCheckoutModal() {
+            document.getElementById('checkoutModal').classList.toggle('active');
+        }
+
+        function openCryptoFromCheckout() {
+            toggleCheckoutModal();
+            toggleCryptoModal();
+        }
+
+        // Wenn der Kunde auf Kaufen klickt, wird die Bestellung temporär/live vermerkt
+        async function completeOrder(method) {
+            const user = window.firebaseAuth.currentUser;
+            if (user) {
+                try {
+                    import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js").then(async ({ collection, addDoc }) => {
+                        await addDoc(collection(window.firebaseDb, "orders"), {
+                            email: user.email,
+                            service: currentSelectedService,
+                            price: currentSelectedPrice,
+                            paymentMethod: method,
+                            status: "In Bearbeitung",
+                            createdAt: new Date()
+                        });
+                    });
+                } catch(e) {}
+            }
+            alert('Vielen Dank für deine Bestellung! Nach Abschluss der Zahlung wird dein Auftrag im Dashboard aktiviert.');
+            toggleCheckoutModal();
+        }
+
+        let currentLang = 'de';
         function toggleLanguage() {
             currentLang = currentLang === 'de' ? 'en' : 'de';
             const btnText = currentLang === 'de' ? 'EN' : 'DE';
