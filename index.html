@@ -17,15 +17,17 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs -->
+    <!-- Firebase SDKs & Mobile-Optimized Redirect Login -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
             getAuth, 
-            createUserWithEmailAndPassword, 
             signInWithEmailAndPassword, 
             signOut, 
-            onAuthStateChanged 
+            onAuthStateChanged,
+            GoogleAuthProvider,
+            signInWithRedirect,
+            getRedirectResult 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -42,9 +44,24 @@
         const auth = getAuth(app);
 
         window.firebaseAuth = auth;
-        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
         window.signOut = signOut;
+
+        // Nach dem Redirect prüfen ob Login erfolgreich war
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result && result.user) {
+                    alert('Erfolgreich angemeldet als ' + result.user.email);
+                }
+            }).catch((error) => {
+                console.error(error);
+            });
+
+        // Nutzen von Redirect statt Popup (verhindert den schwarzen Bildschirm auf iPhones)
+        window.loginWithGoogle = function() {
+            const provider = new GoogleAuthProvider();
+            signInWithRedirect(auth, provider);
+        };
 
         onAuthStateChanged(auth, (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
@@ -184,7 +201,7 @@
                     </div>
                     <div class="space-y-2">
                         <a href="https://paypal.me/valentinolopez1e/35" target="_blank" class="block w-full py-2.5 text-center bg-accent text-black rounded-xl hover:bg-sky-400 transition font-bold text-xs">PayPal (35€)</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-2.5 text-center bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition font-medium text-white text-xs">Krypto</button>
+                        <button onclick="toggleCryptoModal()" class="w-full py-2.5 text-center bg-white/10 hover:bg-white/20 border border-white/10 rounded-xl transition font-medium text-accent text-xs">Krypto</button>
                     </div>
                 </div>
 
@@ -316,14 +333,6 @@
                 document.getElementById('authFormsContainer').classList.remove('hidden');
             }
         }
-
-        import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js").then(({ GoogleAuthProvider, signInWithPopup }) => {
-            window.loginWithGoogle = function() {
-                signInWithPopup(window.firebaseAuth, new GoogleAuthProvider())
-                    .then((result) => { alert('Erfolgreich angemeldet!'); toggleLogin(); })
-                    .catch((error) => { alert('Fehler: ' + error.message); });
-            };
-        });
 
         function handleLoginFirebase(e) {
             e.preventDefault();
