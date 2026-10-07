@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentino | aka Val3ntino</title>
+    <title>Valentino | Val3ntino Portfolio & Services</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome für Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS -->
@@ -55,35 +55,59 @@
                 extend: {
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
-                        bgDark: '#0b0b0f',
-                        cardDark: '#13131a',
-                        accent: '#38bdf8'
+                        bgDark: '#07070a',
+                        cardDark: '#101017',
+                        accent: '#38bdf8',
+                        accentPurple: '#818cf8'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: #0b0b0f; color: #f4f4f5; }
+        body { background-color: #07070a; color: #f4f4f5; overflow-x: hidden; }
         .modal { display: none; }
         .modal.active { display: flex; }
+        
+        /* Stylischer Hintergrund-Glow */
+        .hero-glow {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.12) 0%, rgba(129, 140, 248, 0.05) 50%, transparent 80%);
+            filter: blur(80px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .clean-card {
-            background: #13131a;
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            background: linear-gradient(145deg, #101017 0%, #0d0d12 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .clean-card:hover {
-            border-color: rgba(56, 189, 248, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px -10px rgba(56, 189, 248, 0.1);
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -15px rgba(56, 189, 248, 0.15);
+        }
+        
+        .bestseller-card {
+            background: linear-gradient(145deg, #131320 0%, #0f0f18 100%);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 30px -10px rgba(56, 189, 248, 0.1);
         }
     </style>
 </head>
 <body class="antialiased selection:bg-accent selection:text-black">
 
-    <!-- Minimalistische Navigation -->
-    <nav class="w-full py-5 px-8 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#0b0b0f]/80 backdrop-blur-xl z-50">
-        <a href="#" class="text-xl font-bold tracking-tight text-white hover:text-accent transition">Valentino<span class="text-accent">.</span></a>
+    <div class="hero-glow"></div>
+
+    <!-- Navigation -->
+    <nav class="w-full py-5 px-8 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#07070a]/80 backdrop-blur-xl z-50">
+        <a href="#" class="text-xl font-extrabold tracking-tight text-white hover:text-accent transition">Val3ntino<span class="text-accent">.</span></a>
         
         <!-- Desktop Menü -->
         <div class="hidden md:flex items-center space-x-8">
@@ -91,7 +115,7 @@
             <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
             <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Kontakt" data-en="Contact">Kontakt</a>
             <button onclick="toggleImpressum()" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Impressum" data-en="Imprint">Impressum</button>
-            <button onclick="toggleLogin()" class="text-sm font-medium text-accent hover:text-sky-300 transition flex items-center gap-2 bg-accent/10 px-4 py-2 rounded-xl border border-accent/20"><i class="fa-solid fa-user text-xs"></i> <span id="loginBtnText">Anmelden</span></button>
+            <button onclick="toggleLogin()" class="text-sm font-semibold text-accent hover:text-white transition flex items-center gap-2 bg-accent/10 px-4 py-2 rounded-xl border border-accent/20 shadow-sm"><i class="fa-solid fa-user text-xs"></i> <span id="loginBtnText">Anmelden</span></button>
         </div>
 
         <div class="flex items-center space-x-3 md:hidden">
@@ -111,7 +135,7 @@
     </nav>
 
     <!-- Mobile Dropdown Menü -->
-    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[77px] bg-[#13131a] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl">
+    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[77px] bg-[#101017] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl">
         <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Skills" data-en="Skills">Skills</a>
         <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
         <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Kontakt" data-en="Contact">Kontakt</a>
@@ -119,35 +143,36 @@
         <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium flex items-center gap-2"><i class="fa-solid fa-user"></i> Anmelden</button>
     </div>
 
-    <!-- Cleaner Startbereich -->
-    <header class="max-w-4xl mx-auto px-8 pt-48 pb-24 text-center">
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-8">
+    <!-- Hero Header -->
+    <header class="max-w-4xl mx-auto px-8 pt-52 pb-24 text-center relative">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-xs font-semibold mb-8 shadow-lg shadow-emerald-500/5">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span data-de="Verfügbar für Aufträge" data-en="Available for work">Verfügbar für Aufträge</span>
+            <span data-de="Verfügbar für Aufträge & Projekte" data-en="Available for work & projects">Verfügbar für Aufträge & Projekte</span>
         </div>
 
-        <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-4" data-de="Hi, ich bin Valentino." data-en="Hi, I'm Valentino.">
+        <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6" data-de="Hi, ich bin Valentino." data-en="Hi, I'm Valentino.">
             Hi, ich bin Valentino.
         </h1>
-        <p class="text-xl md:text-2xl text-gray-400 font-light mb-8">
-            aka <span class="text-accent font-medium">Val3ntino</span>
+        <p class="text-2xl md:text-3xl text-gray-400 font-light mb-8">
+            aka <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accentPurple font-semibold">Val3ntino</span>
         </p>
-        <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light" data-de="Ich schreibe Code, optimiere Hardware auf das absolute Limit und bin immer auf der Suche nach der perfekten Performance." data-en="I write code, push hardware to the absolute limit, and am always striving for peak performance.">
-            Ich schreibe Code, optimiere Hardware auf das absolute Limit und bin immer auf der Suche nach der perfekten Performance.
+        <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light" data-de="Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts." data-en="I build clean web applications, optimize Windows & hardware for uncompromising performance, and create creative game scripts.">
+            Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts.
         </p>
     </header>
 
     <main class="max-w-5xl mx-auto px-8 pb-32">
-        <!-- Skills -->
+        <!-- Skills Sektion -->
         <section id="skills" class="mb-32">
             <div class="grid md:grid-cols-3 gap-6">
-                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
+                <!-- Coding -->
+                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between group">
                     <div>
-                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition">
                             <i class="fa-solid fa-code text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-semibold text-white mb-2" data-de="Coding & Dev" data-en="Coding & Dev">Coding & Dev</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light" data-de="Leidenschaft fürs Programmieren, Web-Entwicklung und Game-Scripts." data-en="Passion for programming, web development, and game scripts.">Leidenschaft fürs Programmieren, Web-Entwicklung und Game-Scripts.</p>
+                        <h3 class="text-lg font-bold text-white mb-3" data-de="Coding & Dev" data-en="Coding & Dev">Coding & Dev</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light" data-de="Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts." data-en="Passion for programming, modern web development, and game scripts.">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-lg text-xs font-medium text-gray-300 border border-white/5">HTML & CSS</span>
@@ -157,13 +182,14 @@
                     </div>
                 </div>
 
-                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
+                <!-- PC Tuning -->
+                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between group">
                     <div>
-                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition">
                             <i class="fa-solid fa-microchip text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-semibold text-white mb-2" data-de="PC Tuning" data-en="PC Tuning">PC Tuning</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light" data-de="Maximale Performance, Custom Tweaks und kompromisslose Konfigurationen." data-en="Maximum performance, custom tweaks, and uncompromising configurations.">Maximale Performance, Custom Tweaks und kompromisslose Konfigurationen.</p>
+                        <h3 class="text-lg font-bold text-white mb-3" data-de="PC Tuning" data-en="PC Tuning">PC Tuning</h3>
+                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light" data-de="Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen." data-en="Maximum performance, custom tweaks, and uncompromising hardware optimizations.">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-lg text-xs font-medium text-gray-300 border border-white/5">0 Input Delay</span>
@@ -172,12 +198,13 @@
                     </div>
                 </div>
 
-                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
+                <!-- Vibe Coding -->
+                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between group">
                     <div>
-                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6">
+                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition">
                             <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-semibold text-white mb-2" data-de="Vibe Coding" data-en="Vibe Coding">Vibe Coding</h3>
+                        <h3 class="text-lg font-bold text-white mb-3" data-de="Vibe Coding" data-en="Vibe Coding">Vibe Coding</h3>
                         <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light" data-de="Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre." data-en="Coding in the ultimate flow state. Focusing on clean solutions in a relaxed atmosphere.">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
@@ -188,65 +215,67 @@
             </div>
         </section>
 
-        <!-- Booking (mit PayPal & Krypto Optionen) -->
+        <!-- Booking Sektion -->
         <section id="booking" class="mb-32">
-            <h2 class="text-3xl font-bold text-center text-white mb-12" data-de="Mich buchen & Preise" data-en="Book Me & Pricing">Mich buchen & Preise</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                
-                <!-- Plan 1: Basic PC-Tuning -->
-                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3" data-de="Mich buchen & Preise" data-en="Book Me & Pricing">Mich buchen & Preise</h2>
+                <p class="text-gray-400 text-sm font-light" data-de="Wähle dein gewünschtes Paket und zahle sicher via PayPal oder Krypto." data-en="Choose your preferred package and pay securely via PayPal or Crypto.">Wähle dein gewünschtes Paket und zahle sicher via PayPal oder Krypto.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 items-stretch">
+                <!-- Plan 1 -->
+                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
                     <div>
-                        <h3 class="text-lg font-semibold text-white mb-2" data-de="Basic PC-Tuning" data-en="Basic PC Tuning">Basic PC-Tuning</h3>
-                        <p class="text-4xl font-bold text-white mb-6">15€</p>
-                        <ul class="text-gray-400 text-sm space-y-3 mb-8 font-light">
+                        <h3 class="text-lg font-bold text-white mb-2" data-de="Basic PC-Tuning" data-en="Basic PC Tuning">Basic PC-Tuning</h3>
+                        <p class="text-4xl font-black text-white mb-6">15€</p>
+                        <ul class="text-gray-400 text-sm space-y-3.5 mb-8 font-light">
                             <li data-de="Windows Basis-Optimierung" data-en="Windows Basic Optimization"><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
                             <li data-de="Hintergrunddienste stoppen" data-en="Stop background services"><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
                             <li data-de="Standard FPS Boost" data-en="Standard FPS Boost"><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
                         </ul>
                     </div>
-                    <div class="space-y-2">
-                        <a href="https://paypal.me/valentinolopez1e/15" target="_blank" class="block w-full py-3 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-medium text-white text-xs">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-xl transition font-medium text-accent text-xs">Mit Krypto zahlen</button>
+                    <div class="space-y-2.5">
+                        <a href="https://paypal.me/valentinolopez1e/15" target="_blank" class="block w-full py-3 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-semibold text-white text-xs">Mit PayPal zahlen</a>
+                        <button onclick="toggleCryptoModal()" class="w-full py-3 text-center bg-accent/10 hover:bg-accent/20 border border-accent/25 rounded-xl transition font-semibold text-accent text-xs">Mit Krypto zahlen</button>
                     </div>
                 </div>
 
-                <!-- Plan 2: Pro Tuning (Bestseller) -->
-                <div class="clean-card p-8 rounded-2xl border-accent/50 relative flex flex-col justify-between transform md:-translate-y-2 bg-gradient-to-b from-[#13131a] to-[#181824]">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-black text-xs font-bold px-4 py-1 rounded-full shadow-lg" data-de="Bestseller" data-en="Bestseller">Bestseller</div>
+                <!-- Plan 2 (Bestseller) -->
+                <div class="bestseller-card p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-xs font-extrabold px-4 py-1.5 rounded-full shadow-lg" data-de="BELIEBT" data-en="BESTSELLER">BELIEBT</div>
                     <div>
-                        <h3 class="text-lg font-semibold text-white mb-2" data-de="Pro Tuning (0 Delay)" data-en="Pro Tuning (0 Delay)">Pro Tuning (0 Delay)</h3>
-                        <p class="text-4xl font-bold text-white mb-6">35€</p>
-                        <ul class="text-gray-300 text-sm space-y-3 mb-8 font-light">
+                        <h3 class="text-xl font-bold text-white mb-2 mt-2" data-de="Pro Tuning (0 Delay)" data-en="Pro Tuning (0 Delay)">Pro Tuning (0 Delay)</h3>
+                        <p class="text-4xl font-black text-white mb-6">35€</p>
+                        <ul class="text-gray-300 text-sm space-y-3.5 mb-8 font-light">
                             <li data-de="Alles aus Basic" data-en="Everything in Basic"><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
                             <li data-de="BIOS & Registry Edits" data-en="BIOS & Registry Edits"><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
                             <li data-de="0 Input Delay Setup" data-en="0 Input Delay Setup"><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
                             <li data-de="Max. Performance Garantie" data-en="Max. Performance Guarantee"><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
                         </ul>
                     </div>
-                    <div class="space-y-2">
-                        <a href="https://paypal.me/valentinolopez1e/35" target="_blank" class="block w-full py-3.5 text-center bg-accent text-black rounded-xl hover:bg-sky-400 transition font-bold text-xs shadow-lg shadow-sky-500/20" data-de="Direkt buchen" data-en="Book Now">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3 text-center bg-white/10 hover:bg-white/25 border border-white/20 rounded-xl transition font-medium text-white text-xs">Mit Krypto zahlen</button>
+                    <div class="space-y-2.5">
+                        <a href="https://paypal.me/valentinolopez1e/35" target="_blank" class="block w-full py-3.5 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-xl hover:opacity-90 transition font-bold text-xs shadow-lg shadow-sky-500/20" data-de="Direkt buchen" data-en="Book Now">Mit PayPal zahlen</a>
+                        <button onclick="toggleCryptoModal()" class="w-full py-3 text-center bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl transition font-semibold text-white text-xs">Mit Krypto zahlen</button>
                     </div>
                 </div>
 
-                <!-- Plan 3: Website Build -->
-                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
+                <!-- Plan 3 -->
+                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
                     <div>
-                        <h3 class="text-lg font-semibold text-white mb-2" data-de="Website Build" data-en="Website Build">Website Build</h3>
-                        <p class="text-4xl font-bold text-white mb-6">25€</p>
-                        <ul class="text-gray-400 text-sm space-y-3 mb-8 font-light">
+                        <h3 class="text-lg font-bold text-white mb-2" data-de="Website Build" data-en="Website Build">Website Build</h3>
+                        <p class="text-4xl font-black text-white mb-6">25€</p>
+                        <ul class="text-gray-400 text-sm space-y-3.5 mb-8 font-light">
                             <li data-de="Cleanes Portfolio Design" data-en="Clean Portfolio Design"><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
                             <li data-de="Responsive (Handy & PC)" data-en="Responsive (Mobile & PC)"><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
                             <li data-de="Kontaktformular & Setup" data-en="Contact Form & Setup"><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
                             <li data-de="Hilfe bei GitHub Pages" data-en="GitHub Pages Support"><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
                         </ul>
                     </div>
-                    <div class="space-y-2">
-                        <a href="https://paypal.me/valentinolopez1e/25" target="_blank" class="block w-full py-3 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-medium text-white text-xs" data-de="Mit PayPal zahlen" data-en="Pay with PayPal">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-xl transition font-medium text-accent text-xs">Mit Krypto zahlen</button>
+                    <div class="space-y-2.5">
+                        <a href="https://paypal.me/valentinolopez1e/25" target="_blank" class="block w-full py-3 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-semibold text-white text-xs" data-de="Mit PayPal zahlen" data-en="Pay with PayPal">Mit PayPal zahlen</a>
+                        <button onclick="toggleCryptoModal()" class="w-full py-3 text-center bg-accent/10 hover:bg-accent/20 border border-accent/25 rounded-xl transition font-semibold text-accent text-xs">Mit Krypto zahlen</button>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -254,43 +283,43 @@
         <section class="mb-32">
             <h2 class="text-3xl font-bold text-center text-white mb-12" data-de="Was Kunden sagen" data-en="Client Reviews">Was Kunden sagen</h2>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="clean-card p-8 rounded-2xl">
+                <div class="clean-card p-8 rounded-3xl">
                     <div class="flex text-accent text-xs mb-4 space-x-1">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
                     <p class="text-gray-300 text-sm italic mb-6 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
-                    <p class="text-xs font-semibold text-white">Leon K.</p>
+                    <p class="text-xs font-bold text-white">Leon K.</p>
                     <p class="text-xs text-gray-500">Pro Tuning Kunde</p>
                 </div>
-                <div class="clean-card p-8 rounded-2xl">
+                <div class="clean-card p-8 rounded-3xl">
                     <div class="flex text-accent text-xs mb-4 space-x-1">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
                     <p class="text-gray-300 text-sm italic mb-6 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
-                    <p class="text-xs font-semibold text-white">Jonas M.</p>
+                    <p class="text-xs font-bold text-white">Jonas M.</p>
                     <p class="text-xs text-gray-500">Website Build Kunde</p>
                 </div>
             </div>
         </section>
 
         <!-- Kontaktformular -->
-        <section id="contact" class="max-w-xl mx-auto clean-card p-8 md:p-10 rounded-2xl mb-20">
+        <section id="contact" class="max-w-xl mx-auto clean-card p-8 md:p-10 rounded-3xl mb-20 shadow-2xl">
             <h2 class="text-2xl font-bold text-white mb-2 text-center" data-de="Kontakt aufnehmen" data-en="Get in Touch">Kontakt aufnehmen</h2>
             <p class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
             <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
                 <div>
                     <label class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
-                    <input type="text" id="contactName" class="w-full bg-[#0b0b0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
+                    <input type="text" id="contactName" class="w-full bg-[#07070a] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
-                    <input type="email" id="contactEmail" class="w-full bg-[#0b0b0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                    <input type="email" id="contactEmail" class="w-full bg-[#07070a] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                 </div>
                 <div>
                     <label class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
-                    <textarea rows="4" id="contactMessage" class="w-full bg-[#0b0b0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
+                    <textarea rows="4" id="contactMessage" class="w-full bg-[#07070a] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
                 </div>
-                <button type="submit" id="contactSubmitBtn" class="w-full py-3.5 bg-white text-black font-semibold rounded-xl hover:bg-gray-200 transition text-sm">Nachricht senden</button>
+                <button type="submit" id="contactSubmitBtn" class="w-full py-3.5 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition text-sm shadow-lg">Nachricht senden</button>
             </form>
             <div class="mt-6 text-center">
                 <p class="text-xs text-gray-500">Oder direkt per E-Mail: <a href="mailto:L@valentinolopez.de" class="text-accent hover:underline">L@valentinolopez.de</a></p>
@@ -315,37 +344,37 @@
     </footer>
 
     <!-- Krypto Modal -->
-    <div id="cryptoModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#13131a] p-8 rounded-2xl max-w-lg w-full relative border border-white/10 space-y-4">
+    <div id="cryptoModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#101017] p-8 rounded-3xl max-w-lg w-full relative border border-white/10 space-y-4">
             <button onclick="toggleCryptoModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <h2 class="text-xl font-bold text-white mb-2">Krypto Wallet-Adressen</h2>
+            <h2 class="text-xl font-bold text-white mb-1">Krypto Wallet-Adressen</h2>
             <p class="text-xs text-gray-400 font-light">Wähle deine bevorzugte Kryptowährung und kopiere die Adresse für die Überweisung:</p>
             
             <div class="space-y-3 text-xs">
-                <div class="bg-[#0b0b0f] p-3 rounded-xl border border-white/10 flex justify-between items-center">
+                <div class="bg-[#07070a] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
                     <div>
-                        <p class="text-accent font-semibold mb-1">Solana (SOL)</p>
-                        <p class="text-gray-300 font-mono break-all" id="solAddr">5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD</p>
+                        <p class="text-accent font-bold mb-1">Solana (SOL)</p>
+                        <p class="text-gray-300 font-mono break-all text-[11px]" id="solAddr">5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD</p>
                     </div>
-                    <button onclick="copyWallet('5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition"><i class="fa-regular fa-copy"></i></button>
+                    <button onclick="copyWallet('5fzfBAiPfJ8y6s9jCBbypsVLNFUd9rLVEQHzewdHcxBD')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
                 </div>
 
-                <div class="bg-[#0b0b0f] p-3 rounded-xl border border-white/10 flex justify-between items-center">
+                <div class="bg-[#07070a] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
                     <div>
-                        <p class="text-accent font-semibold mb-1">Bitcoin (BTC)</p>
-                        <p class="text-gray-300 font-mono break-all" id="btcAddr">bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a</p>
+                        <p class="text-accent font-bold mb-1">Bitcoin (BTC)</p>
+                        <p class="text-gray-300 font-mono break-all text-[11px]" id="btcAddr">bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a</p>
                     </div>
-                    <button onclick="copyWallet('bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition"><i class="fa-regular fa-copy"></i></button>
+                    <button onclick="copyWallet('bc1q6jhu3nh4hzf3u6cdx95vtmfuuqp5ysum3wc08a')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
                 </div>
 
-                <div class="bg-[#0b0b0f] p-3 rounded-xl border border-white/10 flex justify-between items-center">
+                <div class="bg-[#07070a] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
                     <div>
-                        <p class="text-accent font-semibold mb-1">Ethereum / Polygon / BNB / Base (EVM)</p>
-                        <p class="text-gray-300 font-mono break-all" id="ethAddr">0xf47809985C85446bcb744F3FFEa7dC314f39E235</p>
+                        <p class="text-accent font-bold mb-1">Ethereum / Polygon / BNB / Base (EVM)</p>
+                        <p class="text-gray-300 font-mono break-all text-[11px]" id="ethAddr">0xf47809985C85446bcb744F3FFEa7dC314f39E235</p>
                     </div>
-                    <button onclick="copyWallet('0xf47809985C85446bcb744F3FFEa7dC314f39E235')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition"><i class="fa-regular fa-copy"></i></button>
+                    <button onclick="copyWallet('0xf47809985C85446bcb744F3FFEa7dC314f39E235')" class="ml-2 px-3 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl transition"><i class="fa-regular fa-copy"></i></button>
                 </div>
             </div>
             <p class="text-[10px] text-gray-500 text-center mt-4">Nach der Überweisung schreib mir bitte kurz über das Kontaktformular mit deinem Transaktions-Hash!</p>
@@ -353,8 +382,8 @@
     </div>
 
     <!-- Impressum Modal -->
-    <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#13131a] p-8 rounded-2xl max-w-md w-full relative border border-white/10">
+    <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#101017] p-8 rounded-3xl max-w-md w-full relative border border-white/10">
             <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -370,21 +399,21 @@
     </div>
 
     <!-- Kundenportal Login & Register Modal -->
-    <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#13131a] p-8 rounded-2xl max-w-md w-full relative border border-white/10">
+    <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#101017] p-8 rounded-3xl max-w-md w-full relative border border-white/10">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
             
             <div id="userDashboardView" class="hidden text-center space-y-5">
-                <div class="w-12 h-12 rounded-full bg-accent/10 border border-accent/20 flex items-center justify-center mx-auto text-accent">
+                <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/25 flex items-center justify-center mx-auto text-accent text-xl">
                     <i class="fa-solid fa-user"></i>
                 </div>
                 <div>
                     <h2 class="text-xl font-bold text-white">Kunden-Dashboard</h2>
                     <p class="text-xs text-gray-400 mt-1" id="userEmailDisplay"></p>
                 </div>
-                <div class="bg-[#0b0b0f] p-4 rounded-xl border border-white/10 text-left space-y-2">
+                <div class="bg-[#07070a] p-4 rounded-2xl border border-white/10 text-left space-y-2">
                     <p class="text-[10px] font-semibold text-gray-500 tracking-wider uppercase">STATUS DER BESTELLUNGEN</p>
                     <p class="text-xs text-gray-300 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Noch keine aktiven Buchungen.</p>
                 </div>
@@ -402,11 +431,11 @@
                     <p class="text-xs text-gray-400 mb-4 font-light">Melde dich in deinem Kundenkonto an.</p>
                     <div>
                         <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
-                        <input type="email" id="loginEmail" class="w-full bg-[#0b0b0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                        <input type="email" id="loginEmail" class="w-full bg-[#07070a] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-400 mb-2">Passwort</label>
-                        <input type="password" id="loginPass" class="w-full bg-[#0b0b0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="••••••••">
+                        <input type="password" id="loginPass" class="w-full bg-[#07070a] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="••••••••">
                     </div>
                     <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition text-sm">Einloggen</button>
                 </form>
@@ -416,15 +445,15 @@
                     <p class="text-xs text-gray-400 mb-4 font-light">Ein Bestätigungscode wird direkt per E-Mail gesendet.</p>
                     <div>
                         <label class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
-                        <input type="text" id="regName" class="w-full bg-[#0b0b0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Name">
+                        <input type="text" id="regName" class="w-full bg-[#07070a] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Name">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
-                        <input type="email" id="regEmail" class="w-full bg-[#0b0b0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                        <input type="email" id="regEmail" class="w-full bg-[#07070a] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-400 mb-2">Passwort (min. 6 Zeichen)</label>
-                        <input type="password" id="regPass" class="w-full bg-[#0b0b0f] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="••••••••">
+                        <input type="password" id="regPass" class="w-full bg-[#07070a] border border-white/10 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="••••••••">
                     </div>
                     <button type="submit" id="regSubmitBtn" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition text-sm">Code anfordern & Registrieren</button>
                 </form>
