@@ -479,7 +479,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.62</p>
+            <p class="font-mono text-accent/70">v1.61</p>
         </div>
     </footer>
 
@@ -594,6 +594,9 @@
                 <div id="cryptoListContainer" class="hidden space-y-2 bg-[#030305] p-3 rounded-2xl border border-white/10 text-xs">
                     <button onclick="selectCryptoCoin('Litecoin (LTC)', 'LTC1QVAL3NTINOCRYPTOADDRESS998877')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Litecoin (LTC)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
                     <button onclick="selectCryptoCoin('Solana (SOL)', 'SOL_VAL3NTINO_STORE_BLOCKCHAIN_ADDR_1122')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Solana (SOL)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
+                    <button onclick="selectCryptoCoin('Ethereum (ETH)', '0xVAL3NTINOETHEREUMWALLETADDRESS998877')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Ethereum (ETH)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
+                    <button onclick="selectCryptoCoin('USDT (ERC20)', '0xVAL3NTINOUSDTWERTEXYZ112233')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>USDT (ERC20)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
+                    <button onclick="selectCryptoCoin('USDC (SPL)', 'USDCVAL3NTINOSPLBLOCKCHAINADDRESS55')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>USDC (SPL)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
                     <button onclick="selectCryptoCoin('Bitcoin (BTC)', 'bc1qval3ntinobitcoinaddresswalletxyz4455')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Bitcoin (BTC)</span><span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded">+10%</span></button>
                 </div>
             </div>
@@ -620,23 +623,29 @@
         </div>
     </div>
 
-    <!-- Krypto Überweisungs-Modal mit Adresse -->
+    <!-- Krypto Überweisungs-Modal mit allen deinen Krypto-Adressen & Zahlungsnachweis -->
     <div id="cryptoAddressModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-4 shadow-2xl text-center">
             <button onclick="document.getElementById('cryptoAddressModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400 text-2xl">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400 text-xl">
                 <i class="fa-solid fa-coins"></i>
             </div>
-            <h2 class="text-lg font-bold text-white">Krypto Zahlung (Pending)</h2>
-            <p class="text-xs text-gray-400">Bitte überweise den genauen Betrag von <span id="cryptoPayAmount" class="text-accent font-bold">€0.00</span> an folgende Adresse:</p>
+            <h2 class="text-base font-bold text-white">Krypto Zahlung (<span id="cryptoCoinTitle">Coin</span>)</h2>
+            <p class="text-xs text-gray-400">Überweise genau <span id="cryptoPayAmount" class="text-accent font-bold">€0.00</span> an folgende Adresse:</p>
             
-            <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 text-xs font-mono text-accent break-all select-all" id="cryptoAddressBox">
+            <div class="bg-[#030305] p-3 rounded-2xl border border-white/10 text-xs font-mono text-accent break-all select-all" id="cryptoAddressBox">
                 ADDRESS_HERE
             </div>
             
-            <p class="text-[10px] text-amber-400">Deine Bestellung bleibt im Status "Pending", bis Valentino den Zahlungseingang manuell bestätigt.</p>
+            <!-- Feld für Zahlungsnachweis (TxID oder Transaktions-Hash) -->
+            <div class="text-left space-y-1">
+                <label class="block text-[11px] font-medium text-gray-400">Zahlungsnachweis / TxID (Proof of Payment) *</label>
+                <input type="text" id="cryptoProofInput" class="w-full bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="TxID / Hash oder Referenz eingeben...">
+            </div>
+
+            <p class="text-[10px] text-amber-400">Bestellung wird nach Blockchain-Überprüfung bestätigt.</p>
             
-            <button onclick="confirmCryptoPending()" class="w-full py-3.5 bg-accent text-black font-bold rounded-xl text-xs shadow-lg">Bestellung als Pending einreichen</button>
+            <button onclick="confirmCryptoPending()" class="w-full py-3 bg-accent text-black font-bold rounded-xl text-xs shadow-lg">Beweis abschicken & Pending einreichen</button>
         </div>
     </div>
 
@@ -815,6 +824,8 @@
         let selectedTopUpValue = 0;
         let pendingGatewayMethod = "";
         let pendingGatewayAmount = "";
+        let pendingCryptoCoin = "";
+        let pendingCryptoAddress = "";
 
         const translations = {
             de: {
@@ -1096,6 +1107,7 @@
                             <div>
                                 <p class="text-white font-bold">${order.items}</p>
                                 <p class="text-[10px] text-gray-400">Invoice #${order.invoice} • ${order.date}</p>
+                                ${order.proof ? `<p class="text-[9px] text-sky-400 mt-0.5">Proof: ${order.proof}</p>` : ''}
                             </div>
                             <div class="text-right">
                                 <span class="${statusColor} font-bold block">${order.status || 'Completed'}</span>
@@ -1150,35 +1162,15 @@
             let email = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : null;
             if(!email) { showToast("Bitte zuerst einloggen!"); return; }
 
-            let newOrder = {
-                items: `Top Up Guthaben (€${selectedTopUpValue.toFixed(2)}) via ${coinName}`,
-                total: `€${selectedTopUpValue.toFixed(2)}`,
-                rawTotal: selectedTopUpValue,
-                method: `Crypto (${coinName})`,
-                status: 'Pending',
-                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
-                date: new Date().toLocaleDateString('de-DE')
-            };
-            let existingOrders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
-            existingOrders.unshift(newOrder);
-            localStorage.setItem('orders_' + email, JSON.stringify(existingOrders));
+            pendingCryptoCoin = coinName + " (Top Up)";
+            pendingCryptoAddress = address;
+            selectedTopUpValue = selectedTopUpValue; // Betrag behalten
 
+            document.getElementById('cryptoCoinTitle').innerText = coinName;
+            document.getElementById('cryptoPayAmount').innerText = '€' + selectedTopUpValue.toFixed(2);
+            document.getElementById('cryptoAddressBox').innerText = address;
             document.getElementById('topUpPaymentModal').classList.remove('active');
-            loadDashboardStats(email);
-            showToast(`Pending Order für €${selectedTopUpValue.toFixed(2)} erstellt! Überweise an: ${address}`);
-        }
-
-        function completeTopUp(method) {
-            let email = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : null;
-            if(!email) { showToast("Bitte zuerst einloggen!"); return; }
-            
-            let currentBal = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
-            let newBal = currentBal + selectedTopUpValue;
-            localStorage.setItem('balance_' + email, newBal.toFixed(2));
-            
-            loadDashboardStats(email);
-            document.getElementById('topUpPaymentModal').classList.remove('active');
-            showToast(`Guthaben um €${selectedTopUpValue.toFixed(2)} via ${method} aufgeladen!`);
+            document.getElementById('cryptoAddressModal').classList.add('active');
         }
 
         function toggleCryptoSelection() {
@@ -1193,6 +1185,11 @@
         }
 
         function openGatewayModal(method, amount) {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            if (!emailInput || !emailInput.includes('@')) {
+                showToast('Bitte zuerst E-Mail Adresse eingeben!');
+                return;
+            }
             pendingGatewayMethod = method;
             pendingGatewayAmount = amount || document.getElementById('cartSubtotalDisplay').innerText;
             document.getElementById('gatewayAmount').innerText = pendingGatewayAmount;
@@ -1206,35 +1203,37 @@
 
         function confirmGatewayPayment() {
             const emailInput = document.getElementById('checkoutEmail').value;
-            if (!emailInput || !emailInput.includes('@')) {
-                showToast('Bitte E-Mail eingeben!');
-                return;
-            }
-            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let orderSummary = cart.length > 0 ? cart.map(i => `${i.qty}x ${i.name}`).join(', ') : `Top Up (€${selectedTopUpValue.toFixed(2)})`;
             let totalAmount = pendingGatewayAmount;
             let rawNum = totalAmount.replace('€', '');
 
-            let newOrder = {
-                items: orderSummary,
-                total: totalAmount,
-                rawTotal: rawNum,
-                method: pendingGatewayMethod,
-                status: 'Completed',
-                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
-                date: new Date().toLocaleDateString('de-DE')
-            };
-            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
-            existingOrders.unshift(newOrder);
-            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+            if(pendingGatewayMethod === 'Top Up PayPal') {
+                let currentBal = parseFloat(localStorage.getItem('balance_' + emailInput) || '0.00');
+                localStorage.setItem('balance_' + emailInput, (currentBal + selectedTopUpValue).toFixed(2));
+                showToast('Top Up via PayPal erfolgreich bestätigt!');
+            } else {
+                let newOrder = {
+                    items: orderSummary,
+                    total: totalAmount,
+                    rawTotal: rawNum,
+                    method: pendingGatewayMethod,
+                    status: 'Completed',
+                    invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                    date: new Date().toLocaleDateString('de-DE')
+                };
+                let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+                existingOrders.unshift(newOrder);
+                localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
 
-            emailjs.send("service_qcbzj8m", "template_rreumik", {
-                to_email: emailInput,
-                to_name: emailInput.split('@')[0],
-                message: `Bestellbestätigung: ${orderSummary}. Summe: ${totalAmount}. Zahlung: ${pendingGatewayMethod}.`,
-                code: "Bestellbestätigung"
-            });
+                emailjs.send("service_qcbzj8m", "template_rreumik", {
+                    to_email: emailInput,
+                    to_name: emailInput.split('@')[0],
+                    message: `Bestellbestätigung: ${orderSummary}. Summe: ${totalAmount}. Zahlung: ${pendingGatewayMethod}.`,
+                    code: "Bestellbestätigung"
+                });
+                showToast('Zahlung bestätigt & Bestellung abgeschlossen!');
+            }
 
-            showToast('Zahlung bestätigt & Bestellung abgeschlossen!');
             document.getElementById('gatewayModal').classList.remove('active');
             cart = [];
             appliedDiscount = 0;
@@ -1248,36 +1247,58 @@
                 showToast('Bitte E-Mail angeben!');
                 return;
             }
+            pendingCryptoCoin = coinName;
+            pendingCryptoAddress = address;
             let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
+            document.getElementById('cryptoCoinTitle').innerText = coinName;
             document.getElementById('cryptoPayAmount').innerText = totalAmount;
             document.getElementById('cryptoAddressBox').innerText = address;
             document.getElementById('paymentModal').classList.remove('active');
             document.getElementById('cryptoAddressModal').classList.add('active');
+        }
 
-            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+        function confirmCryptoPending() {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            const proof = document.getElementById('cryptoProofInput').value.trim();
+
+            if(!proof) {
+                showToast('Bitte gib einen Zahlungsnachweis (TxID / Hash) ein!');
+                return;
+            }
+
+            let orderSummary = cart.length > 0 ? cart.map(i => `${i.qty}x ${i.name}`).join(', ') : `Top Up (€${selectedTopUpValue.toFixed(2)})`;
+            let totalAmount = cart.length > 0 ? document.getElementById('cartSubtotalDisplay').innerText : '€' + selectedTopUpValue.toFixed(2);
             let rawNum = totalAmount.replace('€', '');
 
             let newOrder = {
                 items: orderSummary,
                 total: totalAmount,
                 rawTotal: rawNum,
-                method: `Crypto (${coinName})`,
+                method: `Crypto (${pendingCryptoCoin})`,
                 status: 'Pending',
+                proof: proof,
                 invoice: Math.floor(100000000000 + Math.random() * 900000000000),
                 date: new Date().toLocaleDateString('de-DE')
             };
+
+            // Wenn es ein Top Up war, vermerken wir es im Order-Prozess
+            if(selectedTopUpValue > 0) {
+                newOrder.isTopUp = true;
+                newOrder.topUpValue = selectedTopUpValue;
+            }
+
             let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
             existingOrders.unshift(newOrder);
             localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
-        }
 
-        function confirmCryptoPending() {
-            showToast('Bestellung als Pending eingereicht. Warten auf Blockchain-Bestätigung.');
+            showToast('Bestellung als Pending eingereicht mit Beweis! Warten auf Freigabe.');
             document.getElementById('cryptoAddressModal').classList.remove('active');
+            document.getElementById('cryptoProofInput').value = '';
             cart = [];
+            selectedTopUpValue = 0;
             appliedDiscount = 0;
             updateCartUI();
-            if(window.firebaseAuth.currentUser) loadDashboardStats(window.firebaseAuth.currentUser.email);
+            if(window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
         }
 
         function payWithBalance() {
