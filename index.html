@@ -49,6 +49,7 @@
             <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
             <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Kontakt" data-en="Contact">Kontakt</a>
             <button onclick="toggleImpressum()" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+            <button onclick="toggleLogin()" class="text-sm font-medium text-accent hover:underline flex items-center gap-1.5" data-de="Anmelden" data-en="Login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden</button>
         </div>
 
         <div class="flex items-center space-x-4">
@@ -69,6 +70,7 @@
         <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
         <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Kontakt" data-en="Contact">Kontakt</a>
         <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 hover:text-white text-lg font-medium" data-de="Impressum" data-en="Imprint">Impressum</button>
+        <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-lg font-medium flex items-center gap-2" data-de="Anmelden" data-en="Login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden</button>
     </div>
 
     <!-- Cleaner Startbereich -->
@@ -277,9 +279,30 @@
                 
                 <p class="mt-6 text-white font-semibold" data-de="Kontakt:" data-en="Contact:">Kontakt:</p>
                 <p>E-Mail: L@valentinolopez.de</p>
-
-                <p class="mt-6 text-xs text-gray-600" data-de="Hinweis: Dies ist eine Musteradresse für Demonstrationszwecke." data-en="Note: This is a sample address for demonstration purposes.">Hinweis: Dies ist eine Musteradresse für Demonstrationszwecke.</p>
             </div>
+        </div>
+    </div>
+
+    <!-- Kundenportal Login Modal -->
+    <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#09090b] p-8 rounded-2xl max-w-md w-full relative">
+            <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-2" data-de="Kundenportal" data-en="Client Portal">Kundenportal</h2>
+            <p class="text-gray-400 text-sm mb-6" data-de="Logge dich ein, um deine Käufe und Aufträge zu verwalten." data-en="Log in to manage your purchases and orders.">Logge dich ein, um deine Käufe und Aufträge zu verwalten.</p>
+            
+            <form onsubmit="event.preventDefault(); alert('Login-System wird bald verbunden!'); toggleLogin();" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
+                    <input type="email" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-400 mb-2" data-de="Passwort" data-en="Password">Passwort</label>
+                    <input type="password" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition" data-de="Einloggen" data-en="Log In">Einloggen</button>
+            </form>
         </div>
     </div>
 
@@ -307,6 +330,11 @@
 
         function toggleImpressum() {
             const modal = document.getElementById('impressumModal');
+            modal.classList.toggle('active');
+        }
+
+        function toggleLogin() {
+            const modal = document.getElementById('loginModal');
             modal.classList.toggle('active');
         }
     </script>
