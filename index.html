@@ -17,7 +17,6 @@
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
                         bgDark: '#09090b',
-                        cardDark: '#121216',
                         accent: '#38bdf8'
                     }
                 }
@@ -28,15 +27,13 @@
         body { background-color: #09090b; color: #e4e4e7; }
         .modal { display: none; }
         .modal.active { display: flex; }
-        .glow-card {
-            background: linear-gradient(180deg, rgba(24, 24, 27, 0.6) 0%, rgba(18, 18, 22, 0.9) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
+        .clean-card {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
         }
-        .glow-card:hover {
-            border-color: rgba(56, 189, 248, 0.3);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px -10px rgba(56, 189, 248, 0.1);
+        .clean-card:hover {
+            border-color: rgba(56, 189, 248, 0.4);
         }
     </style>
 </head>
@@ -67,7 +64,7 @@
     </nav>
 
     <!-- Mobile Dropdown Menü -->
-    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[81px] bg-cardDark border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl">
+    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[81px] bg-[#09090b] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl">
         <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Skills" data-en="Skills">Skills</a>
         <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
         <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Kontakt" data-en="Contact">Kontakt</a>
@@ -98,50 +95,50 @@
         <section id="skills" class="mb-32">
             <div class="grid md:grid-cols-3 gap-6">
                 <!-- Coding -->
-                <div class="glow-card p-8 rounded-2xl flex flex-col justify-between">
+                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
-                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-code text-accent text-xl"></i>
+                        <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-code text-accent text-lg"></i>
                         </div>
                         <h3 class="text-xl font-semibold text-white mb-3" data-de="Coding & Dev" data-en="Coding & Dev">Coding & Dev</h3>
                         <p class="text-gray-400 text-sm mb-6 leading-relaxed" data-de="Leidenschaft fürs Programmieren, Web-Entwicklung und Game-Scripts." data-en="Passion for programming, web development, and game scripts.">Leidenschaft fürs Programmieren, Web-Entwicklung und Game-Scripts.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300">HTML & CSS</span>
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300">C++</span>
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300">Python</span>
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300">Luau</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">HTML & CSS</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">C++</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">Python</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">Luau</span>
                     </div>
                 </div>
 
                 <!-- PC Tuning -->
-                <div class="glow-card p-8 rounded-2xl flex flex-col justify-between">
+                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
-                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-microchip text-accent text-xl"></i>
+                        <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-microchip text-accent text-lg"></i>
                         </div>
                         <h3 class="text-xl font-semibold text-white mb-3" data-de="PC Tuning" data-en="PC Tuning">PC Tuning</h3>
                         <p class="text-gray-400 text-sm mb-6 leading-relaxed" data-de="Maximale Performance, Custom Tweaks und kompromisslose Konfigurationen." data-en="Maximum performance, custom tweaks, and uncompromising configurations.">Maximale Performance, Custom Tweaks und kompromisslose Konfigurationen.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300">0 Input Delay</span>
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300">Windows Tweaks</span>
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300">BIOS Edits</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">0 Input Delay</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">Windows Tweaks</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">BIOS Edits</span>
                     </div>
                 </div>
 
                 <!-- Vibe Coding -->
-                <div class="glow-card p-8 rounded-2xl flex flex-col justify-between">
+                <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
-                        <div class="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6">
-                            <i class="fa-solid fa-headphones-simple text-accent text-xl"></i>
+                        <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                            <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
                         </div>
                         <h3 class="text-xl font-semibold text-white mb-3" data-de="Vibe Coding" data-en="Vibe Coding">Vibe Coding</h3>
                         <p class="text-gray-400 text-sm mb-6 leading-relaxed" data-de="Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre." data-en="Coding in the ultimate flow state. Focusing on clean solutions in a relaxed atmosphere.">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300" data-de="Flow State" data-en="Flow State">Flow State</span>
-                        <span class="px-3 py-1 bg-white/5 border border-white/5 rounded-md text-xs font-medium text-gray-300" data-de="Creative" data-en="Creative">Creative</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300" data-de="Flow State" data-en="Flow State">Flow State</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300" data-de="Creative" data-en="Creative">Creative</span>
                     </div>
                 </div>
             </div>
@@ -153,7 +150,7 @@
             <div class="grid md:grid-cols-3 gap-8">
                 
                 <!-- Plan 1 -->
-                <div class="glow-card p-8 rounded-2xl flex flex-col">
+                <div class="clean-card p-8 rounded-2xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Basic PC-Tuning" data-en="Basic PC Tuning">Basic PC-Tuning</h3>
                     <p class="text-4xl font-bold text-white mb-6">15€</p>
                     <ul class="text-gray-400 text-sm space-y-3 mb-8 flex-grow">
@@ -165,7 +162,7 @@
                 </div>
 
                 <!-- Plan 2 (Bestseller) -->
-                <div class="glow-card p-8 rounded-2xl border-accent/40 relative flex flex-col transform md:-translate-y-2 shadow-[0_0_30px_rgba(56,189,248,0.08)]">
+                <div class="clean-card p-8 rounded-2xl border-accent/50 relative flex flex-col transform md:-translate-y-2">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-black text-xs font-bold px-4 py-1 rounded-full" data-de="Bestseller" data-en="Bestseller">Bestseller</div>
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Pro Tuning (0 Delay)" data-en="Pro Tuning (0 Delay)">Pro Tuning (0 Delay)</h3>
                     <p class="text-4xl font-bold text-white mb-6">35€</p>
@@ -179,7 +176,7 @@
                 </div>
 
                 <!-- Plan 3 (Website Build) -->
-                <div class="glow-card p-8 rounded-2xl flex flex-col">
+                <div class="clean-card p-8 rounded-2xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Website Build" data-en="Website Build">Website Build</h3>
                     <p class="text-4xl font-bold text-white mb-6">25€</p>
                     <ul class="text-gray-400 text-sm space-y-3 mb-8 flex-grow">
@@ -198,7 +195,7 @@
         <section class="mb-32">
             <h2 class="text-3xl font-bold text-center text-white mb-12" data-de="Was Kunden sagen" data-en="Client Reviews">Was Kunden sagen</h2>
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="glow-card p-8 rounded-2xl">
+                <div class="clean-card p-8 rounded-2xl">
                     <div class="flex text-accent text-sm mb-4">
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
@@ -210,7 +207,7 @@
                     <p class="text-xs font-semibold text-white">Leon K.</p>
                     <p class="text-xs text-gray-500" data-de="Pro Tuning Kunde" data-en="Pro Tuning Client">Pro Tuning Kunde</p>
                 </div>
-                <div class="glow-card p-8 rounded-2xl">
+                <div class="clean-card p-8 rounded-2xl">
                     <div class="flex text-accent text-sm mb-4">
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
@@ -226,7 +223,7 @@
         </section>
 
         <!-- Kontaktformular -->
-        <section id="contact" class="max-w-2xl mx-auto glow-card p-8 rounded-2xl mb-20">
+        <section id="contact" class="max-w-2xl mx-auto clean-card p-8 rounded-2xl mb-20">
             <h2 class="text-2xl font-bold text-white mb-6 text-center" data-de="Kontakt aufnehmen" data-en="Get in Touch">Kontakt aufnehmen</h2>
             <form action="#" method="POST" class="space-y-5">
                 <div>
@@ -250,16 +247,15 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-10 text-center border-t border-white/5 space-y-4">
-        <!-- Social Media Icons -->
-        <div class="flex justify-center space-x-6 text-gray-400 text-lg">
-            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="hover:text-white transition" title="X (Twitter)">
-                <i class="fa-brands fa-x-twitter"></i>
+    <footer class="py-12 text-center border-t border-white/5 space-y-6">
+        <!-- Social Media Links -->
+        <div class="flex justify-center items-center space-x-8 text-sm">
+            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
+                <i class="fa-brands fa-x-twitter text-accent text-base"></i> Twitter / X
             </a>
-            <a href="#" title="Discord: dri.c" class="hover:text-white transition cursor-default">
-                <i class="fa-brands fa-discord"></i>
-                <span class="text-xs ml-1 text-gray-500">dri.c</span>
-            </a>
+            <span class="text-gray-400 flex items-center gap-2">
+                <i class="fa-brands fa-discord text-accent text-base"></i> Discord: dri.c
+            </span>
         </div>
         <div class="flex justify-center space-x-6 text-xs text-gray-500">
             <p>&copy; 2026 Valentino.</p>
@@ -269,7 +265,7 @@
 
     <!-- Impressum Modal -->
     <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
-        <div class="glow-card p-8 rounded-2xl max-w-md w-full relative">
+        <div class="clean-card bg-[#09090b] p-8 rounded-2xl max-w-md w-full relative">
             <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
