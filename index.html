@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentino | Val3ntino Portfolio & Services</title>
+    <title>Valentino | Val3ntino Store</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome für Icons -->
@@ -74,7 +74,7 @@
                     fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
                     colors: {
                         bgDark: '#030305',
-                        cardDark: '#0a0a0f',
+                        cardDark: '#0d0d14',
                         accent: '#38bdf8',
                         accentPurple: '#818cf8'
                     }
@@ -107,20 +107,19 @@
         }
 
         .clean-card {
-            background: rgba(13, 13, 20, 0.7);
+            background: rgba(13, 13, 20, 0.85);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .clean-card:hover {
-            border-color: rgba(56, 189, 248, 0.35);
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.12);
-            background: rgba(18, 18, 28, 0.85);
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.15);
         }
         
         .bestseller-card {
-            background: linear-gradient(145deg, rgba(19, 19, 32, 0.9) 0%, rgba(11, 11, 20, 0.9) 100%);
+            background: linear-gradient(145deg, rgba(19, 19, 32, 0.95) 0%, rgba(11, 11, 20, 0.95) 100%);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(56, 189, 248, 0.5);
             box-shadow: 0 0 40px -10px rgba(56, 189, 248, 0.15);
@@ -132,21 +131,31 @@
     <div class="hero-glow"></div>
 
     <!-- Navigation -->
-    <nav class="w-full py-5 px-8 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#030305]/80 backdrop-blur-2xl z-50">
+    <nav class="w-full py-5 px-8 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#030305]/85 backdrop-blur-2xl z-50">
         <a href="#" class="text-xl font-extrabold tracking-tight text-white hover:text-accent transition flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></span> Val3ntino<span class="text-accent">.</span>
         </a>
         
         <div class="hidden md:flex items-center space-x-8">
             <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Skills" data-en="Skills">Skills</a>
-            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
+            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
             <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Kontakt" data-en="Contact">Kontakt</a>
-            <button onclick="toggleImpressum()" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+            
+            <!-- Warenkorb Icon Button in Navbar -->
+            <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-white transition flex items-center justify-center">
+                <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
+                <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-accent text-black text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
+            </button>
+
             <button onclick="toggleLanguage()" id="langBtnDesktop" class="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-white transition">EN</button>
             <button onclick="toggleLogin()" class="text-sm font-semibold text-accent hover:text-white transition flex items-center gap-2 bg-accent/10 px-4.5 py-2 rounded-xl border border-accent/25 shadow-sm shadow-sky-500/10"><i class="fa-solid fa-user text-xs"></i> <span id="loginBtnText">Anmelden</span></button>
         </div>
 
         <div class="flex items-center space-x-3 md:hidden">
+            <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 border border-white/10 rounded-xl text-white">
+                <i class="fa-solid fa-cart-shopping text-accent"></i>
+                <span id="cartBadgeMobile" class="absolute -top-1 -right-1 bg-accent text-black text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+            </button>
             <button onclick="toggleLanguage()" id="langBtn" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-white transition">EN</button>
             <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-xl p-2">
                 <i class="fa-solid fa-bars"></i>
@@ -155,9 +164,9 @@
     </nav>
 
     <!-- Mobile Dropdown Menü -->
-    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[77px] bg-[#0a0a0f] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-xl">
+    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[77px] bg-[#0d0d14] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-xl">
         <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Skills" data-en="Skills">Skills</a>
-        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
+        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
         <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Kontakt" data-en="Contact">Kontakt</a>
         <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 hover:text-white text-base font-medium" data-de="Impressum" data-en="Imprint">Impressum</button>
         <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium flex items-center gap-2"><i class="fa-solid fa-user"></i> Anmelden</button>
@@ -232,28 +241,35 @@
             </div>
         </section>
 
-        <!-- Booking Sektion -->
+        <!-- Booking / Store Sektion mit Mengensteuerung -->
         <section id="booking" class="mb-32">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3" data-de="Mich buchen & Preise" data-en="Book Me & Pricing">Mich buchen & Preise</h2>
-                <p class="text-gray-400 text-sm font-light" data-de="Wähle dein gewünschtes Paket und zahle direkt via PayPal oder Krypto." data-en="Choose your preferred package and pay directly via PayPal or Crypto.">Wähle dein gewünschtes Paket und zahle direkt via PayPal oder Krypto.</p>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3" data-de="Store & Services" data-en="Store & Services">Store & Services</h2>
+                <p class="text-gray-400 text-sm font-light" data-de="Wähle deine Menge und lege Pakete in den Warenkorb." data-en="Select your quantity and add packages to your cart.">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 items-stretch">
                 <!-- Plan 1 -->
                 <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
                     <div>
-                        <h3 class="text-lg font-bold text-white mb-2" data-de="Basic PC-Tuning" data-en="Basic PC Tuning">Basic PC-Tuning</h3>
-                        <p class="text-4xl font-black text-white mb-6">15€</p>
-                        <ul class="text-gray-400 text-sm space-y-3.5 mb-8 font-light">
-                            <li data-de="Windows Basis-Optimierung" data-en="Windows Basic Optimization"><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
-                            <li data-de="Hintergrunddienste stoppen" data-en="Stop background services"><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
-                            <li data-de="Standard FPS Boost" data-en="Standard FPS Boost"><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
+                        <h3 class="text-lg font-bold text-white mb-2">Basic PC-Tuning</h3>
+                        <p class="text-4xl font-black text-white mb-6">€15.00</p>
+                        <ul class="text-gray-400 text-sm space-y-3.5 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
                         </ul>
                     </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/15" target="_blank" class="block w-full py-3.5 text-center bg-white/10 hover:bg-white/20 border border-white/15 rounded-2xl transition font-bold text-white text-xs" data-de="Mit PayPal zahlen" data-en="Pay with PayPal">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/25 rounded-2xl transition font-semibold text-accent text-xs" data-de="Mit Krypto zahlen" data-en="Pay with Crypto">Mit Krypto zahlen</button>
+                    <div class="space-y-4">
+                        <!-- Quantity Selector -->
+                        <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
+                            <button onclick="adjustQty('basic', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span id="qty-basic" class="font-bold text-white text-sm">1</span>
+                            <button onclick="adjustQty('basic', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                        <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
+                        </button>
                     </div>
                 </div>
 
@@ -261,36 +277,48 @@
                 <div class="bestseller-card p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-xs font-extrabold px-4.5 py-1.5 rounded-full shadow-lg" data-de="BELIEBT" data-en="BESTSELLER">BELIEBT</div>
                     <div>
-                        <h3 class="text-xl font-bold text-white mb-2 mt-2" data-de="Pro Tuning (0 Delay)" data-en="Pro Tuning (0 Delay)">Pro Tuning (0 Delay)</h3>
-                        <p class="text-4xl font-black text-white mb-6">35€</p>
-                        <ul class="text-gray-300 text-sm space-y-3.5 mb-8 font-light">
-                            <li data-de="Alles aus Basic" data-en="Everything in Basic"><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
-                            <li data-de="BIOS & Registry Edits" data-en="BIOS & Registry Edits"><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
-                            <li data-de="0 Input Delay Setup" data-en="0 Input Delay Setup"><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
-                            <li data-de="Max. Performance Garantie" data-en="Max. Performance Guarantee"><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
+                        <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning (0 Delay)</h3>
+                        <p class="text-4xl font-black text-white mb-6">€35.00</p>
+                        <ul class="text-gray-300 text-sm space-y-3.5 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
                         </ul>
                     </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/35" target="_blank" class="block w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg shadow-sky-500/30" data-de="Mit PayPal zahlen" data-en="Pay with PayPal">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-white/10 hover:bg-white/20 border border-white/25 rounded-2xl transition font-semibold text-white text-xs" data-de="Mit Krypto zahlen" data-en="Pay with Crypto">Mit Krypto zahlen</button>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
+                            <button onclick="adjustQty('pro', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span id="qty-pro" class="font-bold text-white text-sm">1</span>
+                            <button onclick="adjustQty('pro', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                        <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro')" class="w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg shadow-sky-500/30 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
+                        </button>
                     </div>
                 </div>
 
                 <!-- Plan 3 -->
                 <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
                     <div>
-                        <h3 class="text-lg font-bold text-white mb-2" data-de="Website Build" data-en="Website Build">Website Build</h3>
-                        <p class="text-4xl font-black text-white mb-6">25€</p>
-                        <ul class="text-gray-400 text-sm space-y-3.5 mb-8 font-light">
-                            <li data-de="Cleanes Portfolio Design" data-en="Clean Portfolio Design"><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
-                            <li data-de="Responsive (Handy & PC)" data-en="Responsive (Mobile & PC)"><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
-                            <li data-de="Kontaktformular & Setup" data-en="Contact Form & Setup"><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
-                            <li data-de="Hilfe bei GitHub Pages" data-en="GitHub Pages Support"><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
+                        <h3 class="text-lg font-bold text-white mb-2">Website Build</h3>
+                        <p class="text-4xl font-black text-white mb-6">€25.00</p>
+                        <ul class="text-gray-400 text-sm space-y-3.5 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
                         </ul>
                     </div>
-                    <div class="space-y-2.5">
-                        <a href="https://paypal.me/valentinolopez1e/25" target="_blank" class="block w-full py-3.5 text-center bg-white/10 hover:bg-white/10 border border-white/10 rounded-2xl transition font-semibold text-white text-xs" data-de="Mit PayPal zahlen" data-en="Pay with PayPal">Mit PayPal zahlen</a>
-                        <button onclick="toggleCryptoModal()" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/25 rounded-2xl transition font-semibold text-accent text-xs" data-de="Mit Krypto zahlen" data-en="Pay with Crypto">Mit Krypto zahlen</button>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
+                            <button onclick="adjustQty('web', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span id="qty-web" class="font-bold text-white text-sm">1</span>
+                            <button onclick="adjustQty('web', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                        <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
+                        </button>
                     </div>
                 </div>
             </div>
@@ -306,7 +334,6 @@
                     </div>
                     <p class="text-gray-300 text-sm italic mb-6 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
                     <p class="text-xs font-bold text-white">Leon K.</p>
-                    <p class="text-xs text-gray-500" data-de="Pro Tuning Kunde" data-en="Pro Tuning Client">Pro Tuning Kunde</p>
                 </div>
                 <div class="clean-card p-8 rounded-3xl">
                     <div class="flex text-accent text-xs mb-4 space-x-1">
@@ -314,7 +341,6 @@
                     </div>
                     <p class="text-gray-300 text-sm italic mb-6 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
                     <p class="text-xs font-bold text-white">Jonas M.</p>
-                    <p class="text-xs text-gray-500" data-de="Website Build Kunde" data-en="Website Build Client">Website Build Kunde</p>
                 </div>
             </div>
         </section>
@@ -322,52 +348,81 @@
         <!-- Kontaktformular -->
         <section id="contact" class="max-w-xl mx-auto clean-card p-8 md:p-10 rounded-3xl mb-20 shadow-2xl">
             <h2 class="text-2xl font-bold text-white mb-2 text-center" data-de="Kontakt aufnehmen" data-en="Get in Touch">Kontakt aufnehmen</h2>
-            <p class="text-xs text-gray-400 text-center mb-8 font-light" data-de="Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich." data-en="Send me your request directly – I will reply as soon as possible.">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
+            <p class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
             <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2" data-de="Dein Name" data-en="Your Name">Dein Name</label>
+                    <label class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
                     <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
+                    <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
                     <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2" data-de="Nachricht" data-en="Message">Nachricht</label>
+                    <label class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
                     <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
                 </div>
-                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-sm shadow-xl" data-de="Nachricht senden" data-en="Send Message">Nachricht senden</button>
+                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-sm shadow-xl">Nachricht senden</button>
             </form>
-            <div class="mt-6 text-center">
-                <p class="text-xs text-gray-500"><span data-de="Oder direkt per E-Mail:" data-en="Or directly via email:">Oder direkt per E-Mail:</span> <a href="mailto:L@valentinolopez.de" class="text-accent hover:underline">L@valentinolopez.de</a></p>
-            </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="py-12 text-center border-t border-white/5 space-y-4">
-        <div class="flex justify-center items-center space-x-8 text-sm">
-            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2 text-xs">
-                <i class="fa-brands fa-x-twitter text-accent"></i> Twitter / X
-            </a>
-            <span class="text-gray-400 flex items-center gap-2 text-xs">
-                <i class="fa-brands fa-discord text-accent"></i> Discord: dri.c
-            </span>
+    <!-- Shopping Cart Modal (Genau wie in deiner Vorlage) -->
+    <div id="cartModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-6 shadow-2xl">
+            <button onclick="toggleCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <h2 class="text-xl font-extrabold text-white">Shopping Cart</h2>
+
+            <!-- Artikel Liste im Warenkorb -->
+            <div id="cartItemsContainer" class="space-y-3 max-h-56 overflow-y-auto pr-1">
+                <p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>
+            </div>
+
+            <!-- Deine Bestellung / Subtotal -->
+            <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 space-y-3">
+                <p class="text-xs font-bold text-accent tracking-wider uppercase">Your Order</p>
+                <div class="flex justify-between items-center text-sm">
+                    <span class="text-gray-400">Subtotal</span>
+                    <span class="text-white font-bold text-base" id="cartSubtotalDisplay">€0.00</span>
+                </div>
+            </div>
+
+            <!-- Checkout / Kasse Buttons -->
+            <div class="space-y-3">
+                <button onclick="proceedToCheckout()" id="checkoutBtn" class="w-full py-4 text-center bg-accent text-black font-extrabold rounded-2xl hover:bg-sky-400 transition text-sm shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 opacity-50 cursor-not-allowed" disabled>
+                    Checkout <i class="fa-solid fa-cart-shopping text-xs"></i>
+                </button>
+            </div>
         </div>
-        <div class="flex justify-center space-x-6 text-xs text-gray-500">
-            <p>&copy; 2026 Valentino.</p>
-            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+    </div>
+
+    <!-- Zahlungs-Auswahl Modal (PayPal oder Krypto) -->
+    <div id="paymentModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-5 shadow-2xl">
+            <button onclick="togglePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <h2 class="text-xl font-bold text-white mb-1">Zahlung abschließen</h2>
+            <p class="text-xs text-gray-400 font-light">Wähle deine gewünschte Zahlungsmethode für die Bestellung:</p>
+            
+            <div class="space-y-3">
+                <a id="paypalPayLink" href="https://paypal.me/valentinolopez1e" target="_blank" onclick="clearCart()" class="block w-full py-3.5 text-center bg-sky-500 text-black font-bold rounded-2xl hover:bg-sky-400 transition text-xs shadow-lg">Mit PayPal bezahlen</a>
+                <button onclick="openCryptoFromPayment()" class="w-full py-3.5 text-center bg-white/10 hover:bg-white/20 border border-white/15 rounded-2xl transition font-semibold text-white text-xs">Mit Krypto zahlen</button>
+            </div>
         </div>
-    </footer>
+    </div>
 
     <!-- Krypto Modal -->
     <div id="cryptoModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-lg w-full relative border border-white/10 space-y-4 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-lg w-full relative border border-white/10 space-y-4 shadow-2xl">
             <button onclick="toggleCryptoModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <h2 class="text-xl font-bold text-white mb-1" data-de="Krypto Wallet-Adressen" data-en="Crypto Wallet Addresses">Krypto Wallet-Adressen</h2>
-            <p class="text-xs text-gray-400 font-light" data-de="Kopiere die gewünschte Adresse für die Überweisung:" data-en="Copy the desired address for the transfer:">Kopiere die gewünschte Adresse für die Überweisung:</p>
+            <h2 class="text-xl font-bold text-white mb-1">Krypto Wallet-Adressen</h2>
+            <p class="text-xs text-gray-400 font-light">Kopiere die gewünschte Adresse für die Überweisung:</p>
             
             <div class="space-y-3 text-xs">
                 <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center">
@@ -397,7 +452,7 @@
 
     <!-- Impressum Modal -->
     <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
             <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -412,9 +467,9 @@
         </div>
     </div>
 
-    <!-- Kundenportal Login & Register Modal -->
+    <!-- Kundenportal Login Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0a0a0f] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -444,12 +499,6 @@
                     <button onclick="loginWithGoogle()" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition text-xs font-semibold text-white flex items-center justify-center gap-2.5">
                         <i class="fa-brands fa-google text-accent"></i> <span data-de="Mit Google anmelden" data-en="Sign in with Google">Mit Google anmelden</span>
                     </button>
-                </div>
-
-                <div class="relative flex py-2 items-center mb-4">
-                    <div class="flex-grow border-t border-white/10"></div>
-                    <span class="flex-shrink mx-4 text-[10px] text-gray-500 uppercase tracking-wider" data-de="Oder per E-Mail" data-en="Or via Email">Oder per E-Mail</span>
-                    <div class="flex-grow border-t border-white/10"></div>
                 </div>
 
                 <form id="loginForm" onsubmit="handleLoginFirebase(event)" class="space-y-3.5">
@@ -483,9 +532,126 @@
         </div>
     </div>
 
-    <script>
-        let currentLang = 'de';
+    <!-- Footer -->
+    <footer class="py-12 text-center border-t border-white/5 space-y-4">
+        <div class="flex justify-center items-center space-x-8 text-sm">
+            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2 text-xs">
+                <i class="fa-brands fa-x-twitter text-accent"></i> Twitter / X
+            </a>
+            <span class="text-gray-400 flex items-center gap-2 text-xs">
+                <i class="fa-brands fa-discord text-accent"></i> Discord: dri.c
+            </span>
+        </div>
+        <div class="flex justify-center space-x-6 text-xs text-gray-500">
+            <p>&copy; 2026 Valentino.</p>
+            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+        </div>
+    </footer>
 
+    <!-- JavaScript für Warenkorb, Menge & Steuerung -->
+    <script>
+        // Mengen-Steuerung bei den Produkten
+        let quantities = { basic: 1, pro: 1, web: 1 };
+
+        function adjustQty(type, change) {
+            quantities[type] = Math.max(1, quantities[type] + change);
+            document.getElementById('qty-' + type).innerText = quantities[type];
+        }
+
+        // Warenkorb Logik
+        let cart = [];
+
+        function addItemToCart(name, price, type) {
+            let qty = quantities[type];
+            let existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ name, price, qty });
+            }
+            updateCartUI();
+            toggleCartModal();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const badgeMobile = document.getElementById('cartBadgeMobile');
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalDisplay = document.getElementById('cartSubtotalDisplay');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            let totalCount = 0;
+            let subtotal = 0;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>';
+                subtotalDisplay.innerText = '€0.00';
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                container.innerHTML = '';
+                cart.forEach((item, index) => {
+                    totalCount += item.qty;
+                    let itemTotal = item.price * item.qty;
+                    subtotal += itemTotal;
+
+                    container.innerHTML += `
+                        <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center text-xs">
+                            <div>
+                                <p class="font-bold text-white">${item.name}</p>
+                                <p class="text-gray-400 mt-0.5">Menge: ${item.qty}</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="text-accent font-bold">€${itemTotal.toFixed(2)}</span>
+                                <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-xmark"></i></button>
+                            </div>
+                        </div>
+                    `;
+                });
+                subtotalDisplay.innerText = '€' + subtotal.toFixed(2);
+                checkoutBtn.disabled = false;
+                checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                
+                // PayPal Link dynamisch mit Gesamtbetrag aktualisieren
+                document.getElementById('paypalPayLink').href = `https://paypal.me/valentinolopez1e/${subtotal.toFixed(2)}`;
+            }
+
+            badge.innerText = totalCount;
+            badgeMobile.innerText = totalCount;
+        }
+
+        function toggleCartModal() {
+            document.getElementById('cartModal').classList.toggle('active');
+        }
+
+        function proceedToCheckout() {
+            toggleCartModal();
+            togglePaymentModal();
+        }
+
+        function togglePaymentModal() {
+            document.getElementById('paymentModal').classList.toggle('active');
+        }
+
+        function openCryptoFromPayment() {
+            togglePaymentModal();
+            toggleCryptoModal();
+        }
+
+        function clearCart() {
+            cart = [];
+            updateCartUI();
+            togglePaymentModal();
+            alert('Viel Erfolg bei deiner Bestellung! Nach Abschluss der Zahlung wird dein Auftrag bearbeitet.');
+        }
+
+        // Allgemeine UI Funktionen
+        let currentLang = 'de';
         function toggleLanguage() {
             currentLang = currentLang === 'de' ? 'en' : 'de';
             const btnText = currentLang === 'de' ? 'EN' : 'DE';
@@ -556,55 +722,13 @@
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const pass = document.getElementById('loginPass').value;
-            const btn = document.getElementById('loginSubmitBtn');
-
-            btn.innerText = "Logge ein...";
-            btn.disabled = true;
-
             window.signInWithEmailAndPassword(window.firebaseAuth, email, pass)
-                .then(() => {
-                    alert('Erfolgreich eingeloggt!');
-                    btn.innerText = "Einloggen";
-                    btn.disabled = false;
-                    toggleLogin();
-                })
-                .catch((error) => {
-                    alert('Fehler: ' + error.message);
-                    btn.innerText = "Einloggen";
-                    btn.disabled = false;
-                });
-        }
-
-        function handleRegisterFirebase(e) {
-            e.preventDefault();
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPass').value;
-            const btn = document.getElementById('regSubmitBtn');
-
-            btn.innerText = "Erstelle Account...";
-            btn.disabled = true;
-
-            import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js").then(({ createUserWithEmailAndPassword }) => {
-                createUserWithEmailAndPassword(window.firebaseAuth, email, pass)
-                    .then(() => {
-                        alert('Account erfolgreich erstellt!');
-                        btn.innerText = "Registrieren";
-                        btn.disabled = false;
-                        toggleLogin();
-                    })
-                    .catch((error) => {
-                        alert('Fehler: ' + error.message);
-                        btn.innerText = "Registrieren";
-                        btn.disabled = false;
-                    });
-            });
+                .then(() => { alert('Erfolgreich eingeloggt!'); toggleLogin(); })
+                .catch((error) => { alert('Fehler: ' + error.message); });
         }
 
         function handleLogout() {
-            window.signOut(window.firebaseAuth).then(() => {
-                alert('Abgemeldet.');
-                toggleLogin();
-            });
+            window.signOut(window.firebaseAuth).then(() => { alert('Abgemeldet.'); toggleLogin(); });
         }
 
         function handleContact(e) {
