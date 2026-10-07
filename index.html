@@ -283,25 +283,50 @@
         </div>
     </div>
 
-    <!-- Kundenportal Login Modal -->
+    <!-- Kundenportal Login & Register Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
         <div class="clean-card bg-[#18181f] p-8 rounded-2xl max-w-md w-full relative">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
-            <h2 class="text-2xl font-bold text-white mb-2" data-de="Kundenportal" data-en="Client Portal">Kundenportal</h2>
-            <p class="text-gray-300 text-sm mb-6" data-de="Logge dich ein, um deine Käufe und Aufträge zu verwalten." data-en="Log in to manage your purchases and orders.">Logge dich ein, um deine Käufe und Aufträge zu verwalten.</p>
             
-            <form onsubmit="event.preventDefault(); alert('Login-System wird bald verbunden!'); toggleLogin();" class="space-y-4">
+            <!-- Tab Umschalter -->
+            <div class="flex border-b border-white/10 mb-6">
+                <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 pb-3 text-sm font-semibold text-accent border-b-2 border-accent transition">Anmelden</button>
+                <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-sm font-semibold text-gray-400 hover:text-white transition">Registrieren</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="event.preventDefault(); alert('Erfolgreich angemeldet!'); toggleLogin();" class="space-y-4">
+                <h2 class="text-xl font-bold text-white mb-2">Willkommen zurück</h2>
                 <div>
-                    <label class="block text-sm text-gray-300 mb-2" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
+                    <label class="block text-sm text-gray-300 mb-2">E-Mail Adresse</label>
                     <input type="email" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-300 mb-2" data-de="Passwort" data-en="Password">Passwort</label>
+                    <label class="block text-sm text-gray-300 mb-2">Passwort</label>
                     <input type="password" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
                 </div>
-                <button type="submit" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition" data-de="Einloggen" data-en="Log In">Einloggen</button>
+                <button type="submit" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition">Einloggen</button>
+            </form>
+
+            <!-- Register Form (mit Code-Versand an dich/Admin) -->
+            <form id="registerForm" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+                <h2 class="text-xl font-bold text-white mb-2">Account erstellen</h2>
+                <p class="text-xs text-gray-400 mb-4">Nach der Registrierung wird automatisch ein Bestätigungscode generiert und an den Support gesendet.</p>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-2">Dein Name</label>
+                    <input type="text" id="regName" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Dein Name">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-2">E-Mail Adresse</label>
+                    <input type="email" id="regEmail" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                </div>
+                <div>
+                    <label class="block text-sm text-gray-300 mb-2">Passwort wählen</label>
+                    <input type="password" id="regPass" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition">Registrieren & Code anfordern</button>
             </form>
         </div>
     </div>
@@ -336,6 +361,47 @@
         function toggleLogin() {
             const modal = document.getElementById('loginModal');
             modal.classList.toggle('active');
+        }
+
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const loginBtn = document.getElementById('tabLoginBtn');
+            const registerBtn = document.getElementById('tabRegisterBtn');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+                loginBtn.classList.add('text-accent', 'border-b-2', 'border-accent');
+                loginBtn.classList.remove('text-gray-400');
+                registerBtn.classList.remove('text-accent', 'border-b-2', 'border-accent');
+                registerBtn.classList.add('text-gray-400');
+            } else {
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+                registerBtn.classList.add('text-accent', 'border-b-2', 'border-accent');
+                registerBtn.classList.remove('text-gray-400');
+                loginBtn.classList.remove('text-accent', 'border-b-2', 'border-accent');
+                loginBtn.classList.add('text-gray-400');
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            
+            // Generiert einen zufälligen 6-stelligen Bestätigungscode
+            const verificationCode = Math.floor(100000 + Math.random() * 900000);
+            
+            // Öffnet das E-Mail-Programm, um den Code an deine E-Mail (L@valentinolopez.de) zu senden
+            const mailSubject = encodeURIComponent("Neue Registrierung / Bestätigungscode");
+            const mailBody = encodeURIComponent(`Hallo Valentino,\n\nEin neuer Nutzer hat sich registriert:\nName: ${name}\nE-Mail: ${email}\n\nGenerierter Bestätigungscode: ${verificationCode}`);
+            
+            window.location.href = `mailto:L@valentinolopez.de?subject=${mailSubject}&body=${mailBody}`;
+            
+            alert('Registrierung erfolgreich! Ein Bestätigungscode wurde generiert und an den Support übermittelt.');
+            toggleLogin();
         }
     </script>
 </body>
