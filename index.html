@@ -17,16 +17,15 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs -->
+    <!-- Firebase SDKs & Globale Auth Funktionen -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
             getAuth, 
+            createUserWithEmailAndPassword,
             signInWithEmailAndPassword, 
             signOut, 
-            onAuthStateChanged,
-            GoogleAuthProvider,
-            signInWithPopup 
+            onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -42,25 +41,65 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
+        // Global verfügbar machen
         window.firebaseAuth = auth;
-        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
-        window.signOut = signOut;
 
-        window.loginWithGoogle = function() {
-            const provider = new GoogleAuthProvider();
-            signInWithPopup(auth, provider)
-                .then((result) => {
-                    alert('Erfolgreich angemeldet als ' + result.user.email);
+        window.handleLoginFirebase = function(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPass').value;
+            const btn = document.getElementById('loginSubmitBtn');
+            btn.innerText = "Logge ein...";
+            btn.disabled = true;
+
+            signInWithEmailAndPassword(auth, email, pass)
+                .then(() => {
+                    alert('Erfolgreich eingeloggt!');
+                    btn.innerText = "Einloggen";
+                    btn.disabled = false;
                     toggleLogin();
                 })
                 .catch((error) => {
-                    alert('Fehler beim Login: ' + error.message);
+                    alert('Fehler: ' + error.message);
+                    btn.innerText = "Einloggen";
+                    btn.disabled = false;
                 });
+        };
+
+        window.handleRegisterFirebase = function(e) {
+            e.preventDefault();
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPass').value;
+            const btn = document.getElementById('regSubmitBtn');
+            btn.innerText = "Erstelle Account...";
+            btn.disabled = true;
+
+            createUserWithEmailAndPassword(auth, email, pass)
+                .then(() => {
+                    alert('Account erfolgreich erstellt! Du bist nun eingeloggt.');
+                    btn.innerText = "Registrieren";
+                    btn.disabled = false;
+                    toggleLogin();
+                })
+                .catch((error) => {
+                    alert('Fehler: ' + error.message);
+                    btn.innerText = "Registrieren";
+                    btn.disabled = false;
+                });
+        };
+
+        window.handleLogout = function() {
+            signOut(auth).then(() => {
+                alert('Abgemeldet.');
+                toggleLogin();
+            });
         };
 
         onAuthStateChanged(auth, (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
             const loginBtnTextMobile = document.getElementById('loginBtnTextMobile');
+            const adminTab = document.getElementById('adminPanelTabBtn');
+            
             if (user) {
                 if(loginBtnText) loginBtnText.innerText = "Dashboard";
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Dashboard";
@@ -69,14 +108,18 @@
                     checkoutEmailInput.value = user.email;
                 }
                 
-                // Prüfen ob Admin (z.B. deine E-Mail L@valentinolopez.de)
-                if (user.email === 'L@valentinolopez.de' || user.email.includes('admin')) {
-                    document.getElementById('adminPanelTabBtn').classList.remove('hidden');
+                // Admin Erkennung (L@valentinolopez.de)
+                if (adminTab) {
+                    if (user.email === 'L@valentinolopez.de' || user.email.includes('admin')) {
+                        adminTab.classList.remove('hidden');
+                    } else {
+                        adminTab.classList.add('hidden');
+                    }
                 }
             } else {
                 if(loginBtnText) loginBtnText.innerText = "Anmelden";
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Anmelden";
-                document.getElementById('adminPanelTabBtn').classList.add('hidden');
+                if(adminTab) adminTab.classList.add('hidden');
             }
         });
     </script>
@@ -152,9 +195,9 @@
         </a>
         
         <div class="hidden md:flex items-center space-x-8">
-            <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Skills" data-en="Skills">Skills</a>
-            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
-            <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Kontakt" data-en="Contact">Kontakt</a>
+            <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition">Skills</a>
+            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition">Preise & Store</a>
+            <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition">Kontakt</a>
             
             <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-white transition flex items-center justify-center">
                 <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
@@ -170,7 +213,7 @@
                 <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
                 <span id="cartBadgeMobile" class="absolute -top-1 -right-1 bg-accent text-black text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">0</span>
             </button>
-            <button onclick="toggleLanguage()" id="langBtn" class="px-2.5 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-white">EN</button>
+            <button onclick="toggleLanguage()" id="langBtn" class="px-2.5 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold text-white">EN</button>
             <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg p-2">
                 <i class="fa-solid fa-bars" id="menuIcon"></i>
             </button>
@@ -374,7 +417,7 @@
             </div>
             <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 text-xs flex flex-col">
                 <div class="bg-white/5 p-3 rounded-2xl max-w-[85%] self-start text-gray-300">
-                    Hi! Ich bin der KI-Assistent von Valentino. Wie kann ich dir heute bei PC-Tuning oder Web-Dev helfen? (Schreibe "Mensch", um mit Valentino direkt verbunden zu werden).
+                    Hi! Ich bin der KI-Assistent von Valentino. Wie kann ich dir heute helfen? (Schreibe "Mensch", um direkt mit Valentino verbunden zu werden).
                 </div>
             </div>
             <div class="p-3 bg-[#12121c] border-t border-white/10 flex gap-2">
@@ -386,7 +429,7 @@
 
     <!-- Shopping Cart Modal -->
     <div id="cartModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-5 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-6 shadow-2xl">
             <button onclick="toggleCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -432,7 +475,7 @@
 
     <!-- Zahlungs-Auswahl & E-Mail Abfrage Modal -->
     <div id="paymentModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-5 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-4 shadow-2xl">
             <button onclick="togglePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -503,7 +546,7 @@
         </div>
     </div>
 
-    <!-- Kundenportal Login & Admin Panel Modal -->
+    <!-- Kundenportal Login Modal & Admin Panel -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
@@ -519,11 +562,11 @@
                     <p class="text-xs text-gray-400 mt-1" id="userEmailDisplay"></p>
                 </div>
                 
-                <!-- Admin Panel Sektion (Nur sichtbar für dich wenn eingeloggt) -->
+                <!-- Admin Panel -->
                 <div id="adminPanelTabBtn" class="hidden bg-[#030305] p-4 rounded-2xl border border-accent/30 text-left space-y-3">
-                    <p class="text-[10px] font-bold text-accent tracking-wider uppercase"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Panel (Coupons erstellen)</p>
+                    <p class="text-[10px] font-bold text-accent tracking-wider uppercase"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Panel (Coupons)</p>
                     <div class="space-y-2">
-                        <input type="text" id="newCouponCode" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase" placeholder="COUPONCODE (z.B. SALE20)">
+                        <input type="text" id="newCouponCode" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase" placeholder="CODE (z.B. SALE20)">
                         <input type="number" id="newCouponDiscount" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="Rabatt in € (z.B. 5)">
                         <button onclick="createCoupon()" class="w-full py-2 bg-accent text-black font-bold rounded-xl text-xs hover:bg-sky-400 transition">Coupon erstellen</button>
                     </div>
@@ -542,12 +585,6 @@
                     <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-xs font-semibold text-gray-400 hover:text-white transition">Registrieren</button>
                 </div>
 
-                <div class="space-y-2.5 mb-6">
-                    <button onclick="loginWithGoogle()" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition text-xs font-semibold text-white flex items-center justify-center gap-2.5">
-                        <i class="fa-brands fa-google text-accent"></i> Mit Google anmelden
-                    </button>
-                </div>
-
                 <form id="loginForm" onsubmit="handleLoginFirebase(event)" class="space-y-3.5">
                     <div>
                         <label class="block text-xs font-medium text-gray-400 mb-1.5">E-Mail Adresse</label>
@@ -561,10 +598,6 @@
                 </form>
 
                 <form id="registerForm" onsubmit="handleRegisterFirebase(event)" class="space-y-3.5 hidden">
-                    <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Dein Name</label>
-                        <input type="text" id="regName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="Dein Name">
-                    </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-400 mb-1.5">E-Mail Adresse</label>
                         <input type="email" id="regEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
@@ -595,13 +628,9 @@
         </div>
     </footer>
 
-    <!-- JavaScript für Store, Coupons, KI-Chat & Admins -->
+    <!-- JavaScript Steuerung -->
     <script>
-        // Gutscheine Datenbank (Start-Gutschein)
-        let coupons = {
-            "VAL3NTINO": 5.00
-        };
-
+        let coupons = { "VAL3NTINO": 5.00 };
         let appliedDiscount = 0;
         let appliedCouponName = "";
 
@@ -611,7 +640,7 @@
             if (coupons[code]) {
                 appliedDiscount = coupons[code];
                 appliedCouponName = code;
-                msg.innerText = "Gutschein erfolgreich eingelöst (-€" + appliedDiscount.toFixed(2) + ")";
+                msg.innerText = "Gutschein eingelöst (-€" + appliedDiscount.toFixed(2) + ")";
                 msg.className = "text-[10px] text-emerald-400";
                 updateCartUI();
             } else {
@@ -620,13 +649,12 @@
             }
         }
 
-        // Admin Coupon erstellen
         function createCoupon() {
             let code = document.getElementById('newCouponCode').value.trim().toUpperCase();
             let discount = parseFloat(document.getElementById('newCouponDiscount').value);
             if(code && discount > 0) {
                 coupons[code] = discount;
-                alert('Coupon ' + code + ' über €' + discount + ' erfolgreich erstellt!');
+                alert('Coupon ' + code + ' (€' + discount + ') erstellt!');
                 document.getElementById('newCouponCode').value = '';
                 document.getElementById('newCouponDiscount').value = '';
             } else {
@@ -634,16 +662,13 @@
             }
         }
 
-        // KI-Chat Logik mit Human Handoff
         function toggleChat() {
             const chatBox = document.getElementById('chatBox');
             chatBox.classList.toggle('hidden');
             chatBox.classList.toggle('flex');
         }
 
-        function handleChatKey(e) {
-            if (e.key === 'Enter') sendChatMessage();
-        }
+        function handleChatKey(e) { if (e.key === 'Enter') sendChatMessage(); }
 
         function sendChatMessage() {
             const input = document.getElementById('chatInput');
@@ -651,65 +676,46 @@
             let text = input.value.trim();
             if (!text) return;
 
-            // Nutzer Nachricht hinzufügen
             container.innerHTML += `<div class="bg-accent/10 border border-accent/20 p-3 rounded-2xl max-w-[85%] self-end text-white">${text}</div>`;
             input.value = '';
             container.scrollTop = container.scrollHeight;
 
-            // Prüfen ob Nutzer mit einem Menschen sprechen möchte
             let lower = text.toLowerCase();
             if (lower.includes('mensch') || lower.includes('valentino') || lower.includes('support') || lower.includes('human')) {
                 setTimeout(() => {
-                    container.innerHTML += `<div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-2xl max-w-[85%] self-start text-emerald-400">Verstanden! Ich habe deine Anfrage direkt an Valentino weitergeleitet. Er meldet sich in Kürze bei dir oder schreib ihm auf Discord (dri.c).</div>`;
+                    container.innerHTML += `<div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-2xl max-w-[85%] self-start text-emerald-400">Verstanden! Anfrage an Valentino weitergeleitet (Discord: dri.c).</div>`;
                     container.scrollTop = container.scrollHeight;
-
-                    // Benachrichtigung per EmailJS an dich senden
                     emailjs.send("service_qcbzj8m", "template_rreumik", {
                         to_email: "L@valentinolopez.de",
                         to_name: "Valentino",
-                        message: `Ein Kunde im Live-Chat möchte mit einem Menschen sprechen! Nachricht des Kunden: "${text}"`,
-                        code: "Live-Chat Support-Anfrage"
+                        message: `Live-Chat Support-Anfrage: "${text}"`,
+                        code: "Live-Chat Support"
                     });
                 }, 800);
             } else {
-                // KI Antwort simulieren
                 setTimeout(() => {
-                    let aiReply = "Ich helfe dir gerne weiter! Für unser PC-Tuning nutzen wir optimierte BIOS- und Registry-Tweaks für 0 Input Delay. Möchtest du ein Paket buchen oder hast du eine technische Frage?";
-                    if (lower.includes('preis') || lower.includes('kosten')) {
-                        aiReply = "Unsere Preise starten ab 15€ für Basic Tuning, 35€ für Pro Tuning und 25€ für Website Builds!";
-                    }
-                    container.innerHTML += `<div class="bg-white/5 p-3 rounded-2xl max-w-[85%] self-start text-gray-300">${aiReply}</div>`;
+                    container.innerHTML += `<div class="bg-white/5 p-3 rounded-2xl max-w-[85%] self-start text-gray-300">Wie kann ich dir helfen? Schreibe "Mensch", um mit Valentino zu sprechen.</div>`;
                     container.scrollTop = container.scrollHeight;
                 }, 1000);
             }
         }
 
-        // Warenkorb & Menge
         let quantities = { basic: 1, pro: 1, web: 1 };
-
         function adjustQty(type, change) {
             quantities[type] = Math.max(1, quantities[type] + change);
             document.getElementById('qty-' + type).innerText = quantities[type];
         }
 
         let cart = [];
-
         function addItemToCart(name, price, type) {
             let qty = quantities[type];
             let existing = cart.find(item => item.name === name);
-            if (existing) {
-                existing.qty += qty;
-            } else {
-                cart.push({ name, price, qty });
-            }
+            if (existing) { existing.qty += qty; } else { cart.push({ name, price, qty }); }
             updateCartUI();
             toggleCartModal();
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
+        function removeFromCart(index) { cart.splice(index, 1); updateCartUI(); }
 
         function updateCartUI() {
             const badge = document.getElementById('cartBadge');
@@ -727,7 +733,7 @@
                 container.innerHTML = '<p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>';
                 subtotalOnly.innerText = '€0.00';
                 subtotalDisplay.innerText = '€0.00';
-                discountRow.classList.add('hidden');
+                discountRow.style.display = 'none';
                 checkoutBtn.disabled = true;
                 checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
             } else {
@@ -736,7 +742,6 @@
                     totalCount += item.qty;
                     let itemTotal = item.price * item.qty;
                     subtotal += itemTotal;
-
                     container.innerHTML += `
                         <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center text-xs">
                             <div>
@@ -755,7 +760,6 @@
                 let finalTotal = Math.max(0, subtotal - appliedDiscount);
 
                 if (appliedDiscount > 0) {
-                    discountRow.classList.remove('flex');
                     discountRow.style.display = 'flex';
                     document.getElementById('discountName').innerText = appliedCouponName;
                     document.getElementById('discountAmount').innerText = '-€' + appliedDiscount.toFixed(2);
@@ -766,53 +770,38 @@
                 subtotalDisplay.innerText = '€' + finalTotal.toFixed(2);
                 checkoutBtn.disabled = false;
                 checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                
                 document.getElementById('paypalPayLink').href = `https://paypal.me/valentinolopez1e/${finalTotal.toFixed(2)}`;
             }
-
             badge.innerText = totalCount;
             badgeMobile.innerText = totalCount;
         }
 
-        function toggleCartModal() {
-            document.getElementById('cartModal').classList.toggle('active');
-        }
-
-        function proceedToCheckout() {
-            toggleCartModal();
-            togglePaymentModal();
-        }
-
-        function togglePaymentModal() {
-            document.getElementById('paymentModal').classList.toggle('active');
-        }
+        function toggleCartModal() { document.getElementById('cartModal').classList.toggle('active'); }
+        function proceedToCheckout() { toggleCartModal(); togglePaymentModal(); }
+        function togglePaymentModal() { document.getElementById('paymentModal').classList.toggle('active'); }
 
         function completePurchase(method) {
             const emailInput = document.getElementById('checkoutEmail').value;
             if (!emailInput || !emailInput.includes('@')) {
-                alert('Bitte gib eine gültige E-Mail-Adresse für die Bestellbestätigung ein!');
+                alert('Bitte gib eine gültige E-Mail-Adresse ein!');
                 return;
             }
-
             let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
             let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
 
             emailjs.send("service_qcbzj8m", "template_rreumik", {
                 to_email: emailInput,
                 to_name: emailInput.split('@')[0],
-                message: `Vielen Dank für deine Bestellung (${orderSummary}). Gesamtsumme: ${totalAmount}. Zahlungsmethode: ${method}. Wir bearbeiten deinen Auftrag umgehend!`,
+                message: `Bestellbestätigung: ${orderSummary}. Summe: ${totalAmount}. Zahlung: ${method}.`,
                 code: "Bestellbestätigung"
             });
 
-            alert('Bestellung erfolgreich! Eine Bestätigung wurde an ' + emailInput + ' gesendet.');
+            alert('Bestellung erfolgreich! Bestätigung gesendet an ' + emailInput);
             cart = [];
             appliedDiscount = 0;
             updateCartUI();
             togglePaymentModal();
-
-            if(method === 'Krypto') {
-                toggleCryptoModal();
-            }
+            if(method === 'Krypto') toggleCryptoModal();
         }
 
         let currentLang = 'de';
@@ -821,9 +810,6 @@
             const btnText = currentLang === 'de' ? 'EN' : 'DE';
             document.getElementById('langBtn').innerText = btnText;
             document.getElementById('langBtnDesktop').innerText = btnText;
-            document.querySelectorAll('[data-de]').forEach(el => {
-                el.innerText = el.getAttribute(`data-${currentLang}`);
-            });
         }
 
         function toggleMobileMenu() {
@@ -835,23 +821,13 @@
             icon.classList.toggle('fa-xmark');
         }
 
-        function toggleImpressum() {
-            document.getElementById('impressumModal').classList.toggle('active');
-        }
-
-        function toggleCryptoModal() {
-            document.getElementById('cryptoModal').classList.toggle('active');
-        }
-
-        function copyWallet(text) {
-            navigator.clipboard.writeText(text);
-            alert('Wallet-Adresse kopiert!');
-        }
+        function toggleImpressum() { document.getElementById('impressumModal').classList.toggle('active'); }
+        function toggleCryptoModal() { document.getElementById('cryptoModal').classList.toggle('active'); }
+        function copyWallet(text) { navigator.clipboard.writeText(text); alert('Wallet-Adresse kopiert!'); }
 
         function toggleLogin() {
             const modal = document.getElementById('loginModal');
             modal.classList.toggle('active');
-            
             if(window.firebaseAuth && window.firebaseAuth.currentUser) {
                 document.getElementById('userDashboardView').classList.remove('hidden');
                 document.getElementById('authFormsContainer').classList.add('hidden');
@@ -885,37 +861,12 @@
             }
         }
 
-        function handleLoginFirebase(e) {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPass').value;
-            window.signInWithEmailAndPassword(window.firebaseAuth, email, pass)
-                .then(() => { alert('Erfolgreich eingeloggt!'); toggleLogin(); })
-                .catch((error) => { alert('Fehler: ' + error.message); });
-        }
-
-        function handleRegisterFirebase(e) {
-            e.preventDefault();
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPass').value;
-            import("https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js").then(({ createUserWithEmailAndPassword }) => {
-                createUserWithEmailAndPassword(window.firebaseAuth, email, pass)
-                    .then(() => { alert('Account erfolgreich erstellt!'); toggleLogin(); })
-                    .catch((error) => { alert('Fehler: ' + error.message); });
-            });
-        }
-
-        function handleLogout() {
-            window.signOut(window.firebaseAuth).then(() => { alert('Abgemeldet.'); toggleLogin(); });
-        }
-
         function handleContact(e) {
             e.preventDefault();
             const name = document.getElementById('contactName').value;
             const email = document.getElementById('contactEmail').value;
             const message = document.getElementById('contactMessage').value;
             const btn = document.getElementById('contactSubmitBtn');
-
             btn.innerText = "Sende Nachricht...";
             btn.disabled = true;
 
