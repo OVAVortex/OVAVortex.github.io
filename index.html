@@ -17,7 +17,7 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs -->
+    <!-- Firebase SDKs & Direkte Auth Logik -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -66,24 +66,43 @@
 
         window.handleLoginFirebase = function(e) {
             e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPass').value;
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            const msgBox = document.getElementById('authErrorMsg');
+
             signInWithEmailAndPassword(auth, email, pass)
-                .then(() => { alert('Erfolgreich eingeloggt!'); toggleLogin(); })
-                .catch((error) => { alert('Fehler: ' + error.message); });
+                .then(() => {
+                    msgBox.innerText = "";
+                    alert('Erfolgreich eingeloggt!');
+                    toggleLogin();
+                })
+                .catch((error) => {
+                    msgBox.innerText = "Fehler: " + error.message;
+                });
         };
 
         window.handleRegisterFirebase = function(e) {
             e.preventDefault();
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPass').value;
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPass').value.trim();
+            const msgBox = document.getElementById('authErrorMsg');
+
             createUserWithEmailAndPassword(auth, email, pass)
-                .then(() => { alert('Account erfolgreich erstellt!'); toggleLogin(); })
-                .catch((error) => { alert('Fehler: ' + error.message); });
+                .then(() => {
+                    msgBox.innerText = "";
+                    alert('Account erfolgreich erstellt & eingeloggt!');
+                    toggleLogin();
+                })
+                .catch((error) => {
+                    msgBox.innerText = "Fehler: " + error.message;
+                });
         };
 
         window.handleLogout = function() {
-            signOut(auth).then(() => { alert('Abgemeldet.'); toggleLogin(); });
+            signOut(auth).then(() => {
+                alert('Erfolgreich abgemeldet.');
+                toggleLogin();
+            });
         };
 
         onAuthStateChanged(auth, (user) => {
@@ -410,7 +429,7 @@
         </section>
     </main>
 
-    <!-- Footer mit Socials (Discord, Twitter) & Version v1.44 -->
+    <!-- Footer mit Socials & Version v1.45 -->
     <footer class="py-12 px-8 border-t border-white/5 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-gray-500">
         <div class="flex items-center space-x-6">
             <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
@@ -422,7 +441,7 @@
         </div>
         <div class="flex items-center gap-6">
             <p>&copy; 2026 Valentino. All rights reserved.</p>
-            <p class="font-mono text-accent/70">v1.44</p>
+            <p class="font-mono text-accent/70">v1.45</p>
         </div>
     </footer>
 
@@ -519,7 +538,7 @@
 
     <!-- Kundenportal Login Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-4 shadow-2xl">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -561,14 +580,20 @@
 
                 <div class="relative flex py-1 items-center">
                     <div class="flex-grow border-t border-white/10"></div>
-                    <span class="flex-shrink mx-3 text-[10px] text-gray-500 uppercase">Oder per E-Mail</span>
+                    <span class="flex-shrink mx-3 text-[10px] text-gray-500 uppercase">Oder mit E-Mail (Loggt ein oder registriert neu)</span>
                     <div class="flex-grow border-t border-white/10"></div>
                 </div>
 
+                <!-- Fehleranzeige für Login -->
+                <p id="authErrorMsg" class="text-[11px] text-red-400 text-center font-medium"></p>
+
                 <form onsubmit="handleLoginFirebase(event)" class="space-y-3">
                     <input type="email" id="loginEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs" required placeholder="E-Mail">
-                    <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs" required placeholder="Passwort">
-                    <button type="submit" class="w-full py-3 bg-accent text-black font-bold rounded-2xl text-xs">Einloggen / Registrieren</button>
+                    <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs" required placeholder="Passwort (min. 6 Zeichen)">
+                    <div class="grid grid-cols-2 gap-2 pt-1">
+                        <button type="submit" class="w-full py-3 bg-accent text-black font-bold rounded-2xl text-xs hover:bg-sky-400 transition">Einloggen</button>
+                        <button type="button" onclick="handleRegisterFirebase(event)" class="w-full py-3 bg-white/10 text-white font-bold rounded-2xl text-xs hover:bg-white/20 transition">Registrieren</button>
+                    </div>
                 </form>
             </div>
         </div>
