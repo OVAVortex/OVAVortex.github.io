@@ -391,29 +391,39 @@
         <!-- Kontaktformular -->
         <section id="contact" class="max-w-xl mx-auto clean-card p-6 sm:p-8 md:p-10 rounded-3xl mb-16 shadow-2xl">
             <h2 class="text-xl md:text-2xl font-bold text-white mb-2 text-center">Kontakt aufnehmen</h2>
-            <p class="text-xs text-gray-400 text-center mb-6 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
-            <form id="contactForm" onsubmit="handleContact(event)" class="space-y-3.5">
+            <p class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
+            <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Dein Name</label>
-                    <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs md:text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
+                    <label class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
+                    <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">E-Mail Adresse</label>
-                    <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs md:text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                    <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
+                    <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Nachricht</label>
-                    <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs md:text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
+                    <label class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
+                    <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
                 </div>
-                <button type="submit" id="contactSubmitBtn" class="w-full py-3.5 md:py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-xs md:text-sm shadow-xl">Nachricht senden</button>
+                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-sm shadow-xl">Nachricht senden</button>
             </form>
         </section>
     </main>
 
-    <!-- Footer mit Version v1.43 -->
-    <footer class="py-12 px-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center text-xs text-gray-500 max-w-5xl mx-auto">
-        <p>&copy; 2026 Valentino. All rights reserved.</p>
-        <p class="font-mono text-accent/70 mt-2 sm:mt-0">v1.43</p>
+    <!-- Footer mit Socials (Discord, Twitter) & Version v1.44 -->
+    <footer class="py-12 px-8 border-t border-white/5 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-gray-500">
+        <div class="flex items-center space-x-6">
+            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
+                <i class="fa-brands fa-x-twitter text-accent"></i> Twitter / X
+            </a>
+            <span class="text-gray-400 flex items-center gap-2">
+                <i class="fa-brands fa-discord text-accent"></i> Discord: dri.c
+            </span>
+        </div>
+        <div class="flex items-center gap-6">
+            <p>&copy; 2026 Valentino. All rights reserved.</p>
+            <p class="font-mono text-accent/70">v1.44</p>
+        </div>
     </footer>
 
     <!-- KI-Live-Chat Widget -->
