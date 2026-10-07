@@ -129,7 +129,6 @@
                     checkoutEmailInput.value = user.email || '';
                 }
                 
-                // Admin Erkennung
                 if (adminPanel) {
                     if (user.email === 'L@valentinolopez.de' || user.email?.includes('admin')) {
                         adminPanel.classList.remove('hidden');
@@ -223,7 +222,7 @@
     <div class="hero-glow"></div>
     <div id="toast">Benachrichtigung</div>
 
-    <!-- Announcement Bar wie bei Nivex -->
+    <!-- Announcement Bar -->
     <div class="w-full bg-[#0a0a10] border-b border-white/5 py-2 px-4 text-center text-[11px] font-medium text-gray-400">
         <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse mr-1.5"></span> ⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE
     </div>
@@ -279,10 +278,63 @@
         <p class="text-xl md:text-3xl text-gray-400 font-light mb-6 md:mb-8">
             aka <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-sky-300 to-accentPurple font-bold">Val3ntino</span>
         </p>
+        <p class="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light px-2">
+            Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts.
+        </p>
     </header>
 
     <main class="max-w-5xl mx-auto px-5 md:px-8 pb-24 md:pb-32">
-        <!-- Store Sektion -->
+        <!-- Skills Sektion -->
+        <section id="skills" class="mb-24 md:mb-32">
+            <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-code text-accent text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">Coding & Dev</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">HTML & CSS</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">C++</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Python</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Luau</span>
+                    </div>
+                </div>
+
+                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-microchip text-accent text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">PC Tuning</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">0 Input Delay</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Windows Tweaks</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">BIOS Edits</span>
+                    </div>
+                </div>
+
+                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">Vibe Coding</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Flow State</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Creative</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Booking / Store Sektion -->
         <section id="booking" class="mb-24 md:mb-32">
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">Store & Services</h2>
@@ -297,37 +349,42 @@
                         <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€15.00</p>
                         <ul class="text-gray-400 text-xs md:text-sm space-y-3 mb-6 font-light">
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
                         </ul>
                     </div>
                     <div class="space-y-3.5">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
-                            <button onclick="adjustQty('basic', -1)" class="w-9 h-9 rounded-xl bg-white/5 text-white flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <button onclick="adjustQty('basic', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-basic" class="font-bold text-white text-sm">1</span>
-                            <button onclick="adjustQty('basic', 1)" class="w-9 h-9 rounded-xl bg-white/5 text-white flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                            <button onclick="adjustQty('basic', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="w-full py-3.5 text-center bg-accent/10 border border-accent/30 rounded-2xl font-bold text-accent text-xs flex items-center justify-center gap-2">
+                        <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
                         </button>
                     </div>
                 </div>
 
-                <!-- Plan 2 -->
+                <!-- Plan 2 (Bestseller) -->
                 <div class="nivex-card p-6 md:p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3 border-accent/50">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-[10px] md:text-xs font-extrabold px-4 py-1 rounded-full">BELIEBT</div>
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-[10px] md:text-xs font-extrabold px-4 py-1 rounded-full shadow-lg">BELIEBT</div>
                     <div>
-                        <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning</h3>
+                        <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning (0 Delay)</h3>
                         <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€35.00</p>
                         <ul class="text-gray-300 text-xs md:text-sm space-y-3 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
                         </ul>
                     </div>
                     <div class="space-y-3.5">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
-                            <button onclick="adjustQty('pro', -1)" class="w-9 h-9 rounded-xl bg-white/5 text-white flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <button onclick="adjustQty('pro', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-pro" class="font-bold text-white text-sm">1</span>
-                            <button onclick="adjustQty('pro', 1)" class="w-9 h-9 rounded-xl bg-white/5 text-white flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                            <button onclick="adjustQty('pro', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Pro Tuning', 35.00, 'pro')" class="w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl font-bold text-xs flex items-center justify-center gap-2">
+                        <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro')" class="w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg shadow-sky-500/30 flex items-center justify-center gap-2">
                             <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
                         </button>
                     </div>
@@ -339,25 +396,70 @@
                         <h3 class="text-lg font-bold text-white mb-2">Website Build</h3>
                         <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€25.00</p>
                         <ul class="text-gray-400 text-xs md:text-sm space-y-3 mb-6 font-light">
-                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive Design</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
                         </ul>
                     </div>
                     <div class="space-y-3.5">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
-                            <button onclick="adjustQty('web', -1)" class="w-9 h-9 rounded-xl bg-white/5 text-white flex items-center justify-center"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <button onclick="adjustQty('web', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-web" class="font-bold text-white text-sm">1</span>
-                            <button onclick="adjustQty('web', 1)" class="w-9 h-9 rounded-xl bg-white/5 text-white flex items-center justify-center"><i class="fa-solid fa-plus text-xs"></i></button>
+                            <button onclick="adjustQty('web', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="w-full py-3.5 text-center bg-accent/10 border border-accent/30 rounded-2xl font-bold text-accent text-xs flex items-center justify-center gap-2">
+                        <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
                         </button>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Testimonials -->
+        <section class="mb-24 md:mb-32">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-white mb-10">Was Kunden sagen</h2>
+            <div class="grid md:grid-cols-2 gap-5 md:gap-6">
+                <div class="nivex-card p-6 md:p-8 rounded-3xl">
+                    <div class="flex text-accent text-xs mb-3 space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
+                    <p class="text-xs font-bold text-white">Leon K.</p>
+                </div>
+                <div class="nivex-card p-6 md:p-8 rounded-3xl">
+                    <div class="flex text-accent text-xs mb-3 space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
+                    <p class="text-xs font-bold text-white">Jonas M.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontaktformular -->
+        <section id="contact" class="max-w-xl mx-auto nivex-card p-6 sm:p-8 md:p-10 rounded-3xl mb-16 shadow-2xl">
+            <h2 class="text-xl md:text-2xl font-bold text-white mb-2 text-center">Kontakt aufnehmen</h2>
+            <p class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
+            <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
+                    <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
+                    <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                </div>
+                <div>
+                    <label class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
+                    <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
+                </div>
+                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-sm shadow-xl">Nachricht senden</button>
+            </form>
+        </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer mit Socials, Impressum & Version v1.53 -->
     <footer class="py-12 px-8 border-t border-white/5 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-gray-500">
         <div class="flex items-center space-x-6">
             <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
@@ -370,7 +472,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.52</p>
+            <p class="font-mono text-accent/70">v1.53</p>
         </div>
     </footer>
 
@@ -424,7 +526,7 @@
                 </div>
             </div>
 
-            <!-- AGB Checkboxen wie bei Nivex -->
+            <!-- AGB Checkbox -->
             <div class="space-y-2 text-xs text-gray-400">
                 <label class="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" id="agbCheck" class="rounded accent-sky-400"> I have read and agree to Terms of Service.
@@ -516,7 +618,7 @@
                     <button onclick="sendSupportTicket()" class="w-full py-2.5 bg-accent text-black font-bold rounded-xl text-xs hover:bg-sky-400 transition">Send ticket →</button>
                 </div>
 
-                <!-- ADMIN PANEL (Nur für L@valentinolopez.de) -->
+                <!-- ADMIN PANEL -->
                 <div id="adminPanelSection" class="hidden bg-[#030305] p-4 rounded-2xl border border-accent/40 space-y-3 shadow-xl">
                     <p class="text-xs font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Panel (Coupons)</p>
                     <input type="text" id="newCouponCode" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase" placeholder="CODE">
@@ -737,7 +839,6 @@
 
                 subtotalDisplay.innerText = '€' + finalTotal.toFixed(2);
                 
-                // AGB Checkbox Logik
                 if(agbCheck.checked) {
                     checkoutBtn.disabled = false;
                     checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
@@ -823,6 +924,34 @@
                 document.getElementById('userDashboardView').classList.add('hidden');
                 document.getElementById('authFormsContainer').classList.remove('hidden');
             }
+        }
+
+        function handleContact(e) {
+            e.preventDefault();
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+            const btn = document.getElementById('contactSubmitBtn');
+            btn.innerText = "Sende Nachricht...";
+            btn.disabled = true;
+
+            emailjs.send("service_qcbzj8m", "template_rreumik", {
+                to_email: "L@valentinolopez.de",
+                to_name: "Valentino",
+                from_name: name,
+                from_email: email,
+                message: message,
+                code: "Kontaktanfrage"
+            }).then(() => {
+                showToast('Nachricht erfolgreich gesendet!');
+                document.getElementById('contactForm').reset();
+                btn.innerText = "Nachricht senden";
+                btn.disabled = false;
+            }).catch(() => {
+                showToast('Fehler beim Senden.');
+                btn.innerText = "Nachricht senden";
+                btn.disabled = false;
+            });
         }
     </script>
 </body>
