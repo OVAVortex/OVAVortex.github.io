@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" class="scroll-smooth">
+<html lang="de" class="scroll-smooth" id="htmlRoot">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,7 +56,7 @@
                 signInWithPopup(auth, provider)
                     .then(() => {
                         document.getElementById('authErrorMsg').innerText = "";
-                        showToast("Erfolgreich angemeldet!");
+                        showToast(currentLang === 'de' ? "Erfolgreich angemeldet!" : "Successfully logged in!");
                         toggleLogin();
                     })
                     .catch((error) => {
@@ -71,15 +71,15 @@
             const msgBox = document.getElementById('authErrorMsg');
             
             if(!email || !pass) {
-                msgBox.innerText = "Bitte E-Mail und Passwort eingeben!";
+                msgBox.innerText = currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
                 return;
             }
-            msgBox.innerText = "Logge ein...";
+            msgBox.innerText = currentLang === 'de' ? "Logge ein..." : "Logging in...";
 
             signInWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast("Erfolgreich eingeloggt!");
+                    showToast(currentLang === 'de' ? "Erfolgreich eingeloggt!" : "Successfully logged in!");
                     toggleLogin();
                 })
                 .catch((error) => {
@@ -93,15 +93,15 @@
             const msgBox = document.getElementById('authErrorMsg');
             
             if(!email || !pass) {
-                msgBox.innerText = "Bitte E-Mail und Passwort eingeben!";
+                msgBox.innerText = currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
                 return;
             }
-            msgBox.innerText = "Erstelle Account...";
+            msgBox.innerText = currentLang === 'de' ? "Erstelle Account..." : "Creating account...";
 
             createUserWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast("Account erfolgreich erstellt & eingeloggt!");
+                    showToast(currentLang === 'de' ? "Account erfolgreich erstellt!" : "Account successfully created!");
                     toggleLogin();
                 })
                 .catch((error) => {
@@ -111,7 +111,7 @@
 
         window.handleLogout = function() {
             signOut(auth).then(() => {
-                showToast("Erfolgreich abgemeldet.");
+                showToast(currentLang === 'de' ? "Erfolgreich abgemeldet." : "Successfully logged out.");
                 toggleLogin();
             });
         };
@@ -122,8 +122,8 @@
             const adminPanel = document.getElementById('adminPanelSection');
             
             if (user) {
-                if(loginBtnText) loginBtnText.innerText = "Dashboard";
-                if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Dashboard";
+                if(loginBtnText) loginBtnText.innerText = translations[currentLang].dashboard;
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = translations[currentLang].dashboard;
                 const checkoutEmailInput = document.getElementById('checkoutEmail');
                 if (checkoutEmailInput && !checkoutEmailInput.value) {
                     checkoutEmailInput.value = user.email || '';
@@ -140,8 +140,8 @@
 
                 loadDashboardStats(user.email);
             } else {
-                if(loginBtnText) loginBtnText.innerText = "Anmelden";
-                if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Anmelden";
+                if(loginBtnText) loginBtnText.innerText = translations[currentLang].login;
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = translations[currentLang].login;
                 if(adminPanel) adminPanel.classList.add('hidden');
             }
         });
@@ -224,7 +224,7 @@
 
     <!-- Announcement Bar -->
     <div class="w-full bg-[#0a0a10] border-b border-white/5 py-2 px-4 text-center text-[11px] font-medium text-gray-400">
-        <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse mr-1.5"></span> ⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE
+        <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse mr-1.5"></span> <span id="announcementText">⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE</span>
     </div>
 
     <!-- Navigation -->
@@ -234,10 +234,15 @@
         </a>
         
         <div class="hidden md:flex items-center space-x-8">
-            <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition">Skills</a>
-            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition">Preise & Store</a>
-            <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition">Kontakt</a>
+            <a href="#skills" id="navSkills" class="text-sm font-medium text-gray-400 hover:text-white transition">Skills</a>
+            <a href="#booking" id="navStore" class="text-sm font-medium text-gray-400 hover:text-white transition">Preise & Store</a>
+            <a href="#contact" id="navContact" class="text-sm font-medium text-gray-400 hover:text-white transition">Kontakt</a>
             
+            <!-- Sprachschalter -->
+            <button onclick="toggleLanguage()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-bold text-accent transition flex items-center gap-1.5">
+                <i class="fa-solid fa-globe"></i> <span id="langLabel">EN / DE</span>
+            </button>
+
             <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-white transition flex items-center justify-center">
                 <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
                 <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-accent text-black text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
@@ -247,6 +252,9 @@
         </div>
 
         <div class="flex items-center space-x-2.5 md:hidden">
+            <button onclick="toggleLanguage()" class="px-2.5 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-accent">
+                <span id="langLabelMobile">DE</span>
+            </button>
             <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 border border-white/10 rounded-xl text-white">
                 <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
                 <span id="cartBadgeMobile" class="absolute -top-1 -right-1 bg-accent text-black text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">0</span>
@@ -259,26 +267,26 @@
 
     <!-- Mobile Dropdown Menü -->
     <div id="mobileMenu" class="hidden fixed inset-x-0 top-[102px] bg-[#0d0d14]/95 border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-2xl">
-        <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Skills</a>
-        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Preise & Store</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Kontakt</a>
+        <a href="#skills" onclick="toggleMobileMenu()" id="mobileNavSkills" class="text-gray-300 hover:text-white text-base font-medium py-1">Skills</a>
+        <a href="#booking" onclick="toggleMobileMenu()" id="mobileNavStore" class="text-gray-300 hover:text-white text-base font-medium py-1">Preise & Store</a>
+        <a href="#contact" onclick="toggleMobileMenu()" id="mobileNavContact" class="text-gray-300 hover:text-white text-base font-medium py-1">Kontakt</a>
         <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium py-2 flex items-center gap-2"><i class="fa-solid fa-user"></i> <span id="loginBtnTextMobile">Anmelden</span></button>
     </div>
 
     <!-- Hero Header -->
     <header class="max-w-4xl mx-auto px-5 md:px-8 pt-48 md:pt-60 pb-20 md:pb-28 text-center relative">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-6 md:mb-8 shadow-xl shadow-emerald-500/5 backdrop-blur-md">
+        <div class="inline-flex items-center gap-2 px-4 py.1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-6 md:mb-8 shadow-xl shadow-emerald-500/5 backdrop-blur-md">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Verfügbar für Aufträge & High-End Projekte</span>
+            <span id="heroBadge">Verfügbar für Aufträge & High-End Projekte</span>
         </div>
 
-        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4 md:mb-6">
+        <h1 id="heroTitle" class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4 md:mb-6">
             Hi, ich bin Valentino.
         </h1>
         <p class="text-xl md:text-3xl text-gray-400 font-light mb-6 md:mb-8">
             aka <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-sky-300 to-accentPurple font-bold">Val3ntino</span>
         </p>
-        <p class="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light px-2">
+        <p id="heroDesc" class="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light px-2">
             Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts.
         </p>
     </header>
@@ -292,8 +300,8 @@
                         <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-code text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">Coding & Dev</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
+                        <h3 id="skill1Title" class="text-lg font-bold text-white mb-2.5 md:mb-3">Coding & Dev</h3>
+                        <p id="skill1Desc" class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">HTML & CSS</span>
@@ -308,8 +316,8 @@
                         <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-microchip text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">PC Tuning</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
+                        <h3 id="skill2Title" class="text-lg font-bold text-white mb-2.5 md:mb-3">PC Tuning</h3>
+                        <p id="skill2Desc" class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">0 Input Delay</span>
@@ -323,8 +331,8 @@
                         <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">Vibe Coding</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
+                        <h3 id="skill3Title" class="text-lg font-bold text-white mb-2.5 md:mb-3">Vibe Coding</h3>
+                        <p id="skill3Desc" class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Flow State</span>
@@ -337,8 +345,8 @@
         <!-- Booking / Store Sektion -->
         <section id="booking" class="mb-24 md:mb-32">
             <div class="text-center mb-12 md:mb-16">
-                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">Store & Services</h2>
-                <p class="text-gray-400 text-xs md:text-sm font-light px-4">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
+                <h2 id="storeTitle" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">Store & Services</h2>
+                <p id="storeDesc" class="text-gray-400 text-xs md:text-sm font-light px-4">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6 md:gap-8 items-stretch">
@@ -359,7 +367,7 @@
                             <span id="qty-basic" class="font-bold text-white text-sm">1</span>
                             <button onclick="adjustQty('basic', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
+                        <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="addToCartText w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
                         </button>
                     </div>
@@ -367,7 +375,7 @@
 
                 <!-- Plan 2 (Bestseller) -->
                 <div class="nivex-card p-6 md:p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3 border-accent/50">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-[10px] md:text-xs font-extrabold px-4 py-1 rounded-full shadow-lg">BELIEBT</div>
+                    <div id="popularBadge" class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-[10px] md:text-xs font-extrabold px-4 py-1 rounded-full shadow-lg">BELIEBT</div>
                     <div>
                         <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning (0 Delay)</h3>
                         <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€35.00</p>
@@ -384,7 +392,7 @@
                             <span id="qty-pro" class="font-bold text-white text-sm">1</span>
                             <button onclick="adjustQty('pro', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro')" class="w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg shadow-sky-500/30 flex items-center justify-center gap-2">
+                        <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro')" class="addToCartText w-full py-4 text-center bg-gradient-to-r from-accent to-accentPurple text-black rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg shadow-sky-500/30 flex items-center justify-center gap-2">
                             <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
                         </button>
                     </div>
@@ -408,7 +416,7 @@
                             <span id="qty-web" class="font-bold text-white text-sm">1</span>
                             <button onclick="adjustQty('web', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
+                        <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="addToCartText w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
                             <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
                         </button>
                     </div>
@@ -418,20 +426,20 @@
 
         <!-- Testimonials -->
         <section class="mb-24 md:mb-32">
-            <h2 class="text-2xl sm:text-3xl font-bold text-center text-white mb-10">Was Kunden sagen</h2>
+            <h2 id="testimonialsTitle" class="text-2xl sm:text-3xl font-bold text-center text-white mb-10">Was Kunden sagen</h2>
             <div class="grid md:grid-cols-2 gap-5 md:gap-6">
                 <div class="nivex-card p-6 md:p-8 rounded-3xl">
                     <div class="flex text-accent text-xs mb-3 space-x-1">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
-                    <p class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
+                    <p id="testi1" class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
                     <p class="text-xs font-bold text-white">Leon K.</p>
                 </div>
                 <div class="nivex-card p-6 md:p-8 rounded-3xl">
                     <div class="flex text-accent text-xs mb-3 space-x-1">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
-                    <p class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
+                    <p id="testi2" class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
                     <p class="text-xs font-bold text-white">Jonas M.</p>
                 </div>
             </div>
@@ -439,19 +447,19 @@
 
         <!-- Kontaktformular -->
         <section id="contact" class="max-w-xl mx-auto nivex-card p-6 sm:p-8 md:p-10 rounded-3xl mb-16 shadow-2xl">
-            <h2 class="text-xl md:text-2xl font-bold text-white mb-2 text-center">Kontakt aufnehmen</h2>
-            <p class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
+            <h2 id="contactTitle" class="text-xl md:text-2xl font-bold text-white mb-2 text-center">Kontakt aufnehmen</h2>
+            <p id="contactDesc" class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
             <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
+                    <label id="labelName" class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
                     <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
+                    <label id="labelEmail" class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
                     <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
+                    <label id="labelMessage" class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
                     <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
                 </div>
                 <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-sm shadow-xl">Nachricht senden</button>
@@ -470,9 +478,9 @@
             </span>
         </div>
         <div class="flex items-center gap-6">
-            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
+            <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.54</p>
+            <p class="font-mono text-accent/70">v1.55</p>
         </div>
     </footer>
 
@@ -496,24 +504,23 @@
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-6 shadow-2xl">
             <button onclick="toggleCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             
-            <h2 class="text-xl font-extrabold text-white">Shopping Cart</h2>
+            <h2 id="cartTitle" class="text-xl font-extrabold text-white">Shopping Cart</h2>
             <div id="cartItemsContainer" class="space-y-3 max-h-52 overflow-y-auto pr-1">
-                <p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>
+                <p id="cartEmptyText" class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>
             </div>
 
-            <!-- Gutschein -->
             <div class="space-y-1.5">
-                <label class="block text-[11px] font-medium text-gray-400">Gutscheincode</label>
+                <label id="labelCoupon" class="block text-[11px] font-medium text-gray-400">Gutscheincode</label>
                 <div class="flex gap-2">
                     <input type="text" id="couponInput" class="flex-1 bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase" placeholder="Z.B. VAL3NTINO">
-                    <button onclick="applyCoupon()" class="px-4 py-2 bg-white/10 text-white rounded-xl text-xs font-semibold">Einlösen</button>
+                    <button onclick="applyCoupon()" id="btnApplyCoupon" class="px-4 py-2 bg-white/10 text-white rounded-xl text-xs font-semibold">Einlösen</button>
                 </div>
                 <p id="couponMsg" class="text-[10px] text-emerald-400"></p>
             </div>
 
             <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-2">
                 <div class="flex justify-between items-center text-xs text-gray-400">
-                    <span>Subtotal</span>
+                    <span id="labelSubtotal">Subtotal</span>
                     <span id="cartSubtotalOnly">€0.00</span>
                 </div>
                 <div id="discountRow" class="hidden justify-between items-center text-xs text-emerald-400">
@@ -521,14 +528,14 @@
                     <span id="discountAmount">-€0.00</span>
                 </div>
                 <div class="flex justify-between items-center text-sm pt-1 border-t border-white/5">
-                    <span class="text-white font-bold">Gesamtsumme</span>
+                    <span id="labelTotal" class="text-white font-bold">Gesamtsumme</span>
                     <span class="text-accent font-bold text-base" id="cartSubtotalDisplay">€0.00</span>
                 </div>
             </div>
 
             <div class="space-y-2 text-xs text-gray-400">
                 <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="agbCheck" class="rounded accent-sky-400"> I have read and agree to Terms of Service.
+                    <input type="checkbox" id="agbCheck" class="rounded accent-sky-400"> <span id="agbText">I have read and agree to Terms of Service.</span>
                 </label>
             </div>
 
@@ -536,26 +543,24 @@
         </div>
     </div>
 
-    <!-- Nivex Style Checkout & Krypto Auswahl Modal -->
+    <!-- Zahlungs-Modal -->
     <div id="paymentModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-lg w-full relative space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="togglePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             
-            <!-- Order Summary Header wie im Screenshot -->
             <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center text-xs">
-                <span class="text-gray-400 font-bold uppercase tracking-wider text-[10px]">Order Summary</span>
+                <span id="labelOrderSummary" class="text-gray-400 font-bold uppercase tracking-wider text-[10px]">Order Summary</span>
                 <span class="text-accent font-black text-sm" id="checkoutSummaryTotal">€0.00</span>
             </div>
 
             <div>
-                <p class="text-xs font-bold text-white mb-2">Step 1 of 2 • Order Information</p>
-                <label class="block text-[11px] font-medium text-gray-400 mb-1">E-mail Address *</label>
+                <p id="step1Title" class="text-xs font-bold text-white mb-2">Step 1 of 2 • Order Information</p>
+                <label id="labelEmailCheckout" class="block text-[11px] font-medium text-gray-400 mb-1">E-mail Address *</label>
                 <input type="email" id="checkoutEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs" required placeholder="deine@email.de">
             </div>
 
-            <!-- Zahlungsmethoden Auswahl (Nivex Style) -->
             <div class="space-y-3 pt-2">
-                <p class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Payment Method</p>
+                <p id="labelPaymentMethod" class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Payment Method</p>
                 
                 <a id="paypalPayLink" href="#" target="_blank" onclick="completePurchase('PayPal')" class="block w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -573,7 +578,6 @@
                     <span class="text-[10px] text-accent" id="cryptoToggleText">Expand ▼</span>
                 </div>
 
-                <!-- Krypto Auswahlliste (Wie im Screenshot) -->
                 <div id="cryptoListContainer" class="hidden space-y-2 bg-[#030305] p-3 rounded-2xl border border-white/10 text-xs">
                     <button onclick="completePurchase('Litecoin (LTC)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Litecoin (LTC)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
                     <button onclick="completePurchase('Solana (SOL)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Solana (SOL)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
@@ -584,29 +588,27 @@
                 </div>
             </div>
 
-            <!-- Support Box bei Bestellung -->
             <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 mt-4 flex items-center justify-between text-xs">
                 <div>
-                    <p class="text-white font-bold">Need help with this order?</p>
-                    <p class="text-gray-400 text-[10px]">Open a support ticket and we'll get back to you.</p>
+                    <p id="needHelpTitle" class="text-white font-bold">Need help with this order?</p>
+                    <p id="needHelpDesc" class="text-gray-400 text-[10px]">Open a support ticket and we'll get back to you.</p>
                 </div>
-                <button onclick="toggleLogin(); togglePaymentModal();" class="text-accent font-bold hover:underline">Support →</button>
+                <button onclick="toggleLogin(); togglePaymentModal();" id="needHelpBtn" class="text-accent font-bold hover:underline">Support →</button>
             </div>
         </div>
     </div>
 
-    <!-- Nivex Style Kunden-Dashboard & Admin Panel -->
+    <!-- Login Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-lg w-full relative space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             
-            <!-- Dashboard Ansicht -->
             <div id="userDashboardView" class="hidden space-y-5">
                 <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 flex justify-between items-center">
                     <div class="flex items-center gap-3">
                         <div id="userAvatarLetter" class="w-12 h-12 rounded-2xl bg-accent text-black font-black text-lg flex items-center justify-center shadow-lg">L</div>
                         <div>
-                            <p class="text-sm font-bold text-white">Welcome back</p>
+                            <p id="welcomeBackText" class="text-sm font-bold text-white">Welcome back</p>
                             <p class="text-xs text-gray-400" id="userEmailDisplay">lucalopezwin@gmail.com</p>
                         </div>
                     </div>
@@ -615,32 +617,32 @@
                 <div class="grid grid-cols-2 gap-3">
                     <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10">
                         <p class="text-lg font-black text-white" id="statOrdersCount">0</p>
-                        <p class="text-[11px] text-gray-400 font-light">Completed orders</p>
+                        <p id="statOrdersLabel" class="text-[11px] text-gray-400 font-light">Completed orders</p>
                     </div>
                     <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10">
                         <p class="text-lg font-black text-accent" id="statTotalSpent">€0.00</p>
-                        <p class="text-[11px] text-gray-400 font-light">Total spent</p>
+                        <p id="statSpentLabel" class="text-[11px] text-gray-400 font-light">Total spent</p>
                     </div>
                 </div>
 
                 <div class="space-y-1 text-xs">
-                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Common Account</p>
-                    <button onclick="switchDashboardTab('orders')" class="w-full text-left px-4 py-2.5 rounded-xl bg-white/5 text-white font-medium flex items-center gap-2"><i class="fa-solid fa-box text-accent"></i> Orders & Invoices</button>
-                    <button onclick="switchDashboardTab('tickets')" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 font-medium flex items-center gap-2"><i class="fa-solid fa-headset text-accent"></i> My Tickets</button>
+                    <p id="commonAccountTitle" class="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-1">Common Account</p>
+                    <button onclick="switchDashboardTab('orders')" id="btnTabOrders" class="w-full text-left px-4 py-2.5 rounded-xl bg-white/5 text-white font-medium flex items-center gap-2"><i class="fa-solid fa-box text-accent"></i> Orders & Invoices</button>
+                    <button onclick="switchDashboardTab('tickets')" id="btnTabTickets" class="w-full text-left px-4 py-2.5 rounded-xl hover:bg-white/5 text-gray-300 font-medium flex items-center gap-2"><i class="fa-solid fa-headset text-accent"></i> My Tickets</button>
                 </div>
 
                 <div id="dashOrdersSection" class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-3">
-                    <p class="text-xs font-bold text-white">Latest Orders</p>
+                    <p id="latestOrdersTitle" class="text-xs font-bold text-white">Latest Orders</p>
                     <div id="userOrdersContainer" class="space-y-2 max-h-40 overflow-y-auto pr-1">
-                        <p class="text-xs text-gray-400 text-center py-2">Noch keine Bestellungen.</p>
+                        <p id="noOrdersText" class="text-xs text-gray-400 text-center py-2">Noch keine Bestellungen.</p>
                     </div>
                 </div>
 
                 <div id="dashTicketsSection" class="hidden bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-3">
-                    <p class="text-xs font-bold text-white">Open a Support Ticket</p>
+                    <p id="openTicketTitle" class="text-xs font-bold text-white">Open a Support Ticket</p>
                     <input type="text" id="ticketSubject" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="Subject...">
                     <textarea rows="2" id="ticketMsg" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="Describe the problem..."></textarea>
-                    <button onclick="sendSupportTicket()" class="w-full py-2.5 bg-accent text-black font-bold rounded-xl text-xs hover:bg-sky-400 transition">Send ticket →</button>
+                    <button onclick="sendSupportTicket()" id="btnSendTicket" class="w-full py-2.5 bg-accent text-black font-bold rounded-xl text-xs hover:bg-sky-400 transition">Send ticket →</button>
                 </div>
 
                 <!-- ADMIN PANEL -->
@@ -652,28 +654,28 @@
                     <div id="adminCouponsList" class="space-y-1 max-h-20 overflow-y-auto text-xs text-gray-300"></div>
                 </div>
 
-                <button onclick="handleLogout()" class="w-full py-3 bg-red-500/10 text-red-400 rounded-2xl text-xs font-semibold hover:bg-red-500/20 transition flex items-center justify-center gap-2"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                <button onclick="handleLogout()" id="btnLogout" class="w-full py-3 bg-red-500/10 text-red-400 rounded-2xl text-xs font-semibold hover:bg-red-500/20 transition flex items-center justify-center gap-2"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
             </div>
 
             <!-- Login / Reg Form -->
             <div id="authFormsContainer" class="space-y-4">
-                <h3 class="text-base font-bold text-white text-center">Anmelden / Registrieren</h3>
+                <h3 id="authTitle" class="text-base font-bold text-white text-center">Anmelden / Registrieren</h3>
                 
                 <div class="space-y-2">
-                    <button onclick="loginWithProvider('google')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
+                    <button onclick="loginWithProvider('google')" id="btnLoginGoogle" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
                         <i class="fa-brands fa-google text-accent"></i> Mit Google anmelden
                     </button>
-                    <button onclick="loginWithProvider('github')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
+                    <button onclick="loginWithProvider('github')" id="btnLoginGithub" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
                         <i class="fa-brands fa-github"></i> Mit GitHub anmelden
                     </button>
-                    <button onclick="loginWithProvider('apple')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
+                    <button onclick="loginWithProvider('apple')" id="btnLoginApple" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
                         <i class="fa-brands fa-apple"></i> Mit Apple anmelden
                     </button>
                 </div>
 
                 <div class="relative flex py-1 items-center">
                     <div class="flex-grow border-t border-white/10"></div>
-                    <span class="flex-shrink mx-3 text-[10px] text-gray-500 uppercase">Oder mit E-Mail</span>
+                    <span id="authOrEmail" class="flex-shrink mx-3 text-[10px] text-gray-500 uppercase">Oder mit E-Mail</span>
                     <div class="flex-grow border-t border-white/10"></div>
                 </div>
 
@@ -683,16 +685,226 @@
                     <input type="email" id="loginEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs" required placeholder="E-Mail Adresse">
                     <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs" required placeholder="Passwort (min. 6 Zeichen)">
                     <div class="grid grid-cols-2 gap-2 pt-1">
-                        <button type="button" onclick="executeLogin()" class="w-full py-3 bg-accent text-black font-bold rounded-2xl text-xs hover:bg-sky-400 transition">Einloggen</button>
-                        <button type="button" onclick="executeRegister()" class="w-full py-3 bg-white/10 text-white font-bold rounded-2xl text-xs hover:bg-white/20 transition">Registrieren</button>
+                        <button type="button" onclick="executeLogin()" id="btnLoginEmail" class="w-full py-3 bg-accent text-black font-bold rounded-2xl text-xs hover:bg-sky-400 transition">Einloggen</button>
+                        <button type="button" onclick="executeRegister()" id="btnRegisterEmail" class="w-full py-3 bg-white/10 text-white font-bold rounded-2xl text-xs hover:bg-white/20 transition">Registrieren</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Steuerung -->
+    <!-- JavaScript Steuerung & Mehrsprachigkeit -->
     <script>
+        let currentLang = 'de';
+
+        const translations = {
+            de: {
+                announcement: "⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE",
+                navSkills: "Skills",
+                navStore: "Preise & Store",
+                navContact: "Kontakt",
+                login: "Anmelden",
+                dashboard: "Dashboard",
+                heroBadge: "Verfügbar für Aufträge & High-End Projekte",
+                heroTitle: "Hi, ich bin Valentino.",
+                heroDesc: "Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts.",
+                skill1Title: "Coding & Dev",
+                skill1Desc: "Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.",
+                skill2Title: "PC Tuning",
+                skill2Desc: "Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.",
+                skill3Title: "Vibe Coding",
+                skill3Desc: "Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.",
+                storeTitle: "Store & Services",
+                storeDesc: "Wähle deine Menge und lege Pakete in den Warenkorb.",
+                popularBadge: "BELIEBT",
+                addToCart: "In den Warenkorb",
+                testimonialsTitle: "Was Kunden sagen",
+                testi1: "\"Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!\"",
+                testi2: "\"Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.\"",
+                contactTitle: "Kontakt aufnehmen",
+                contactDesc: "Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.",
+                labelName: "Dein Name",
+                labelEmail: "E-Mail Adresse",
+                labelMessage: "Nachricht",
+                btnSendMsg: "Nachricht senden",
+                footerImpressum: "Impressum",
+                cartTitle: "Shopping Cart",
+                cartEmptyText: "Dein Warenkorb ist leer.",
+                labelCoupon: "Gutscheincode",
+                btnApplyCoupon: "Einlösen",
+                labelSubtotal: "Subtotal",
+                labelTotal: "Gesamtsumme",
+                agbText: "I have read and agree to Terms of Service.",
+                checkoutBtn: "Checkout",
+                labelOrderSummary: "Order Summary",
+                step1Title: "Step 1 of 2 • Order Information",
+                labelEmailCheckout: "E-mail Address *",
+                labelPaymentMethod: "Payment Method",
+                needHelpTitle: "Need help with this order?",
+                needHelpDesc: "Open a support ticket and we'll get back to you.",
+                welcomeBackText: "Welcome back",
+                statOrdersLabel: "Completed orders",
+                statSpentLabel: "Total spent",
+                commonAccountTitle: "Common Account",
+                btnTabOrders: "Orders & Invoices",
+                btnTabTickets: "My Tickets",
+                latestOrdersTitle: "Latest Orders",
+                noOrdersText: "Noch keine Bestellungen.",
+                openTicketTitle: "Open a Support Ticket",
+                btnSendTicket: "Send ticket →",
+                authTitle: "Anmelden / Registrieren",
+                btnLoginGoogle: "Mit Google anmelden",
+                btnLoginGithub: "Mit GitHub anmelden",
+                btnLoginApple: "Mit Apple anmelden",
+                authOrEmail: "Oder mit E-Mail",
+                btnLoginEmail: "Einloggen",
+                btnRegisterEmail: "Registrieren",
+                btnLogout: "Logout"
+            },
+            en: {
+                announcement: "⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE",
+                navSkills: "Skills",
+                navStore: "Pricing & Store",
+                navContact: "Contact",
+                login: "Sign In",
+                dashboard: "Dashboard",
+                heroBadge: "Available for freelance & high-end projects",
+                heroTitle: "Hi, I'm Valentino.",
+                heroDesc: "I build clean web applications, optimize Windows & hardware for uncompromising performance, and create custom game scripts.",
+                skill1Title: "Coding & Dev",
+                skill1Desc: "Passion for programming, modern web development, and game scripting.",
+                skill2Title: "PC Tuning",
+                skill2Desc: "Maximum performance, custom tweaks, and uncompromising hardware optimization.",
+                skill3Title: "Vibe Coding",
+                skill3Desc: "Coding in the perfect flow state. Focusing on clean solutions in a relaxed atmosphere.",
+                storeTitle: "Store & Services",
+                storeDesc: "Choose your quantity and add packages to your cart.",
+                popularBadge: "POPULAR",
+                addToCart: "Add to Cart",
+                testimonialsTitle: "What Clients Say",
+                testi1: "\"Pro Tuning made my PC unbelievably fast. Zero input delay in games, absolutely recommended!\"",
+                testi2: "\"Super clean work on the website build. My site looks extremely clean and was online instantly.\"",
+                contactTitle: "Get in Touch",
+                contactDesc: "Send me a direct message – I'll reply as soon as possible.",
+                labelName: "Your Name",
+                labelEmail: "Email Address",
+                labelMessage: "Message",
+                btnSendMsg: "Send Message",
+                footerImpressum: "Imprint",
+                cartTitle: "Shopping Cart",
+                cartEmptyText: "Your cart is empty.",
+                labelCoupon: "Coupon Code",
+                btnApplyCoupon: "Apply",
+                labelSubtotal: "Subtotal",
+                labelTotal: "Total",
+                agbText: "I have read and agree to Terms of Service.",
+                checkoutBtn: "Checkout",
+                labelOrderSummary: "Order Summary",
+                step1Title: "Step 1 of 2 • Order Information",
+                labelEmailCheckout: "E-mail Address *",
+                labelPaymentMethod: "Payment Method",
+                needHelpTitle: "Need help with this order?",
+                needHelpDesc: "Open a support ticket and we'll get back to you.",
+                welcomeBackText: "Welcome back",
+                statOrdersLabel: "Completed orders",
+                statSpentLabel: "Total spent",
+                commonAccountTitle: "Common Account",
+                btnTabOrders: "Orders & Invoices",
+                btnTabTickets: "My Tickets",
+                latestOrdersTitle: "Latest Orders",
+                noOrdersText: "No orders yet.",
+                openTicketTitle: "Open a Support Ticket",
+                btnSendTicket: "Send ticket →",
+                authTitle: "Sign In / Register",
+                btnLoginGoogle: "Sign in with Google",
+                btnLoginGithub: "Sign in with GitHub",
+                btnLoginApple: "Sign in with Apple",
+                authOrEmail: "Or with email",
+                btnLoginEmail: "Sign In",
+                btnRegisterEmail: "Register",
+                btnLogout: "Logout"
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'de' ? 'en' : 'de';
+            document.getElementById('langLabel').innerText = currentLang === 'de' ? 'EN / DE' : 'DE / EN';
+            document.getElementById('langLabelMobile').innerText = currentLang.toUpperCase();
+            document.getElementById('htmlRoot').lang = currentLang;
+
+            let t = translations[currentLang];
+            document.getElementById('announcementText').innerText = t.announcement;
+            document.getElementById('navSkills').innerText = t.navSkills;
+            document.getElementById('navStore').innerText = t.navStore;
+            document.getElementById('navContact').innerText = t.navContact;
+            document.getElementById('mobileNavSkills').innerText = t.navSkills;
+            document.getElementById('mobileNavStore').innerText = t.navStore;
+            document.getElementById('mobileNavContact').innerText = t.navContact;
+            document.getElementById('heroBadge').innerText = t.heroBadge;
+            document.getElementById('heroTitle').innerText = t.heroTitle;
+            document.getElementById('heroDesc').innerText = t.heroDesc;
+            document.getElementById('skill1Title').innerText = t.skill1Title;
+            document.getElementById('skill1Desc').innerText = t.skill1Desc;
+            document.getElementById('skill2Title').innerText = t.skill2Title;
+            document.getElementById('skill2Desc').innerText = t.skill2Desc;
+            document.getElementById('skill3Title').innerText = t.skill3Title;
+            document.getElementById('skill3Desc').innerText = t.skill3Desc;
+            document.getElementById('storeTitle').innerText = t.storeTitle;
+            document.getElementById('storeDesc').innerText = t.storeDesc;
+            document.getElementById('popularBadge').innerText = t.popularBadge;
+            document.getElementById('testimonialsTitle').innerText = t.testimonialsTitle;
+            document.getElementById('testi1').innerText = t.testi1;
+            document.getElementById('testi2').innerText = t.testi2;
+            document.getElementById('contactTitle').innerText = t.contactTitle;
+            document.getElementById('contactDesc').innerText = t.contactDesc;
+            document.getElementById('labelName').innerText = t.labelName;
+            document.getElementById('labelEmail').innerText = t.labelEmail;
+            document.getElementById('labelMessage').innerText = t.labelMessage;
+            document.getElementById('contactSubmitBtn').innerText = t.btnSendMsg;
+            document.getElementById('footerImpressum').innerText = t.footerImpressum;
+            document.getElementById('cartTitle').innerText = t.cartTitle;
+            if(cart.length === 0) document.getElementById('cartEmptyText').innerText = t.cartEmptyText;
+            document.getElementById('labelCoupon').innerText = t.labelCoupon;
+            document.getElementById('btnApplyCoupon').innerText = t.btnApplyCoupon;
+            document.getElementById('labelSubtotal').innerText = t.labelSubtotal;
+            document.getElementById('labelTotal').innerText = t.labelTotal;
+            document.getElementById('agbText').innerText = t.agbText;
+            document.getElementById('labelOrderSummary').innerText = t.labelOrderSummary;
+            document.getElementById('step1Title').innerText = t.step1Title;
+            document.getElementById('labelEmailCheckout').innerText = t.labelEmailCheckout;
+            document.getElementById('labelPaymentMethod').innerText = t.labelPaymentMethod;
+            document.getElementById('needHelpTitle').innerText = t.needHelpTitle;
+            document.getElementById('needHelpDesc').innerText = t.needHelpDesc;
+            document.getElementById('welcomeBackText').innerText = t.welcomeBackText;
+            document.getElementById('statOrdersLabel').innerText = t.statOrdersLabel;
+            document.getElementById('statSpentLabel').innerText = t.statSpentLabel;
+            document.getElementById('commonAccountTitle').innerText = t.commonAccountTitle;
+            document.getElementById('btnTabOrders').innerHTML = `<i class="fa-solid fa-box text-accent"></i> ${t.btnTabOrders}`;
+            document.getElementById('btnTabTickets').innerHTML = `<i class="fa-solid fa-headset text-accent"></i> ${t.btnTabTickets}`;
+            document.getElementById('latestOrdersTitle').innerText = t.latestOrdersTitle;
+            document.getElementById('openTicketTitle').innerText = t.openTicketTitle;
+            document.getElementById('btnSendTicket').innerText = t.btnSendTicket;
+            document.getElementById('authTitle').innerText = t.authTitle;
+            document.getElementById('btnLoginGoogle').innerHTML = `<i class="fa-brands fa-google text-accent"></i> ${t.btnLoginGoogle}`;
+            document.getElementById('btnLoginGithub').innerHTML = `<i class="fa-brands fa-github text-accent"></i> ${t.btnLoginGithub}`;
+            document.getElementById('btnLoginApple').innerHTML = `<i class="fa-brands fa-apple text-accent"></i> ${t.btnLoginApple}`;
+            document.getElementById('authOrEmail').innerText = t.authOrEmail;
+            document.getElementById('btnLoginEmail').innerText = t.btnLoginEmail;
+            document.getElementById('btnRegisterEmail').innerText = t.btnRegisterEmail;
+            document.getElementById('btnLogout').innerHTML = `<i class="fa-solid fa-right-from-bracket"></i> ${t.btnLogout}`;
+
+            let user = window.firebaseAuth && window.firebaseAuth.currentUser;
+            document.getElementById('loginBtnText').innerText = user ? t.dashboard : t.login;
+            document.getElementById('loginBtnTextMobile').innerText = user ? t.dashboard : t.login;
+
+            let addToCartBtns = document.querySelectorAll('.addToCartText');
+            addToCartBtns.forEach(b => {
+                b.innerHTML = `<i class="fa-solid fa-cart-plus"></i> ${t.addToCart}`;
+            });
+
+            showToast(currentLang === 'de' ? "Sprache zu Deutsch gewechselt" : "Language switched to English");
+        }
+
         function showToast(message) {
             let toast = document.getElementById("toast");
             toast.innerText = message;
@@ -712,11 +924,11 @@
             if (coupons[code]) {
                 appliedDiscount = coupons[code];
                 appliedCouponName = code;
-                msg.innerText = "Gutschein eingelöst (-€" + appliedDiscount.toFixed(2) + ")";
+                msg.innerText = currentLang === 'de' ? "Gutschein eingelöst (-€" + appliedDiscount.toFixed(2) + ")" : "Coupon applied (-€" + appliedDiscount.toFixed(2) + ")";
                 msg.className = "text-[10px] text-emerald-400";
                 updateCartUI();
             } else {
-                msg.innerText = "Ungültiger Gutscheincode!";
+                msg.innerText = currentLang === 'de' ? "Ungültiger Gutscheincode!" : "Invalid coupon code!";
                 msg.className = "text-[10px] text-red-400";
             }
         }
@@ -726,12 +938,12 @@
             let discount = parseFloat(document.getElementById('newCouponDiscount').value);
             if(code && discount > 0) {
                 coupons[code] = discount;
-                showToast('Coupon ' + code + ' (€' + discount + ') erstellt!');
+                showToast('Coupon ' + code + ' (€' + discount + ') created!');
                 document.getElementById('newCouponCode').value = '';
                 document.getElementById('newCouponDiscount').value = '';
                 renderAdminCoupons();
             } else {
-                showToast('Bitte gültige Daten eingeben.');
+                showToast('Please enter valid data.');
             }
         }
 
@@ -755,7 +967,7 @@
             document.getElementById('statTotalSpent').innerText = '€' + totalSpent.toFixed(2);
             
             if (orders.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-2">Noch keine Bestellungen.</p>';
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center py-2">${translations[currentLang].noOrdersText}</p>`;
             } else {
                 container.innerHTML = '';
                 orders.forEach(order => {
@@ -789,9 +1001,9 @@
             const text = document.getElementById('cryptoToggleText');
             list.classList.toggle('hidden');
             if(list.classList.contains('hidden')) {
-                text.innerText = "Expand ▼";
+                text.innerText = currentLang === 'de' ? "Ausklappen ▼" : "Expand ▼";
             } else {
-                text.innerText = "Hide ▲";
+                text.innerText = currentLang === 'de' ? "Einklappen ▲" : "Hide ▲";
             }
         }
 
@@ -801,7 +1013,7 @@
             const userEmail = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : "Unbekannt";
 
             if(!subject || !message) {
-                showToast("Bitte Betreff und Nachricht eingeben!");
+                showToast(currentLang === 'de' ? "Bitte Betreff und Nachricht eingeben!" : "Please enter subject and message!");
                 return;
             }
 
@@ -812,11 +1024,11 @@
                 message: `Support Ticket von ${userEmail} - Betreff: ${subject} \n\nNachricht: ${message}`,
                 code: "Kunden Support-Ticket"
             }).then(() => {
-                showToast("Support Ticket erfolgreich abgesendet!");
+                showToast(currentLang === 'de' ? "Support Ticket erfolgreich abgesendet!" : "Support ticket sent successfully!");
                 document.getElementById('ticketSubject').value = '';
                 document.getElementById('ticketMsg').value = '';
             }).catch(() => {
-                showToast("Fehler beim Senden des Tickets.");
+                showToast(currentLang === 'de' ? "Fehler beim Senden des Tickets." : "Error sending ticket.");
             });
         }
 
@@ -848,7 +1060,7 @@
             let totalCount = 0, subtotal = 0;
 
             if (cart.length === 0) {
-                container.innerHTML = '<p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>';
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center py-6">${translations[currentLang].cartEmptyText}</p>`;
                 subtotalOnly.innerText = '€0.00';
                 subtotalDisplay.innerText = '€0.00';
                 discountRow.style.display = 'none';
@@ -860,7 +1072,7 @@
                     totalCount += item.qty;
                     let itemTotal = item.price * item.qty;
                     subtotal += itemTotal;
-                    container.innerHTML += `<div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center text-xs"><div><p class="font-bold text-white">${item.name}</p><p class="text-gray-400 mt-0.5">Menge: ${item.qty}</p></div><div class="flex items-center gap-3"><span class="text-accent font-bold">€${itemTotal.toFixed(2)}</span><button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-xmark"></i></button></div></div>`;
+                    container.innerHTML += `<div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center text-xs"><div><p class="font-bold text-white">${item.name}</p><p class="text-gray-400 mt-0.5">${currentLang === 'de' ? 'Menge' : 'Qty'}: ${item.qty}</p></div><div class="flex items-center gap-3"><span class="text-accent font-bold">€${itemTotal.toFixed(2)}</span><button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-xmark"></i></button></div></div>`;
                 });
                 subtotalOnly.innerText = '€' + subtotal.toFixed(2);
                 let finalTotal = Math.max(0, subtotal - appliedDiscount);
@@ -903,7 +1115,7 @@
         function completePurchase(method) {
             const emailInput = document.getElementById('checkoutEmail').value;
             if (!emailInput || !emailInput.includes('@')) {
-                showToast('Bitte gib eine gültige E-Mail-Adresse ein!');
+                showToast(currentLang === 'de' ? 'Bitte gib eine gültige E-Mail-Adresse ein!' : 'Please enter a valid email address!');
                 return;
             }
             let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
@@ -929,7 +1141,7 @@
                 code: "Bestellbestätigung"
             });
 
-            showToast('Bestellung erfolgreich! E-Mail gesendet.');
+            showToast(currentLang === 'de' ? 'Bestellung erfolgreich! E-Mail gesendet.' : 'Order successful! Email sent.');
             cart = [];
             appliedDiscount = 0;
             updateCartUI();
@@ -969,7 +1181,7 @@
             const email = document.getElementById('contactEmail').value;
             const message = document.getElementById('contactMessage').value;
             const btn = document.getElementById('contactSubmitBtn');
-            btn.innerText = "Sende Nachricht...";
+            btn.innerText = currentLang === 'de' ? "Sende Nachricht..." : "Sending message...";
             btn.disabled = true;
 
             emailjs.send("service_qcbzj8m", "template_rreumik", {
@@ -980,13 +1192,13 @@
                 message: message,
                 code: "Kontaktanfrage"
             }).then(() => {
-                showToast('Nachricht erfolgreich gesendet!');
+                showToast(currentLang === 'de' ? 'Nachricht erfolgreich gesendet!' : 'Message sent successfully!');
                 document.getElementById('contactForm').reset();
-                btn.innerText = "Nachricht senden";
+                btn.innerText = translations[currentLang].btnSendMsg;
                 btn.disabled = false;
             }).catch(() => {
-                showToast('Fehler beim Senden.');
-                btn.innerText = "Nachricht senden";
+                showToast(currentLang === 'de' ? 'Fehler beim Senden.' : 'Error sending message.');
+                btn.innerText = translations[currentLang].btnSendMsg;
                 btn.disabled = false;
             });
         }
