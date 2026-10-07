@@ -68,9 +68,15 @@
                 if (checkoutEmailInput && !checkoutEmailInput.value) {
                     checkoutEmailInput.value = user.email;
                 }
+                
+                // Prüfen ob Admin (z.B. deine E-Mail L@valentinolopez.de)
+                if (user.email === 'L@valentinolopez.de' || user.email.includes('admin')) {
+                    document.getElementById('adminPanelTabBtn').classList.remove('hidden');
+                }
             } else {
                 if(loginBtnText) loginBtnText.innerText = "Anmelden";
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Anmelden";
+                document.getElementById('adminPanelTabBtn').classList.add('hidden');
             }
         });
     </script>
@@ -145,7 +151,6 @@
             <span class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></span> Val3ntino<span class="text-accent">.</span>
         </a>
         
-        <!-- Desktop Menü -->
         <div class="hidden md:flex items-center space-x-8">
             <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Skills" data-en="Skills">Skills</a>
             <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
@@ -160,13 +165,12 @@
             <button onclick="toggleLogin()" class="text-sm font-semibold text-accent hover:text-white transition flex items-center gap-2 bg-accent/10 px-4.5 py-2 rounded-xl border border-accent/25 shadow-sm shadow-sky-500/10"><i class="fa-solid fa-user text-xs"></i> <span id="loginBtnText">Anmelden</span></button>
         </div>
 
-        <!-- Mobile Controls in Navbar -->
         <div class="flex items-center space-x-2.5 md:hidden">
             <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 border border-white/10 rounded-xl text-white">
                 <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
                 <span id="cartBadgeMobile" class="absolute -top-1 -right-1 bg-accent text-black text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">0</span>
             </button>
-            <button onclick="toggleLanguage()" id="langBtn" class="px-2.5 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold text-white">EN</button>
+            <button onclick="toggleLanguage()" id="langBtn" class="px-2.5 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-white">EN</button>
             <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg p-2">
                 <i class="fa-solid fa-bars" id="menuIcon"></i>
             </button>
@@ -175,10 +179,10 @@
 
     <!-- Mobile Dropdown Menü -->
     <div id="mobileMenu" class="hidden fixed inset-x-0 top-[69px] bg-[#0d0d14]/95 border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-2xl">
-        <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1" data-de="Skills" data-en="Skills">Skills</a>
-        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1" data-de="Kontakt" data-en="Contact">Kontakt</a>
-        <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 hover:text-white text-base font-medium py-1" data-de="Impressum" data-en="Imprint">Impressum</button>
+        <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Skills</a>
+        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Preise & Store</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Kontakt</a>
+        <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 hover:text-white text-base font-medium py-1">Impressum</button>
         <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium py-2 flex items-center gap-2"><i class="fa-solid fa-user"></i> <span id="loginBtnTextMobile">Anmelden</span></button>
     </div>
 
@@ -186,16 +190,16 @@
     <header class="max-w-4xl mx-auto px-5 md:px-8 pt-44 md:pt-56 pb-20 md:pb-28 text-center relative">
         <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-6 md:mb-8 shadow-xl shadow-emerald-500/5 backdrop-blur-md">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span data-de="Verfügbar für Aufträge & High-End Projekte" data-en="Available for work & high-end projects">Verfügbar für Aufträge & High-End Projekte</span>
+            <span>Verfügbar für Aufträge & High-End Projekte</span>
         </div>
 
-        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4 md:mb-6" data-de="Hi, ich bin Valentino." data-en="Hi, I'm Valentino.">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4 md:mb-6">
             Hi, ich bin Valentino.
         </h1>
         <p class="text-xl md:text-3xl text-gray-400 font-light mb-6 md:mb-8">
             aka <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-sky-300 to-accentPurple font-bold">Val3ntino</span>
         </p>
-        <p class="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light px-2" data-de="Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts." data-en="I build clean web applications, optimize Windows & hardware for uncompromising performance, and create creative game scripts.">
+        <p class="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light px-2">
             Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts.
         </p>
     </header>
@@ -209,8 +213,8 @@
                         <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-code text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3" data-de="Coding & Dev" data-en="Coding & Dev">Coding & Dev</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light" data-de="Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts." data-en="Passion for programming, modern web development, and game scripts.">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">Coding & Dev</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">HTML & CSS</span>
@@ -225,8 +229,8 @@
                         <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-microchip text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3" data-de="PC Tuning" data-en="PC Tuning">PC Tuning</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light" data-de="Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen." data-en="Maximum performance, custom tweaks, and uncompromising hardware optimizations.">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">PC Tuning</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">0 Input Delay</span>
@@ -240,12 +244,12 @@
                         <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3" data-de="Vibe Coding" data-en="Vibe Coding">Vibe Coding</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light" data-de="Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre." data-en="Coding in the ultimate flow state. Focusing on clean solutions in a relaxed atmosphere.">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">Vibe Coding</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5" data-de="Flow State" data-en="Flow State">Flow State</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5" data-de="Creative" data-en="Creative">Creative</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Flow State</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Creative</span>
                     </div>
                 </div>
             </div>
@@ -254,8 +258,8 @@
         <!-- Booking / Store Sektion -->
         <section id="booking" class="mb-24 md:mb-32">
             <div class="text-center mb-12 md:mb-16">
-                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3" data-de="Store & Services" data-en="Store & Services">Store & Services</h2>
-                <p class="text-gray-400 text-xs md:text-sm font-light px-4" data-de="Wähle deine Menge und lege Pakete in den Warenkorb." data-en="Select your quantity and add packages to your cart.">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">Store & Services</h2>
+                <p class="text-gray-400 text-xs md:text-sm font-light px-4">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6 md:gap-8 items-stretch">
@@ -284,7 +288,7 @@
 
                 <!-- Plan 2 (Bestseller) -->
                 <div class="bestseller-card p-6 md:p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-[10px] md:text-xs font-extrabold px-4 py-1 rounded-full shadow-lg" data-de="BELIEBT" data-en="BESTSELLER">BELIEBT</div>
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-[10px] md:text-xs font-extrabold px-4 py-1 rounded-full shadow-lg">BELIEBT</div>
                     <div>
                         <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning (0 Delay)</h3>
                         <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€35.00</p>
@@ -333,30 +337,9 @@
             </div>
         </section>
 
-        <!-- Testimonials -->
-        <section class="mb-24 md:mb-32">
-            <h2 class="text-2xl sm:text-3xl font-bold text-center text-white mb-10" data-de="Was Kunden sagen" data-en="Client Reviews">Was Kunden sagen</h2>
-            <div class="grid md:grid-cols-2 gap-5 md:gap-6">
-                <div class="clean-card p-6 md:p-8 rounded-3xl">
-                    <div class="flex text-accent text-xs mb-3 space-x-1">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
-                    <p class="text-xs font-bold text-white">Leon K.</p>
-                </div>
-                <div class="clean-card p-6 md:p-8 rounded-3xl">
-                    <div class="flex text-accent text-xs mb-3 space-x-1">
-                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                    </div>
-                    <p class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
-                    <p class="text-xs font-bold text-white">Jonas M.</p>
-                </div>
-            </div>
-        </section>
-
         <!-- Kontaktformular -->
         <section id="contact" class="max-w-xl mx-auto clean-card p-6 sm:p-8 md:p-10 rounded-3xl mb-16 shadow-2xl">
-            <h2 class="text-xl md:text-2xl font-bold text-white mb-2 text-center" data-de="Kontakt aufnehmen" data-en="Get in Touch">Kontakt aufnehmen</h2>
+            <h2 class="text-xl md:text-2xl font-bold text-white mb-2 text-center">Kontakt aufnehmen</h2>
             <p class="text-xs text-gray-400 text-center mb-6 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
             <form id="contactForm" onsubmit="handleContact(event)" class="space-y-3.5">
                 <div>
@@ -376,6 +359,31 @@
         </section>
     </main>
 
+    <!-- KI-Live-Chat Widget -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <button onclick="toggleChat()" id="chatToggleBtn" class="w-14 h-14 bg-accent text-black rounded-full shadow-2xl flex items-center justify-center text-xl hover:scale-110 transition">
+            <i class="fa-solid fa-comments"></i>
+        </button>
+        <div id="chatBox" class="clean-card bg-[#0d0d14] w-80 sm:w-96 rounded-3xl shadow-2xl border border-white/10 hidden flex-col absolute bottom-20 right-0 overflow-hidden">
+            <div class="bg-[#12121c] p-4 border-b border-white/10 flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-xs font-bold text-white">Val3ntino AI Assistant</span>
+                </div>
+                <button onclick="toggleChat()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="chatMessages" class="p-4 h-64 overflow-y-auto space-y-3 text-xs flex flex-col">
+                <div class="bg-white/5 p-3 rounded-2xl max-w-[85%] self-start text-gray-300">
+                    Hi! Ich bin der KI-Assistent von Valentino. Wie kann ich dir heute bei PC-Tuning oder Web-Dev helfen? (Schreibe "Mensch", um mit Valentino direkt verbunden zu werden).
+                </div>
+            </div>
+            <div class="p-3 bg-[#12121c] border-t border-white/10 flex gap-2">
+                <input type="text" id="chatInput" onkeypress="handleChatKey(event)" class="flex-1 bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-accent" placeholder="Schreibe eine Nachricht...">
+                <button onclick="sendChatMessage()" class="px-4 bg-accent text-black font-bold rounded-xl text-xs hover:bg-sky-400 transition"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
     <!-- Shopping Cart Modal -->
     <div id="cartModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-5 shadow-2xl">
@@ -389,16 +397,33 @@
                 <p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>
             </div>
 
+            <!-- Coupon Eingabe -->
+            <div class="space-y-1.5">
+                <label class="block text-[11px] font-medium text-gray-400">Gutscheincode</label>
+                <div class="flex gap-2">
+                    <input type="text" id="couponInput" class="flex-1 bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase focus:outline-none focus:border-accent" placeholder="Z.B. VAL3NTINO">
+                    <button onclick="applyCoupon()" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-semibold transition">Einlösen</button>
+                </div>
+                <p id="couponMsg" class="text-[10px] text-emerald-400"></p>
+            </div>
+
             <div class="bg-[#030305] p-4 md:p-5 rounded-2xl border border-white/10 space-y-2">
-                <p class="text-[11px] font-bold text-accent tracking-wider uppercase">Your Order</p>
-                <div class="flex justify-between items-center text-sm">
-                    <span class="text-gray-400">Subtotal</span>
-                    <span class="text-white font-bold text-base" id="cartSubtotalDisplay">€0.00</span>
+                <div class="flex justify-between items-center text-xs text-gray-400">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotalOnly">€0.00</span>
+                </div>
+                <div id="discountRow" class="hidden justify-between items-center text-xs text-emerald-400">
+                    <span>Rabatt (<span id="discountName"></span>)</span>
+                    <span id="discountAmount">-€0.00</span>
+                </div>
+                <div class="flex justify-between items-center text-sm pt-1 border-t border-white/5">
+                    <span class="text-white font-bold">Gesamtsumme</span>
+                    <span class="text-accent font-bold text-base" id="cartSubtotalDisplay">€0.00</span>
                 </div>
             </div>
 
             <div class="space-y-3">
-                <button onclick="proceedToCheckout()" id="checkoutBtn" class="w-full py-3.5 md:py-4 text-center bg-accent text-black font-extrabold rounded-2xl hover:bg-sky-400 transition text-xs md:text-sm shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 opacity-50 cursor-not-allowed" disabled>
+                <button onclick="proceedToCheckout()" id="checkoutBtn" class="w-full py-3.5 md:py-4 text-center bg-accent text-black font-extrabold rounded-2xl hover:bg-sky-400 transition text-xs md:text-sm shadow-lg opacity-50 cursor-not-allowed" disabled>
                     Checkout <i class="fa-solid fa-cart-shopping text-xs"></i>
                 </button>
             </div>
@@ -407,7 +432,7 @@
 
     <!-- Zahlungs-Auswahl & E-Mail Abfrage Modal -->
     <div id="paymentModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-4 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-5 shadow-2xl">
             <button onclick="togglePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -467,18 +492,18 @@
             <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <h2 class="text-xl font-bold text-white mb-6" data-de="Impressum" data-en="Imprint">Impressum</h2>
+            <h2 class="text-xl font-bold text-white mb-6">Impressum</h2>
             <div class="text-gray-300 text-sm space-y-3 font-light leading-relaxed">
                 <p><strong class="text-white font-medium">Angaben gemäß § 5 TMG:</strong></p>
                 <p>Valentino Lopez</p>
                 <p>Europa-Allee 2<br>60327 Frankfurt am Main</p>
-                <p class="mt-6 text-white font-medium" data-de="Kontakt:" data-en="Contact:">Kontakt:</p>
+                <p class="mt-6 text-white font-medium">Kontakt:</p>
                 <p>E-Mail: L@valentinolopez.de</p>
             </div>
         </div>
     </div>
 
-    <!-- Kundenportal Login Modal -->
+    <!-- Kundenportal Login & Admin Panel Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
@@ -490,54 +515,65 @@
                     <i class="fa-solid fa-user"></i>
                 </div>
                 <div>
-                    <h2 class="text-xl font-bold text-white" data-de="Kunden-Dashboard" data-en="Client Dashboard">Kunden-Dashboard</h2>
+                    <h2 class="text-xl font-bold text-white">Kunden-Dashboard</h2>
                     <p class="text-xs text-gray-400 mt-1" id="userEmailDisplay"></p>
                 </div>
+                
+                <!-- Admin Panel Sektion (Nur sichtbar für dich wenn eingeloggt) -->
+                <div id="adminPanelTabBtn" class="hidden bg-[#030305] p-4 rounded-2xl border border-accent/30 text-left space-y-3">
+                    <p class="text-[10px] font-bold text-accent tracking-wider uppercase"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Panel (Coupons erstellen)</p>
+                    <div class="space-y-2">
+                        <input type="text" id="newCouponCode" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white uppercase" placeholder="COUPONCODE (z.B. SALE20)">
+                        <input type="number" id="newCouponDiscount" class="w-full bg-[#12121c] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="Rabatt in € (z.B. 5)">
+                        <button onclick="createCoupon()" class="w-full py-2 bg-accent text-black font-bold rounded-xl text-xs hover:bg-sky-400 transition">Coupon erstellen</button>
+                    </div>
+                </div>
+
                 <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 text-left space-y-2">
                     <p class="text-[10px] font-semibold text-gray-500 tracking-wider uppercase">STATUS</p>
-                    <p class="text-xs text-gray-300 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> <span data-de="Erfolgreich eingeloggt." data-en="Successfully logged in.">Erfolgreich eingeloggt.</span></p>
+                    <p class="text-xs text-gray-300 flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-400"></i> Erfolgreich eingeloggt.</p>
                 </div>
-                <button onclick="handleLogout()" class="w-full py-3 bg-red-500/10 text-red-400 border border-red-500/20 font-semibold rounded-2xl hover:bg-red-500/20 transition text-sm" data-de="Abmelden" data-en="Logout">Abmelden</button>
+                <button onclick="handleLogout()" class="w-full py-3 bg-red-500/10 text-red-400 border border-red-500/20 font-semibold rounded-2xl hover:bg-red-500/20 transition text-sm">Abmelden</button>
             </div>
 
             <div id="authFormsContainer">
                 <div class="flex border-b border-white/10 mb-6">
-                    <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 pb-3 text-xs font-semibold text-accent border-b-2 border-accent transition" data-de="Anmelden" data-en="Login">Anmelden</button>
-                    <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-xs font-semibold text-gray-400 hover:text-white transition" data-de="Registrieren" data-en="Register">Registrieren</button>
+                    <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 pb-3 text-xs font-semibold text-accent border-b-2 border-accent transition">Anmelden</button>
+                    <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-xs font-semibold text-gray-400 hover:text-white transition">Registrieren</button>
                 </div>
 
                 <div class="space-y-2.5 mb-6">
                     <button onclick="loginWithGoogle()" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition text-xs font-semibold text-white flex items-center justify-center gap-2.5">
-                        <i class="fa-brands fa-google text-accent"></i> <span data-de="Mit Google anmelden" data-en="Sign in with Google">Mit Google anmelden</span>
+                        <i class="fa-brands fa-google text-accent"></i> Mit Google anmelden
                     </button>
                 </div>
 
                 <form id="loginForm" onsubmit="handleLoginFirebase(event)" class="space-y-3.5">
                     <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
+                        <label class="block text-xs font-medium text-gray-400 mb-1.5">E-Mail Adresse</label>
                         <input type="email" id="loginEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5" data-de="Passwort" data-en="Password">Passwort</label>
+                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Passwort</label>
                         <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="••••••••">
                     </div>
-                    <button type="submit" id="loginSubmitBtn" class="w-full py-3.5 bg-accent text-black font-bold rounded-2xl hover:bg-sky-400 transition text-xs mt-2 shadow-lg" data-de="Einloggen" data-en="Log In">Einloggen</button>
+                    <button type="submit" id="loginSubmitBtn" class="w-full py-3.5 bg-accent text-black font-bold rounded-2xl hover:bg-sky-400 transition text-xs mt-2 shadow-lg">Einloggen</button>
                 </form>
 
                 <form id="registerForm" onsubmit="handleRegisterFirebase(event)" class="space-y-3.5 hidden">
                     <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5" data-de="Dein Name" data-en="Your Name">Dein Name</label>
+                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Dein Name</label>
                         <input type="text" id="regName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="Dein Name">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
+                        <label class="block text-xs font-medium text-gray-400 mb-1.5">E-Mail Adresse</label>
                         <input type="email" id="regEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-400 mb-1.5" data-de="Passwort (min. 6 Zeichen)" data-en="Password (min. 6 chars)">Passwort (min. 6 Zeichen)</label>
+                        <label class="block text-xs font-medium text-gray-400 mb-1.5">Passwort (min. 6 Zeichen)</label>
                         <input type="password" id="regPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="••••••••">
                     </div>
-                    <button type="submit" id="regSubmitBtn" class="w-full py-3.5 bg-accent text-black font-bold rounded-2xl hover:bg-sky-400 transition text-xs mt-2 shadow-lg" data-de="Registrieren" data-en="Register">Registrieren</button>
+                    <button type="submit" id="regSubmitBtn" class="w-full py-3.5 bg-accent text-black font-bold rounded-2xl hover:bg-sky-400 transition text-xs mt-2 shadow-lg">Registrieren</button>
                 </form>
             </div>
         </div>
@@ -555,12 +591,100 @@
         </div>
         <div class="flex justify-center space-x-6 text-xs text-gray-500">
             <p>&copy; 2026 Valentino.</p>
-            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript für Store, Coupons, KI-Chat & Admins -->
     <script>
+        // Gutscheine Datenbank (Start-Gutschein)
+        let coupons = {
+            "VAL3NTINO": 5.00
+        };
+
+        let appliedDiscount = 0;
+        let appliedCouponName = "";
+
+        function applyCoupon() {
+            let code = document.getElementById('couponInput').value.trim().toUpperCase();
+            let msg = document.getElementById('couponMsg');
+            if (coupons[code]) {
+                appliedDiscount = coupons[code];
+                appliedCouponName = code;
+                msg.innerText = "Gutschein erfolgreich eingelöst (-€" + appliedDiscount.toFixed(2) + ")";
+                msg.className = "text-[10px] text-emerald-400";
+                updateCartUI();
+            } else {
+                msg.innerText = "Ungültiger Gutscheincode!";
+                msg.className = "text-[10px] text-red-400";
+            }
+        }
+
+        // Admin Coupon erstellen
+        function createCoupon() {
+            let code = document.getElementById('newCouponCode').value.trim().toUpperCase();
+            let discount = parseFloat(document.getElementById('newCouponDiscount').value);
+            if(code && discount > 0) {
+                coupons[code] = discount;
+                alert('Coupon ' + code + ' über €' + discount + ' erfolgreich erstellt!');
+                document.getElementById('newCouponCode').value = '';
+                document.getElementById('newCouponDiscount').value = '';
+            } else {
+                alert('Bitte gültige Daten eingeben.');
+            }
+        }
+
+        // KI-Chat Logik mit Human Handoff
+        function toggleChat() {
+            const chatBox = document.getElementById('chatBox');
+            chatBox.classList.toggle('hidden');
+            chatBox.classList.toggle('flex');
+        }
+
+        function handleChatKey(e) {
+            if (e.key === 'Enter') sendChatMessage();
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const container = document.getElementById('chatMessages');
+            let text = input.value.trim();
+            if (!text) return;
+
+            // Nutzer Nachricht hinzufügen
+            container.innerHTML += `<div class="bg-accent/10 border border-accent/20 p-3 rounded-2xl max-w-[85%] self-end text-white">${text}</div>`;
+            input.value = '';
+            container.scrollTop = container.scrollHeight;
+
+            // Prüfen ob Nutzer mit einem Menschen sprechen möchte
+            let lower = text.toLowerCase();
+            if (lower.includes('mensch') || lower.includes('valentino') || lower.includes('support') || lower.includes('human')) {
+                setTimeout(() => {
+                    container.innerHTML += `<div class="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-2xl max-w-[85%] self-start text-emerald-400">Verstanden! Ich habe deine Anfrage direkt an Valentino weitergeleitet. Er meldet sich in Kürze bei dir oder schreib ihm auf Discord (dri.c).</div>`;
+                    container.scrollTop = container.scrollHeight;
+
+                    // Benachrichtigung per EmailJS an dich senden
+                    emailjs.send("service_qcbzj8m", "template_rreumik", {
+                        to_email: "L@valentinolopez.de",
+                        to_name: "Valentino",
+                        message: `Ein Kunde im Live-Chat möchte mit einem Menschen sprechen! Nachricht des Kunden: "${text}"`,
+                        code: "Live-Chat Support-Anfrage"
+                    });
+                }, 800);
+            } else {
+                // KI Antwort simulieren
+                setTimeout(() => {
+                    let aiReply = "Ich helfe dir gerne weiter! Für unser PC-Tuning nutzen wir optimierte BIOS- und Registry-Tweaks für 0 Input Delay. Möchtest du ein Paket buchen oder hast du eine technische Frage?";
+                    if (lower.includes('preis') || lower.includes('kosten')) {
+                        aiReply = "Unsere Preise starten ab 15€ für Basic Tuning, 35€ für Pro Tuning und 25€ für Website Builds!";
+                    }
+                    container.innerHTML += `<div class="bg-white/5 p-3 rounded-2xl max-w-[85%] self-start text-gray-300">${aiReply}</div>`;
+                    container.scrollTop = container.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Warenkorb & Menge
         let quantities = { basic: 1, pro: 1, web: 1 };
 
         function adjustQty(type, change) {
@@ -591,7 +715,9 @@
             const badge = document.getElementById('cartBadge');
             const badgeMobile = document.getElementById('cartBadgeMobile');
             const container = document.getElementById('cartItemsContainer');
+            const subtotalOnly = document.getElementById('cartSubtotalOnly');
             const subtotalDisplay = document.getElementById('cartSubtotalDisplay');
+            const discountRow = document.getElementById('discountRow');
             const checkoutBtn = document.getElementById('checkoutBtn');
 
             let totalCount = 0;
@@ -599,7 +725,9 @@
 
             if (cart.length === 0) {
                 container.innerHTML = '<p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>';
+                subtotalOnly.innerText = '€0.00';
                 subtotalDisplay.innerText = '€0.00';
+                discountRow.classList.add('hidden');
                 checkoutBtn.disabled = true;
                 checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
             } else {
@@ -622,11 +750,24 @@
                         </div>
                     `;
                 });
-                subtotalDisplay.innerText = '€' + subtotal.toFixed(2);
+
+                subtotalOnly.innerText = '€' + subtotal.toFixed(2);
+                let finalTotal = Math.max(0, subtotal - appliedDiscount);
+
+                if (appliedDiscount > 0) {
+                    discountRow.classList.remove('flex');
+                    discountRow.style.display = 'flex';
+                    document.getElementById('discountName').innerText = appliedCouponName;
+                    document.getElementById('discountAmount').innerText = '-€' + appliedDiscount.toFixed(2);
+                } else {
+                    discountRow.style.display = 'none';
+                }
+
+                subtotalDisplay.innerText = '€' + finalTotal.toFixed(2);
                 checkoutBtn.disabled = false;
                 checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
                 
-                document.getElementById('paypalPayLink').href = `https://paypal.me/valentinolopez1e/${subtotal.toFixed(2)}`;
+                document.getElementById('paypalPayLink').href = `https://paypal.me/valentinolopez1e/${finalTotal.toFixed(2)}`;
             }
 
             badge.innerText = totalCount;
@@ -665,6 +806,7 @@
 
             alert('Bestellung erfolgreich! Eine Bestätigung wurde an ' + emailInput + ' gesendet.');
             cart = [];
+            appliedDiscount = 0;
             updateCartUI();
             togglePaymentModal();
 
