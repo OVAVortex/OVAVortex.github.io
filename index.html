@@ -191,9 +191,21 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-8 text-center text-xs text-gray-700 border-t border-white/5">
-        <p class="mb-3">&copy; 2026 Valentino.</p>
-        <button onclick="toggleImpressum()" class="text-gray-500 hover:text-gray-300 transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+    <footer class="py-10 text-center border-t border-white/5 space-y-4">
+        <!-- Social Media Icons -->
+        <div class="flex justify-center space-x-6 text-gray-400 text-lg">
+            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="hover:text-white transition" title="X (Twitter)">
+                <i class="fa-brands fa-x-twitter"></i>
+            </a>
+            <a href="#" title="Discord: dri.c" class="hover:text-white transition cursor-default">
+                <i class="fa-brands fa-discord"></i>
+                <span class="text-xs ml-1 text-gray-500">dri.c</span>
+            </a>
+        </div>
+        <div class="flex justify-center space-x-6 text-xs text-gray-500">
+            <p>&copy; 2026 Valentino.</p>
+            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+        </div>
     </footer>
 
     <!-- Impressum Modal -->
