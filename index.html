@@ -16,7 +16,7 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        bgDark: '#09090b',
+                        bgDark: '#121216',
                         accent: '#38bdf8'
                     }
                 }
@@ -24,12 +24,12 @@
         }
     </script>
     <style>
-        body { background-color: #09090b; color: #e4e4e7; }
+        body { background-color: #121216; color: #f4f4f5; }
         .modal { display: none; }
         .modal.active { display: flex; }
         .clean-card {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #18181f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.2s ease;
         }
         .clean-card:hover {
@@ -40,32 +40,32 @@
 <body class="antialiased selection:bg-accent selection:text-black">
 
     <!-- Minimalistische Navigation -->
-    <nav class="w-full py-6 px-8 flex justify-between items-center border-b border-white/5 fixed top-0 bg-bgDark/80 backdrop-blur-md z-50">
+    <nav class="w-full py-6 px-8 flex justify-between items-center border-b border-white/10 fixed top-0 bg-[#121216]/90 backdrop-blur-md z-50">
         <a href="#" class="text-xl font-bold tracking-tight text-white hover:text-accent transition">Valentino<span class="text-accent">.</span></a>
         
         <!-- Desktop Menü -->
         <div class="hidden md:flex items-center space-x-8">
-            <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Skills" data-en="Skills">Skills</a>
-            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
-            <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Kontakt" data-en="Contact">Kontakt</a>
-            <button onclick="toggleImpressum()" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+            <a href="#skills" class="text-sm font-medium text-gray-300 hover:text-white transition" data-de="Skills" data-en="Skills">Skills</a>
+            <a href="#booking" class="text-sm font-medium text-gray-300 hover:text-white transition" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
+            <a href="#contact" class="text-sm font-medium text-gray-300 hover:text-white transition" data-de="Kontakt" data-en="Contact">Kontakt</a>
+            <button onclick="toggleImpressum()" class="text-sm font-medium text-gray-300 hover:text-white transition" data-de="Impressum" data-en="Imprint">Impressum</button>
             <button onclick="toggleLogin()" class="text-sm font-medium text-accent hover:underline flex items-center gap-1.5" data-de="Anmelden" data-en="Login"><i class="fa-solid fa-arrow-right-to-bracket"></i> Anmelden</button>
         </div>
 
         <div class="flex items-center space-x-4">
             <!-- Sprachschalter -->
-            <button onclick="toggleLanguage()" id="langBtn" class="px-3 py-1 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition">
+            <button onclick="toggleLanguage()" id="langBtn" class="px-3 py-1 bg-white/10 hover:bg-white/20 border border-white/10 rounded-full text-xs font-semibold text-white transition">
                 EN
             </button>
             <!-- Mobile Menü Button (3 Striche) -->
-            <button onclick="toggleMobileMenu()" class="md:hidden text-gray-400 hover:text-white text-xl p-2">
+            <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white text-xl p-2">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
     </nav>
 
     <!-- Mobile Dropdown Menü -->
-    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[81px] bg-[#09090b] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl">
+    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[81px] bg-[#18181f] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl">
         <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Skills" data-en="Skills">Skills</a>
         <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Preise & Buchen" data-en="Pricing & Booking">Preise & Buchen</a>
         <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg font-medium" data-de="Kontakt" data-en="Contact">Kontakt</a>
@@ -76,7 +76,7 @@
     <!-- Cleaner Startbereich -->
     <header class="max-w-4xl mx-auto px-8 pt-44 pb-24 text-center">
         <!-- Status Badge -->
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-8">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-medium mb-8">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span data-de="Verfügbar für Aufträge" data-en="Available for work">Verfügbar für Aufträge</span>
         </div>
@@ -84,10 +84,10 @@
         <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-4" data-de="Hi, ich bin Valentino." data-en="Hi, I'm Valentino.">
             Hi, ich bin Valentino.
         </h1>
-        <p class="text-xl md:text-2xl text-gray-400 font-light mb-8">
+        <p class="text-xl md:text-2xl text-gray-300 font-light mb-8">
             aka <span class="text-accent font-medium">Val3ntino</span>
         </p>
-        <p class="text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed" data-de="Ich schreibe Code, optimiere Hardware auf das absolute Limit und bin immer auf der Suche nach der perfekten Performance." data-en="I write code, push hardware to the absolute limit, and am always striving for peak performance.">
+        <p class="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed" data-de="Ich schreibe Code, optimiere Hardware auf das absolute Limit und bin immer auf der Suche nach der perfekten Performance." data-en="I write code, push hardware to the absolute limit, and am always striving for peak performance.">
             Ich schreibe Code, optimiere Hardware auf das absolute Limit und bin immer auf der Suche nach der perfekten Performance.
         </p>
     </header>
@@ -99,48 +99,48 @@
                 <!-- Coding -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
-                        <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center mb-6">
                             <i class="fa-solid fa-code text-accent text-lg"></i>
                         </div>
                         <h3 class="text-xl font-semibold text-white mb-3" data-de="Coding & Dev" data-en="Coding & Dev">Coding & Dev</h3>
                         <p class="text-gray-400 text-sm mb-6 leading-relaxed" data-de="Leidenschaft fürs Programmieren, Web-Entwicklung und Game-Scripts." data-en="Passion for programming, web development, and game scripts.">Leidenschaft fürs Programmieren, Web-Entwicklung und Game-Scripts.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">HTML & CSS</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">C++</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">Python</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">Luau</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300">HTML & CSS</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300">C++</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300">Python</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300">Luau</span>
                     </div>
                 </div>
 
                 <!-- PC Tuning -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
-                        <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center mb-6">
                             <i class="fa-solid fa-microchip text-accent text-lg"></i>
                         </div>
                         <h3 class="text-xl font-semibold text-white mb-3" data-de="PC Tuning" data-en="PC Tuning">PC Tuning</h3>
                         <p class="text-gray-400 text-sm mb-6 leading-relaxed" data-de="Maximale Performance, Custom Tweaks und kompromisslose Konfigurationen." data-en="Maximum performance, custom tweaks, and uncompromising configurations.">Maximale Performance, Custom Tweaks und kompromisslose Konfigurationen.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">0 Input Delay</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">Windows Tweaks</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300">BIOS Edits</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300">0 Input Delay</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300">Windows Tweaks</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300">BIOS Edits</span>
                     </div>
                 </div>
 
                 <!-- Vibe Coding -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col justify-between">
                     <div>
-                        <div class="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center mb-6">
+                        <div class="w-10 h-10 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center mb-6">
                             <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
                         </div>
                         <h3 class="text-xl font-semibold text-white mb-3" data-de="Vibe Coding" data-en="Vibe Coding">Vibe Coding</h3>
                         <p class="text-gray-400 text-sm mb-6 leading-relaxed" data-de="Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre." data-en="Coding in the ultimate flow state. Focusing on clean solutions in a relaxed atmosphere.">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300" data-de="Flow State" data-en="Flow State">Flow State</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-md text-xs font-medium text-gray-300" data-de="Creative" data-en="Creative">Creative</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300" data-de="Flow State" data-en="Flow State">Flow State</span>
+                        <span class="px-3 py-1 bg-white/10 rounded-md text-xs font-medium text-gray-300" data-de="Creative" data-en="Creative">Creative</span>
                     </div>
                 </div>
             </div>
@@ -155,20 +155,20 @@
                 <div class="clean-card p-8 rounded-2xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Basic PC-Tuning" data-en="Basic PC Tuning">Basic PC-Tuning</h3>
                     <p class="text-4xl font-bold text-white mb-6">15€</p>
-                    <ul class="text-gray-400 text-sm space-y-3 mb-8 flex-grow">
+                    <ul class="text-gray-300 text-sm space-y-3 mb-8 flex-grow">
                         <li data-de="Windows Basis-Optimierung" data-en="Windows Basic Optimization"><i class="fa-solid fa-check text-accent mr-2"></i> Windows Basis-Optimierung</li>
                         <li data-de="Hintergrunddienste stoppen" data-en="Stop background services"><i class="fa-solid fa-check text-accent mr-2"></i> Hintergrunddienste stoppen</li>
                         <li data-de="Standard FPS Boost" data-en="Standard FPS Boost"><i class="fa-solid fa-check text-accent mr-2"></i> Standard FPS Boost</li>
                     </ul>
-                    <a href="#contact" class="block w-full py-3 text-center border border-white/10 rounded-xl hover:bg-white hover:text-black transition font-medium" data-de="Auswählen" data-en="Select">Auswählen</a>
+                    <a href="#contact" class="block w-full py-3 text-center border border-white/15 rounded-xl hover:bg-white hover:text-black transition font-medium text-gray-200" data-de="Auswählen" data-en="Select">Auswählen</a>
                 </div>
 
                 <!-- Plan 2 (Bestseller) -->
-                <div class="clean-card p-8 rounded-2xl border-accent/50 relative flex flex-col transform md:-translate-y-2">
+                <div class="clean-card p-8 rounded-2xl border-accent/60 relative flex flex-col transform md:-translate-y-2">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-black text-xs font-bold px-4 py-1 rounded-full" data-de="Bestseller" data-en="Bestseller">Bestseller</div>
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Pro Tuning (0 Delay)" data-en="Pro Tuning (0 Delay)">Pro Tuning (0 Delay)</h3>
                     <p class="text-4xl font-bold text-white mb-6">35€</p>
-                    <ul class="text-gray-400 text-sm space-y-3 mb-8 flex-grow">
+                    <ul class="text-gray-300 text-sm space-y-3 mb-8 flex-grow">
                         <li data-de="Alles aus Basic" data-en="Everything in Basic"><i class="fa-solid fa-check text-accent mr-2"></i> Alles aus Basic</li>
                         <li data-de="BIOS & Registry Edits" data-en="BIOS & Registry Edits"><i class="fa-solid fa-check text-accent mr-2"></i> BIOS & Registry Edits</li>
                         <li data-de="0 Input Delay Setup" data-en="0 Input Delay Setup"><i class="fa-solid fa-check text-accent mr-2"></i> 0 Input Delay Setup</li>
@@ -181,13 +181,13 @@
                 <div class="clean-card p-8 rounded-2xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Website Build" data-en="Website Build">Website Build</h3>
                     <p class="text-4xl font-bold text-white mb-6">25€</p>
-                    <ul class="text-gray-400 text-sm space-y-3 mb-8 flex-grow">
+                    <ul class="text-gray-300 text-sm space-y-3 mb-8 flex-grow">
                         <li data-de="Cleanes Portfolio Design" data-en="Clean Portfolio Design"><i class="fa-solid fa-check text-accent mr-2"></i> Cleanes Portfolio Design</li>
                         <li data-de="Responsive (Handy & PC)" data-en="Responsive (Mobile & PC)"><i class="fa-solid fa-check text-accent mr-2"></i> Responsive (Handy & PC)</li>
                         <li data-de="Kontaktformular & Setup" data-en="Contact Form & Setup"><i class="fa-solid fa-check text-accent mr-2"></i> Kontaktformular & Setup</li>
                         <li data-de="Hilfe bei GitHub Pages" data-en="GitHub Pages Support"><i class="fa-solid fa-check text-accent mr-2"></i> Hilfe bei GitHub Pages</li>
                     </ul>
-                    <a href="#contact" class="block w-full py-3 text-center border border-white/10 rounded-xl hover:bg-white hover:text-black transition font-medium" data-de="Auswählen" data-en="Select">Auswählen</a>
+                    <a href="#contact" class="block w-full py-3 text-center border border-white/15 rounded-xl hover:bg-white hover:text-black transition font-medium text-gray-200" data-de="Auswählen" data-en="Select">Auswählen</a>
                 </div>
 
             </div>
@@ -205,9 +205,9 @@
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                     </div>
-                    <p class="text-gray-300 text-sm italic mb-6" data-de="&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;" data-en="&quot;The Pro Tuning made my PC incredibly fast. Zero input delay in games, absolutely recommended!&quot;">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
+                    <p class="text-gray-200 text-sm italic mb-6" data-de="&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;" data-en="&quot;The Pro Tuning made my PC incredibly fast. Zero input delay in games, absolutely recommended!&quot;">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
                     <p class="text-xs font-semibold text-white">Leon K.</p>
-                    <p class="text-xs text-gray-500" data-de="Pro Tuning Kunde" data-en="Pro Tuning Client">Pro Tuning Kunde</p>
+                    <p class="text-xs text-gray-400" data-de="Pro Tuning Kunde" data-en="Pro Tuning Client">Pro Tuning Kunde</p>
                 </div>
                 <div class="clean-card p-8 rounded-2xl">
                     <div class="flex text-accent text-sm mb-4">
@@ -217,9 +217,9 @@
                         <i class="fa-solid fa-star"></i>
                         <i class="fa-solid fa-star"></i>
                     </div>
-                    <p class="text-gray-300 text-sm italic mb-6" data-de="&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;" data-en="&quot;Super clean work on the website build. My site looks extremely clean and was online in no time.&quot;">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
+                    <p class="text-gray-200 text-sm italic mb-6" data-de="&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;" data-en="&quot;Super clean work on the website build. My site looks extremely clean and was online in no time.&quot;">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
                     <p class="text-xs font-semibold text-white">Jonas M.</p>
-                    <p class="text-xs text-gray-500" data-de="Website Build Kunde" data-en="Website Build Client">Website Build Kunde</p>
+                    <p class="text-xs text-gray-400" data-de="Website Build Kunde" data-en="Website Build Client">Website Build Kunde</p>
                 </div>
             </div>
         </section>
@@ -229,50 +229,50 @@
             <h2 class="text-2xl font-bold text-white mb-6 text-center" data-de="Kontakt aufnehmen" data-en="Get in Touch">Kontakt aufnehmen</h2>
             <form action="#" method="POST" class="space-y-5">
                 <div>
-                    <label class="block text-sm text-gray-400 mb-2" data-de="Dein Name" data-en="Your Name">Dein Name</label>
-                    <input type="text" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?" data-placeholder-de="Wie darf ich dich nennen?" data-placeholder-en="What is your name?">
+                    <label class="block text-sm text-gray-300 mb-2" data-de="Dein Name" data-en="Your Name">Dein Name</label>
+                    <input type="text" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?" data-placeholder-de="Wie darf ich dich nennen?" data-placeholder-en="What is your name?">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-2" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
-                    <input type="email" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Für meine Antwort" data-placeholder-de="Für meine Antwort" data-placeholder-en="For my reply">
+                    <label class="block text-sm text-gray-300 mb-2" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
+                    <input type="email" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Für meine Antwort" data-placeholder-de="Für meine Antwort" data-placeholder-en="For my reply">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-2" data-de="Nachricht" data-en="Message">Nachricht</label>
-                    <textarea rows="5" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen (z.B. Website Build oder Tuning-Termin)" data-placeholder-de="Dein Anliegen (z.B. Website Build oder Tuning-Termin)" data-placeholder-en="Your message (e.g. Website Build or Tuning)"></textarea>
+                    <label class="block text-sm text-gray-300 mb-2" data-de="Nachricht" data-en="Message">Nachricht</label>
+                    <textarea rows="5" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen (z.B. Website Build oder Tuning-Termin)" data-placeholder-de="Dein Anliegen (z.B. Website Build oder Tuning-Termin)" data-placeholder-en="Your message (e.g. Website Build or Tuning)"></textarea>
                 </div>
                 <button type="submit" class="w-full py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition" data-de="Nachricht senden" data-en="Send Message">Nachricht senden</button>
             </form>
             <div class="mt-8 text-center">
-                <p class="text-sm text-gray-500"><span data-de="Oder direkt per E-Mail: " data-en="Or directly via email: ">Oder direkt per E-Mail: </span><a href="mailto:L@valentinolopez.de" class="text-accent hover:underline">L@valentinolopez.de</a></p>
+                <p class="text-sm text-gray-400"><span data-de="Oder direkt per E-Mail: " data-en="Or directly via email: ">Oder direkt per E-Mail: </span><a href="mailto:L@valentinolopez.de" class="text-accent hover:underline">L@valentinolopez.de</a></p>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="py-12 text-center border-t border-white/5 space-y-6">
+    <footer class="py-12 text-center border-t border-white/10 space-y-6">
         <!-- Social Media Links -->
         <div class="flex justify-center items-center space-x-8 text-sm">
-            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
+            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-300 hover:text-white transition flex items-center gap-2">
                 <i class="fa-brands fa-x-twitter text-accent text-base"></i> Twitter / X
             </a>
-            <span class="text-gray-400 flex items-center gap-2">
+            <span class="text-gray-300 flex items-center gap-2">
                 <i class="fa-brands fa-discord text-accent text-base"></i> Discord: dri.c
             </span>
         </div>
-        <div class="flex justify-center space-x-6 text-xs text-gray-500">
+        <div class="flex justify-center space-x-6 text-xs text-gray-400">
             <p>&copy; 2026 Valentino.</p>
-            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition" data-de="Impressum" data-en="Imprint">Impressum</button>
+            <button onclick="toggleImpressum()" class="hover:text-gray-200 transition" data-de="Impressum" data-en="Imprint">Impressum</button>
         </div>
     </footer>
 
     <!-- Impressum Modal -->
     <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#09090b] p-8 rounded-2xl max-w-md w-full relative">
+        <div class="clean-card bg-[#18181f] p-8 rounded-2xl max-w-md w-full relative">
             <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
             <h2 class="text-2xl font-bold text-white mb-6" data-de="Impressum" data-en="Imprint">Impressum</h2>
-            <div class="text-gray-400 text-sm space-y-3 leading-relaxed">
+            <div class="text-gray-300 text-sm space-y-3 leading-relaxed">
                 <p><strong data-de="Angaben gemäß § 5 TMG:" data-en="Information according to § 5 TMG:">Angaben gemäß § 5 TMG:</strong></p>
                 <p>Valentino Lopez Espinosa</p>
                 <p>Europa-Allee 2<br>60327 Frankfurt am Main</p>
@@ -285,21 +285,21 @@
 
     <!-- Kundenportal Login Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#09090b] p-8 rounded-2xl max-w-md w-full relative">
+        <div class="clean-card bg-[#18181f] p-8 rounded-2xl max-w-md w-full relative">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
             <h2 class="text-2xl font-bold text-white mb-2" data-de="Kundenportal" data-en="Client Portal">Kundenportal</h2>
-            <p class="text-gray-400 text-sm mb-6" data-de="Logge dich ein, um deine Käufe und Aufträge zu verwalten." data-en="Log in to manage your purchases and orders.">Logge dich ein, um deine Käufe und Aufträge zu verwalten.</p>
+            <p class="text-gray-300 text-sm mb-6" data-de="Logge dich ein, um deine Käufe und Aufträge zu verwalten." data-en="Log in to manage your purchases and orders.">Logge dich ein, um deine Käufe und Aufträge zu verwalten.</p>
             
             <form onsubmit="event.preventDefault(); alert('Login-System wird bald verbunden!'); toggleLogin();" class="space-y-4">
                 <div>
-                    <label class="block text-sm text-gray-400 mb-2" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
-                    <input type="email" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                    <label class="block text-sm text-gray-300 mb-2" data-de="E-Mail Adresse" data-en="Email Address">E-Mail Adresse</label>
+                    <input type="email" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                 </div>
                 <div>
-                    <label class="block text-sm text-gray-400 mb-2" data-de="Passwort" data-en="Password">Passwort</label>
-                    <input type="password" class="w-full bg-bgDark border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
+                    <label class="block text-sm text-gray-300 mb-2" data-de="Passwort" data-en="Password">Passwort</label>
+                    <input type="password" class="w-full bg-[#121216] border border-white/15 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent transition" required placeholder="••••••••">
                 </div>
                 <button type="submit" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition" data-de="Einloggen" data-en="Log In">Einloggen</button>
             </form>
