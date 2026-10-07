@@ -479,7 +479,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.63.1</p>
+            <p class="font-mono text-accent/70">v1.64</p>
         </div>
     </footer>
 
@@ -573,16 +573,16 @@
                     <span class="text-[10px] text-emerald-400 font-bold">Pay Now →</span>
                 </button>
 
-                <!-- PayPal Gateway (Öffnet erst das Gateway-Modal statt direkt zu kaufen) -->
-                <button onclick="openGatewayModal('PayPal')" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
+                <!-- PayPal Gateway (Öffnet PayPal Proof Modal mit Pending Status) -->
+                <button onclick="openPayPalProofModal()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-paypal text-sky-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">PayPal & Credit Card</span>
+                        <span class="text-xs font-bold text-white">PayPal & Credit Card (Pending Proof)</span>
                     </div>
                     <span class="text-[10px] text-accent">Select →</span>
                 </button>
 
-                <!-- Krypto Gateway (Öffnet Krypto-Adressen-Modal mit Pending-Status) -->
+                <!-- Krypto Gateway -->
                 <button onclick="toggleCryptoSelection()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-coins text-amber-400 text-lg"></i>
@@ -603,27 +603,28 @@
         </div>
     </div>
 
-    <!-- Professionelles Zahlungs-Gateway-Modal (Echtes Bestätigen statt direktem Redirect) -->
-    <div id="gatewayModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
-            <button onclick="document.getElementById('gatewayModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            <div class="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center mx-auto text-sky-400 text-2xl">
-                <i class="fa-solid fa-shield-halved"></i>
+    <!-- PayPal Zahlungsnachweis Modal (Pending) -->
+    <div id="paypalProofModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-4 shadow-2xl text-center">
+            <button onclick="document.getElementById('paypalProofModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <div class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center mx-auto text-sky-400 text-xl">
+                <i class="fa-brands fa-paypal"></i>
             </div>
-            <h2 class="text-lg font-bold text-white">Sichere Zahlungsabwicklung</h2>
-            <p class="text-xs text-gray-400">Betrag: <span id="gatewayAmount" class="text-accent font-bold">€0.00</span></p>
+            <h2 class="text-base font-bold text-white">PayPal Zahlung (Pending)</h2>
+            <p class="text-xs text-gray-400">Bitte überweise <span id="paypalPayAmount" class="text-accent font-bold">€0.00</span> an:</p>
             
-            <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-3 text-left text-xs">
-                <p class="text-gray-300">1. Klicke auf den Link, um die Zahlung im sicheren Portal durchzuführen:</p>
-                <a id="gatewayExternalLink" href="#" target="_blank" class="block py-2.5 px-4 bg-sky-500 text-black font-bold text-center rounded-xl">Zum PayPal / Zahlungsportal →</a>
-                <p class="text-gray-300 pt-2">2. Klicke erst nach erfolgreicher Überweisung hier auf Bestätigen:</p>
+            <a id="paypalDirectLink" href="#" target="_blank" class="block py-2.5 px-4 bg-sky-500 text-black font-bold text-center rounded-xl text-xs shadow-lg">paypal.me/valentinolopez1e →</a>
+            
+            <div class="text-left space-y-1 pt-2">
+                <label class="block text-[11px] font-medium text-gray-400">PayPal Transaktionscode / Name (Proof of Payment) *</label>
+                <input type="text" id="paypalProofInput" class="w-full bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="Transaktions-ID oder Absender-Name...">
             </div>
 
-            <button onclick="confirmGatewayPayment()" class="w-full py-3.5 bg-accent text-black font-extrabold rounded-xl text-xs shadow-lg">Zahlung abgeschlossen & Bestätigen</button>
+            <button onclick="confirmPayPalPending()" class="w-full py-3 bg-accent text-black font-bold rounded-xl text-xs shadow-lg">PayPal Beweis abschicken & Pending einreichen</button>
         </div>
     </div>
 
-    <!-- Krypto Überweisungs-Modal mit allen deinen Krypto-Adressen & Zahlungsnachweis -->
+    <!-- Krypto Zahlungsnachweis Modal -->
     <div id="cryptoAddressModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-4 shadow-2xl text-center">
             <button onclick="document.getElementById('cryptoAddressModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -637,14 +638,11 @@
                 ADDRESS_HERE
             </div>
             
-            <!-- Feld für Zahlungsnachweis (TxID oder Transaktions-Hash) -->
             <div class="text-left space-y-1">
                 <label class="block text-[11px] font-medium text-gray-400">Zahlungsnachweis / TxID (Proof of Payment) *</label>
                 <input type="text" id="cryptoProofInput" class="w-full bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="TxID / Hash oder Referenz eingeben...">
             </div>
 
-            <p class="text-[10px] text-amber-400">Bestellung wird nach Blockchain-Überprüfung bestätigt.</p>
-            
             <button onclick="confirmCryptoPending()" class="w-full py-3 bg-accent text-black font-bold rounded-xl text-xs shadow-lg">Beweis abschicken & Pending einreichen</button>
         </div>
     </div>
@@ -793,10 +791,10 @@
             <p class="text-xs text-gray-400">Gewählter Betrag: <span id="topUpAmountDisplay" class="text-accent font-bold">€0.00</span></p>
             
             <div class="space-y-3 pt-2">
-                <button onclick="openGatewayModal('Top Up PayPal', selectedTopUpValue)" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
+                <button onclick="openTopUpPayPalProof()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-paypal text-sky-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">PayPal & Credit Card</span>
+                        <span class="text-xs font-bold text-white">PayPal & Credit Card (Pending Proof)</span>
                     </div>
                     <span class="text-[10px] text-accent">Pay →</span>
                 </button>
@@ -818,14 +816,28 @@
         </div>
     </div>
 
+    <!-- Top Up PayPal Proof Modal -->
+    <div id="topUpPaypalProofModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-4 shadow-2xl text-center">
+            <button onclick="document.getElementById('topUpPaypalProofModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h2 class="text-base font-bold text-white">Top Up PayPal Zahlung</h2>
+            <p class="text-xs text-gray-400">Überweise <span id="topUpPayPalAmountDisplay" class="text-accent font-bold">€0.00</span> an:</p>
+            <a href="https://paypal.me/valentinolopez1e" target="_blank" class="block py-2.5 px-4 bg-sky-500 text-black font-bold text-center rounded-xl text-xs shadow-lg">paypal.me/valentinolopez1e →</a>
+            <div class="text-left space-y-1 pt-2">
+                <label class="block text-[11px] font-medium text-gray-400">PayPal Transaktionscode / Name *</label>
+                <input type="text" id="topUpPayPalProofInput" class="w-full bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-xs text-white" placeholder="Transaktions-ID oder Name...">
+            </div>
+            <button onclick="confirmTopUpPayPalProof()" class="w-full py-3 bg-accent text-black font-bold rounded-xl text-xs shadow-lg">Top Up Beweis abschicken & einreichen</button>
+        </div>
+    </div>
+
     <!-- JavaScript Steuerung -->
     <script>
         let currentLang = 'de';
         let selectedTopUpValue = 0;
-        let pendingGatewayMethod = "";
-        let pendingGatewayAmount = "";
         let pendingCryptoCoin = "";
         let pendingCryptoAddress = "";
+        let isTopUpFlow = false;
 
         const translations = {
             de: {
@@ -1091,7 +1103,7 @@
             let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
             
             document.getElementById('userAvatarLetter').innerText = email.charAt(0).toUpperCase();
-            let completedOrders = orders.filter(o => o.status === 'Completed');
+            let completedOrders = orders.filter(o => o.status === 'Completed' && !o.isTopUp);
             document.getElementById('statOrdersCount').innerText = completedOrders.length;
             document.getElementById('statBalanceAmount').innerText = '€' + balance.toFixed(2);
             document.getElementById('checkoutBalanceDisplay').innerText = `Available: €` + balance.toFixed(2);
@@ -1142,6 +1154,7 @@
 
         function selectTopUpAmount(amount) {
             selectedTopUpValue = amount;
+            isTopUpFlow = true;
             document.getElementById('topUpAmountDisplay').innerText = '€' + amount.toFixed(2);
             document.getElementById('topUpModal').classList.remove('active');
             document.getElementById('topUpPaymentModal').classList.add('active');
@@ -1158,10 +1171,48 @@
             }
         }
 
+        function openTopUpPayPalProof() {
+            document.getElementById('topUpPayPalAmountDisplay').innerText = '€' + selectedTopUpValue.toFixed(2);
+            document.getElementById('topUpPaymentModal').classList.remove('active');
+            document.getElementById('topUpPaypalProofModal').classList.add('active');
+        }
+
+        function confirmTopUpPayPalProof() {
+            const emailInput = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : null;
+            const proof = document.getElementById('topUpPayPalProofInput').value.trim();
+
+            if(!emailInput) { showToast("Bitte zuerst einloggen!"); return; }
+            if(!proof) { showToast("Bitte Transaktions-ID oder Name eingeben!"); return; }
+
+            let newOrder = {
+                items: `Top Up Guthaben (€${selectedTopUpValue.toFixed(2)}) via PayPal`,
+                total: `€${selectedTopUpValue.toFixed(2)}`,
+                rawTotal: selectedTopUpValue,
+                method: `PayPal (Top Up)`,
+                status: 'Pending',
+                proof: proof,
+                isTopUp: true,
+                topUpValue: selectedTopUpValue,
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+
+            showToast('Top Up Pending eingereicht! Guthaben wird nach Prüfung gutgeschrieben.');
+            document.getElementById('topUpPaypalProofModal').classList.remove('active');
+            document.getElementById('topUpPayPalProofInput').value = '';
+            selectedTopUpValue = 0;
+            loadDashboardStats(emailInput);
+        }
+
         function selectTopUpCryptoCoin(coinName, address) {
             let email = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : null;
             if(!email) { showToast("Bitte zuerst einloggen!"); return; }
 
+            isTopUpFlow = true;
             pendingCryptoCoin = coinName + " (Top Up)";
             pendingCryptoAddress = address;
 
@@ -1183,59 +1234,51 @@
             }
         }
 
-        function openGatewayModal(method, amount) {
+        function openPayPalProofModal() {
             const emailInput = document.getElementById('checkoutEmail').value;
             if (!emailInput || !emailInput.includes('@')) {
                 showToast('Bitte zuerst E-Mail Adresse eingeben!');
                 return;
             }
-            pendingGatewayMethod = method;
-            pendingGatewayAmount = amount || document.getElementById('cartSubtotalDisplay').innerText;
-            document.getElementById('gatewayAmount').innerText = pendingGatewayAmount;
-            
-            let payUrl = method.includes('PayPal') ? `https://paypal.me/valentinolopez1e/${pendingGatewayAmount.replace('€','')}` : '#';
-            document.getElementById('gatewayExternalLink').href = payUrl;
-
+            isTopUpFlow = false;
+            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
+            document.getElementById('paypalPayAmount').innerText = totalAmount;
             document.getElementById('paymentModal').classList.remove('active');
-            document.getElementById('gatewayModal').classList.add('active');
+            document.getElementById('paypalProofModal').classList.add('active');
         }
 
-        function confirmGatewayPayment() {
+        function confirmPayPalPending() {
             const emailInput = document.getElementById('checkoutEmail').value;
-            let orderSummary = cart.length > 0 ? cart.map(i => `${i.qty}x ${i.name}`).join(', ') : `Top Up (€${selectedTopUpValue.toFixed(2)})`;
-            let totalAmount = pendingGatewayAmount;
-            let rawNum = totalAmount.replace('€', '');
+            const proof = document.getElementById('paypalProofInput').value.trim();
 
-            if(pendingGatewayMethod === 'Top Up PayPal') {
-                let currentBal = parseFloat(localStorage.getItem('balance_' + emailInput) || '0.00');
-                localStorage.setItem('balance_' + emailInput, (currentBal + selectedTopUpValue).toFixed(2));
-                showToast('Top Up via PayPal erfolgreich bestätigt!');
-            } else {
-                let newOrder = {
-                    items: orderSummary,
-                    total: totalAmount,
-                    rawTotal: rawNum,
-                    method: pendingGatewayMethod,
-                    status: 'Completed',
-                    invoice: Math.floor(100000000000 + Math.random() * 900000000000),
-                    date: new Date().toLocaleDateString('de-DE')
-                };
-                let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
-                existingOrders.unshift(newOrder);
-                localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
-
-                emailjs.send("service_qcbzj8m", "template_rreumik", {
-                    to_email: emailInput,
-                    to_name: emailInput.split('@')[0],
-                    message: `Bestellbestätigung: ${orderSummary}. Summe: ${totalAmount}. Zahlung: ${pendingGatewayMethod}.`,
-                    code: "Bestellbestätigung"
-                });
-                showToast('Zahlung bestätigt & Bestellung abgeschlossen!');
+            if(!proof) {
+                showToast('Bitte gib einen Zahlungsnachweis (ID / Name) ein!');
+                return;
             }
 
-            document.getElementById('gatewayModal').classList.remove('active');
+            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
+            let rawNum = totalAmount.replace('€', '');
+
+            let newOrder = {
+                items: orderSummary,
+                total: totalAmount,
+                rawTotal: rawNum,
+                method: 'PayPal (Pending Proof)',
+                status: 'Pending',
+                proof: proof,
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+
+            showToast('PayPal Bestellung als Pending eingereicht!');
+            document.getElementById('paypalProofModal').classList.remove('active');
+            document.getElementById('paypalProofInput').value = '';
             cart = [];
-            selectedTopUpValue = 0;
             appliedDiscount = 0;
             updateCartUI();
             if(window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
@@ -1247,6 +1290,7 @@
                 showToast('Bitte E-Mail angeben!');
                 return;
             }
+            isTopUpFlow = false;
             pendingCryptoCoin = coinName;
             pendingCryptoAddress = address;
             let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
@@ -1266,8 +1310,8 @@
                 return;
             }
 
-            let orderSummary = cart.length > 0 ? cart.map(i => `${i.qty}x ${i.name}`).join(', ') : `Top Up (€${selectedTopUpValue.toFixed(2)})`;
-            let totalAmount = cart.length > 0 ? document.getElementById('cartSubtotalDisplay').innerText : '€' + selectedTopUpValue.toFixed(2);
+            let orderSummary = isTopUpFlow ? `Top Up Guthaben (€${selectedTopUpValue.toFixed(2)}) via ${pendingCryptoCoin}` : cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let totalAmount = isTopUpFlow ? '€' + selectedTopUpValue.toFixed(2) : document.getElementById('cartSubtotalDisplay').innerText;
             let rawNum = totalAmount.replace('€', '');
 
             let newOrder = {
@@ -1277,27 +1321,25 @@
                 method: `Crypto (${pendingCryptoCoin})`,
                 status: 'Pending',
                 proof: proof,
+                isTopUp: isTopUpFlow,
+                topUpValue: isTopUpFlow ? selectedTopUpValue : 0,
                 invoice: Math.floor(100000000000 + Math.random() * 900000000000),
                 date: new Date().toLocaleDateString('de-DE')
             };
-
-            if(selectedTopUpValue > 0) {
-                newOrder.isTopUp = true;
-                newOrder.topUpValue = selectedTopUpValue;
-            }
 
             let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
             existingOrders.unshift(newOrder);
             localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
 
-            showToast('Bestellung als Pending eingereicht mit Beweis! Warten auf Freigabe.');
+            showToast('Bestellung/Top Up als Pending eingereicht mit Beweis!');
             document.getElementById('cryptoAddressModal').classList.remove('active');
             document.getElementById('cryptoProofInput').value = '';
             cart = [];
             selectedTopUpValue = 0;
+            isTopUpFlow = false;
             appliedDiscount = 0;
             updateCartUI();
-            if(window.firebaseAuth.currentUser) loadDashboardStats(window.firebaseAuth.currentUser.email);
+            if(window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
         }
 
         function payWithBalance() {
