@@ -18,7 +18,6 @@
                     colors: {
                         bgDark: '#09090b',
                         cardDark: '#121216',
-                        cardHover: '#1a1a22',
                         accent: '#38bdf8'
                     }
                 }
@@ -77,6 +76,12 @@
 
     <!-- Cleaner Startbereich -->
     <header class="max-w-4xl mx-auto px-8 pt-44 pb-24 text-center">
+        <!-- Status Badge -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-8">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span data-de="Verfügbar für Aufträge" data-en="Available for work">Verfügbar für Aufträge</span>
+        </div>
+
         <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-4" data-de="Hi, ich bin Valentino." data-en="Hi, I'm Valentino.">
             Hi, ich bin Valentino.
         </h1>
@@ -186,6 +191,37 @@
                     <a href="#contact" class="block w-full py-3 text-center border border-white/10 rounded-xl hover:bg-white hover:text-black transition font-medium" data-de="Auswählen" data-en="Select">Auswählen</a>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- Testimonials (Kundenstimmen) -->
+        <section class="mb-32">
+            <h2 class="text-3xl font-bold text-center text-white mb-12" data-de="Was Kunden sagen" data-en="Client Reviews">Was Kunden sagen</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="glow-card p-8 rounded-2xl">
+                    <div class="flex text-accent text-sm mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 text-sm italic mb-6" data-de="&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;" data-en="&quot;The Pro Tuning made my PC incredibly fast. Zero input delay in games, absolutely recommended!&quot;">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
+                    <p class="text-xs font-semibold text-white">Leon K.</p>
+                    <p class="text-xs text-gray-500" data-de="Pro Tuning Kunde" data-en="Pro Tuning Client">Pro Tuning Kunde</p>
+                </div>
+                <div class="glow-card p-8 rounded-2xl">
+                    <div class="flex text-accent text-sm mb-4">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <p class="text-gray-300 text-sm italic mb-6" data-de="&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;" data-en="&quot;Super clean work on the website build. My site looks extremely clean and was online in no time.&quot;">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
+                    <p class="text-xs font-semibold text-white">Jonas M.</p>
+                    <p class="text-xs text-gray-500" data-de="Website Build Kunde" data-en="Website Build Client">Website Build Kunde</p>
+                </div>
             </div>
         </section>
 
