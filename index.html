@@ -35,13 +35,11 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
 
-        // Global verfügbar machen für die Formulare
         window.firebaseAuth = auth;
         window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
         window.signInWithEmailAndPassword = signInWithEmailAndPassword;
         window.signOut = signOut;
 
-        // Auth State Überwachung
         onAuthStateChanged(auth, (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
             if (user) {
@@ -183,11 +181,12 @@
             </div>
         </section>
 
-        <!-- Booking -->
+        <!-- Booking (mit PayPal.me Links) -->
         <section id="booking" class="mb-32">
             <h2 class="text-3xl font-bold text-center text-white mb-12" data-de="Mich buchen & Preise" data-en="Book Me & Pricing">Mich buchen & Preise</h2>
             <div class="grid md:grid-cols-3 gap-8">
                 
+                <!-- Plan 1: Basic PC-Tuning (15€) -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Basic PC-Tuning" data-en="Basic PC Tuning">Basic PC-Tuning</h3>
                     <p class="text-4xl font-bold text-white mb-6">15€</p>
@@ -196,9 +195,10 @@
                         <li data-de="Hintergrunddienste stoppen" data-en="Stop background services"><i class="fa-solid fa-check text-accent mr-2"></i> Hintergrunddienste stoppen</li>
                         <li data-de="Standard FPS Boost" data-en="Standard FPS Boost"><i class="fa-solid fa-check text-accent mr-2"></i> Standard FPS Boost</li>
                     </ul>
-                    <a href="https://buy.stripe.com/test_cNi4gB2Q22wKccW7gF2go03" target="_blank" class="block w-full py-3 text-center border border-white/15 rounded-xl hover:bg-white hover:text-black transition font-medium text-gray-200" data-de="Auswählen" data-en="Select">Auswählen</a>
+                    <a href="https://paypal.me/valentinolopez1e/15" target="_blank" class="block w-full py-3 text-center border border-white/15 rounded-xl hover:bg-white hover:text-black transition font-medium text-gray-200" data-de="Auswählen" data-en="Select">Mit PayPal zahlen</a>
                 </div>
 
+                <!-- Plan 2: Pro Tuning (35€ - Bestseller) -->
                 <div class="clean-card p-8 rounded-2xl border-accent/60 relative flex flex-col transform md:-translate-y-2">
                     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-black text-xs font-bold px-4 py-1 rounded-full" data-de="Bestseller" data-en="Bestseller">Bestseller</div>
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Pro Tuning (0 Delay)" data-en="Pro Tuning (0 Delay)">Pro Tuning (0 Delay)</h3>
@@ -209,9 +209,10 @@
                         <li data-de="0 Input Delay Setup" data-en="0 Input Delay Setup"><i class="fa-solid fa-check text-accent mr-2"></i> 0 Input Delay Setup</li>
                         <li data-de="Max. Performance Garantie" data-en="Max. Performance Guarantee"><i class="fa-solid fa-check text-accent mr-2"></i> Max. Performance Garantie</li>
                     </ul>
-                    <a href="https://buy.stripe.com/test_4gMcN7eyKfjwb8S58x2go02" target="_blank" class="block w-full py-3 text-center bg-accent text-black rounded-xl hover:bg-sky-400 transition font-bold" data-de="Direkt buchen" data-en="Book Now">Direkt buchen</a>
+                    <a href="https://paypal.me/valentinolopez1e/35" target="_blank" class="block w-full py-3 text-center bg-accent text-black rounded-xl hover:bg-sky-400 transition font-bold" data-de="Direkt buchen" data-en="Book Now">Mit PayPal zahlen</a>
                 </div>
 
+                <!-- Plan 3: Website Build (25€) -->
                 <div class="clean-card p-8 rounded-2xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white mb-2" data-de="Website Build" data-en="Website Build">Website Build</h3>
                     <p class="text-4xl font-bold text-white mb-6">25€</p>
@@ -221,7 +222,7 @@
                         <li data-de="Kontaktformular & Setup" data-en="Contact Form & Setup"><i class="fa-solid fa-check text-accent mr-2"></i> Kontaktformular & Setup</li>
                         <li data-de="Hilfe bei GitHub Pages" data-en="GitHub Pages Support"><i class="fa-solid fa-check text-accent mr-2"></i> Hilfe bei GitHub Pages</li>
                     </ul>
-                    <a href="https://buy.stripe.com/test_eVq3cx3U6gnA0ue30p2go01" target="_blank" class="block w-full py-3 text-center border border-white/15 rounded-xl hover:bg-white hover:text-black transition font-medium text-gray-200" data-de="Auswählen" data-en="Select">Auswählen</a>
+                    <a href="https://paypal.me/valentinolopez1e/25" target="_blank" class="block w-full py-3 text-center border border-white/15 rounded-xl hover:bg-white hover:text-black transition font-medium text-gray-200" data-de="Auswählen" data-en="Select">Mit PayPal zahlen</a>
                 </div>
 
             </div>
@@ -307,14 +308,13 @@
         </div>
     </div>
 
-    <!-- Echtes Kundenportal Login & Register Modal (mit Firebase & EmailJS) -->
+    <!-- Kundenportal Login & Register Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-sm z-50 items-center justify-center p-4">
         <div class="clean-card bg-[#18181f] p-8 rounded-2xl max-w-md w-full relative">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-2xl"></i>
             </button>
             
-            <!-- Ansicht wenn eingeloggt -->
             <div id="userDashboardView" class="hidden text-center space-y-4">
                 <h2 class="text-2xl font-bold text-white">Kunden-Dashboard</h2>
                 <p class="text-sm text-gray-300">Eingeloggt als: <span id="userEmailDisplay" class="text-accent font-medium"></span></p>
@@ -325,14 +325,12 @@
                 <button onclick="handleLogout()" class="w-full py-3 bg-red-500/20 text-red-400 border border-red-500/30 font-bold rounded-xl hover:bg-red-500/30 transition">Abmelden</button>
             </div>
 
-            <!-- Ansicht wenn abgemeldet -->
             <div id="authFormsContainer">
                 <div class="flex border-b border-white/10 mb-6">
                     <button onclick="switchAuthTab('login')" id="tabLoginBtn" class="flex-1 pb-3 text-sm font-semibold text-accent border-b-2 border-accent transition">Anmelden</button>
                     <button onclick="switchAuthTab('register')" id="tabRegisterBtn" class="flex-1 pb-3 text-sm font-semibold text-gray-400 hover:text-white transition">Registrieren</button>
                 </div>
 
-                <!-- Login Form (Echt mit Firebase) -->
                 <form id="loginForm" onsubmit="handleLoginFirebase(event)" class="space-y-4">
                     <h2 class="text-xl font-bold text-white mb-2">Willkommen zurück</h2>
                     <div>
@@ -346,7 +344,6 @@
                     <button type="submit" id="loginSubmitBtn" class="w-full py-3 bg-accent text-black font-bold rounded-xl hover:bg-sky-400 transition">Einloggen</button>
                 </form>
 
-                <!-- Register Form (Echt mit Firebase & EmailJS Bestätigungscode) -->
                 <form id="registerForm" onsubmit="handleRegisterFirebase(event)" class="space-y-4 hidden">
                     <h2 class="text-xl font-bold text-white mb-2">Account erstellen</h2>
                     <p class="text-xs text-gray-400 mb-4">Ein Bestätigungscode wird per E-Mail gesendet und der Account wird aktiviert.</p>
@@ -393,7 +390,6 @@
             const modal = document.getElementById('loginModal');
             modal.classList.toggle('active');
             
-            // Prüfen ob Nutzer eingeloggt ist und Dashboard anzeigen
             if(window.firebaseAuth && window.firebaseAuth.currentUser) {
                 document.getElementById('userDashboardView').classList.remove('hidden');
                 document.getElementById('authFormsContainer').classList.add('hidden');
@@ -427,7 +423,6 @@
             }
         }
 
-        // Firebase Login ausführen
         function handleLoginFirebase(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
@@ -451,7 +446,6 @@
                 });
         }
 
-        // Firebase Registrierung + EmailJS Code Versand
         function handleRegisterFirebase(e) {
             e.preventDefault();
             const name = document.getElementById('regName').value;
@@ -466,7 +460,6 @@
 
             window.createUserWithEmailAndPassword(window.firebaseAuth, email, pass)
                 .then((userCredential) => {
-                    // Sende Code via EmailJS
                     emailjs.send("service_qcbzj8m", "template_rreumik", {
                         to_email: email,
                         to_name: name,
@@ -489,7 +482,6 @@
                 });
         }
 
-        // Logout
         function handleLogout() {
             window.signOut(window.firebaseAuth).then(() => {
                 alert('Erfolgreich abgemeldet.');
@@ -499,7 +491,6 @@
             });
         }
 
-        // Kontaktformular
         function handleContact(e) {
             e.preventDefault();
             const name = document.getElementById('contactName').value;
