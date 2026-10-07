@@ -60,14 +60,17 @@
 
         onAuthStateChanged(auth, (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
+            const loginBtnTextMobile = document.getElementById('loginBtnTextMobile');
             if (user) {
-                loginBtnText.innerText = "Dashboard";
+                if(loginBtnText) loginBtnText.innerText = "Dashboard";
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Dashboard";
                 const checkoutEmailInput = document.getElementById('checkoutEmail');
                 if (checkoutEmailInput && !checkoutEmailInput.value) {
                     checkoutEmailInput.value = user.email;
                 }
             } else {
-                loginBtnText.innerText = "Anmelden";
+                if(loginBtnText) loginBtnText.innerText = "Anmelden";
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Anmelden";
             }
         });
     </script>
@@ -87,7 +90,7 @@
         }
     </script>
     <style>
-        body { background-color: #030305; color: #f4f4f5; overflow-x: hidden; }
+        body { background-color: #030305; color: #f4f4f5; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
         .modal { display: none; }
         .modal.active { display: flex; }
         
@@ -102,10 +105,10 @@
             top: 5%;
             left: 50%;
             transform: translateX(-50%);
-            width: 700px;
-            height: 400px;
+            width: min(700px, 90vw);
+            height: 350px;
             background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(129, 140, 248, 0.06) 45%, transparent 75%);
-            filter: blur(90px);
+            filter: blur(80px);
             z-index: -1;
             pointer-events: none;
         }
@@ -114,12 +117,14 @@
             background: rgba(13, 13, 20, 0.85);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s ease;
         }
-        .clean-card:hover {
-            border-color: rgba(56, 189, 248, 0.4);
-            transform: translateY(-4px);
-            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.15);
+        @media (min-width: 768px) {
+            .clean-card:hover {
+                border-color: rgba(56, 189, 248, 0.4);
+                transform: translateY(-4px);
+                box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.15);
+            }
         }
         
         .bestseller-card {
@@ -135,11 +140,12 @@
     <div class="hero-glow"></div>
 
     <!-- Navigation -->
-    <nav class="w-full py-5 px-8 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#030305]/85 backdrop-blur-2xl z-50">
-        <a href="#" class="text-xl font-extrabold tracking-tight text-white hover:text-accent transition flex items-center gap-2">
+    <nav class="w-full py-4 px-5 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#030305]/90 backdrop-blur-2xl z-50">
+        <a href="#" class="text-lg md:text-xl font-extrabold tracking-tight text-white hover:text-accent transition flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></span> Val3ntino<span class="text-accent">.</span>
         </a>
         
+        <!-- Desktop Menü -->
         <div class="hidden md:flex items-center space-x-8">
             <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Skills" data-en="Skills">Skills</a>
             <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
@@ -154,56 +160,57 @@
             <button onclick="toggleLogin()" class="text-sm font-semibold text-accent hover:text-white transition flex items-center gap-2 bg-accent/10 px-4.5 py-2 rounded-xl border border-accent/25 shadow-sm shadow-sky-500/10"><i class="fa-solid fa-user text-xs"></i> <span id="loginBtnText">Anmelden</span></button>
         </div>
 
-        <div class="flex items-center space-x-3 md:hidden">
+        <!-- Mobile Controls in Navbar -->
+        <div class="flex items-center space-x-2.5 md:hidden">
             <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 border border-white/10 rounded-xl text-white">
-                <i class="fa-solid fa-cart-shopping text-accent"></i>
+                <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
                 <span id="cartBadgeMobile" class="absolute -top-1 -right-1 bg-accent text-black text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">0</span>
             </button>
-            <button onclick="toggleLanguage()" id="langBtn" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-white transition">EN</button>
-            <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-xl p-2">
-                <i class="fa-solid fa-bars"></i>
+            <button onclick="toggleLanguage()" id="langBtn" class="px-2.5 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs font-semibold text-white">EN</button>
+            <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg p-2">
+                <i class="fa-solid fa-bars" id="menuIcon"></i>
             </button>
         </div>
     </nav>
 
     <!-- Mobile Dropdown Menü -->
-    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[77px] bg-[#0d0d14] border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-xl">
-        <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Skills" data-en="Skills">Skills</a>
-        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium" data-de="Kontakt" data-en="Contact">Kontakt</a>
-        <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 hover:text-white text-base font-medium" data-de="Impressum" data-en="Imprint">Impressum</button>
-        <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium flex items-center gap-2"><i class="fa-solid fa-user"></i> Anmelden</button>
+    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[69px] bg-[#0d0d14]/95 border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-2xl">
+        <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1" data-de="Skills" data-en="Skills">Skills</a>
+        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1" data-de="Preise & Store" data-en="Store & Pricing">Preise & Store</a>
+        <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1" data-de="Kontakt" data-en="Contact">Kontakt</a>
+        <button onclick="toggleMobileMenu(); toggleImpressum();" class="text-left text-gray-300 hover:text-white text-base font-medium py-1" data-de="Impressum" data-en="Imprint">Impressum</button>
+        <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium py-2 flex items-center gap-2"><i class="fa-solid fa-user"></i> <span id="loginBtnTextMobile">Anmelden</span></button>
     </div>
 
     <!-- Hero Header -->
-    <header class="max-w-4xl mx-auto px-8 pt-56 pb-28 text-center relative">
-        <div class="inline-flex items-center gap-2 px-4.5 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-8 shadow-xl shadow-emerald-500/5 backdrop-blur-md">
+    <header class="max-w-4xl mx-auto px-5 md:px-8 pt-44 md:pt-56 pb-20 md:pb-28 text-center relative">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-6 md:mb-8 shadow-xl shadow-emerald-500/5 backdrop-blur-md">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             <span data-de="Verfügbar für Aufträge & High-End Projekte" data-en="Available for work & high-end projects">Verfügbar für Aufträge & High-End Projekte</span>
         </div>
 
-        <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-6" data-de="Hi, ich bin Valentino." data-en="Hi, I'm Valentino.">
+        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4 md:mb-6" data-de="Hi, ich bin Valentino." data-en="Hi, I'm Valentino.">
             Hi, ich bin Valentino.
         </h1>
-        <p class="text-2xl md:text-3xl text-gray-400 font-light mb-8">
+        <p class="text-xl md:text-3xl text-gray-400 font-light mb-6 md:mb-8">
             aka <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-sky-300 to-accentPurple font-bold">Val3ntino</span>
         </p>
-        <p class="text-base md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light" data-de="Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts." data-en="I build clean web applications, optimize Windows & hardware for uncompromising performance, and create creative game scripts.">
+        <p class="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light px-2" data-de="Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts." data-en="I build clean web applications, optimize Windows & hardware for uncompromising performance, and create creative game scripts.">
             Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts.
         </p>
     </header>
 
-    <main class="max-w-5xl mx-auto px-8 pb-32">
+    <main class="max-w-5xl mx-auto px-5 md:px-8 pb-24 md:pb-32">
         <!-- Skills Sektion -->
-        <section id="skills" class="mb-32">
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between group">
+        <section id="skills" class="mb-24 md:mb-32">
+            <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+                <div class="clean-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
                     <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-code text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-3" data-de="Coding & Dev" data-en="Coding & Dev">Coding & Dev</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light" data-de="Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts." data-en="Passion for programming, modern web development, and game scripts.">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3" data-de="Coding & Dev" data-en="Coding & Dev">Coding & Dev</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light" data-de="Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts." data-en="Passion for programming, modern web development, and game scripts.">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">HTML & CSS</span>
@@ -213,13 +220,13 @@
                     </div>
                 </div>
 
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between group">
+                <div class="clean-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
                     <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-microchip text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-3" data-de="PC Tuning" data-en="PC Tuning">PC Tuning</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light" data-de="Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen." data-en="Maximum performance, custom tweaks, and uncompromising hardware optimizations.">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3" data-de="PC Tuning" data-en="PC Tuning">PC Tuning</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light" data-de="Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen." data-en="Maximum performance, custom tweaks, and uncompromising hardware optimizations.">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">0 Input Delay</span>
@@ -228,13 +235,13 @@
                     </div>
                 </div>
 
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between group">
+                <div class="clean-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
                     <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
                             <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
                         </div>
-                        <h3 class="text-lg font-bold text-white mb-3" data-de="Vibe Coding" data-en="Vibe Coding">Vibe Coding</h3>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed font-light" data-de="Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre." data-en="Coding in the ultimate flow state. Focusing on clean solutions in a relaxed atmosphere.">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
+                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3" data-de="Vibe Coding" data-en="Vibe Coding">Vibe Coding</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light" data-de="Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre." data-en="Coding in the ultimate flow state. Focusing on clean solutions in a relaxed atmosphere.">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
                     </div>
                     <div class="flex flex-wrap gap-2">
                         <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5" data-de="Flow State" data-en="Flow State">Flow State</span>
@@ -245,25 +252,25 @@
         </section>
 
         <!-- Booking / Store Sektion -->
-        <section id="booking" class="mb-32">
-            <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-extrabold text-white mb-3" data-de="Store & Services" data-en="Store & Services">Store & Services</h2>
-                <p class="text-gray-400 text-sm font-light" data-de="Wähle deine Menge und lege Pakete in den Warenkorb." data-en="Select your quantity and add packages to your cart.">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
+        <section id="booking" class="mb-24 md:mb-32">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3" data-de="Store & Services" data-en="Store & Services">Store & Services</h2>
+                <p class="text-gray-400 text-xs md:text-sm font-light px-4" data-de="Wähle deine Menge und lege Pakete in den Warenkorb." data-en="Select your quantity and add packages to your cart.">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-8 items-stretch">
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8 items-stretch">
                 <!-- Plan 1 -->
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
+                <div class="clean-card p-6 md:p-8 rounded-3xl flex flex-col justify-between">
                     <div>
                         <h3 class="text-lg font-bold text-white mb-2">Basic PC-Tuning</h3>
-                        <p class="text-4xl font-black text-white mb-6">€15.00</p>
-                        <ul class="text-gray-400 text-sm space-y-3.5 mb-6 font-light">
+                        <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€15.00</p>
+                        <ul class="text-gray-400 text-xs md:text-sm space-y-3 mb-6 font-light">
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
                         </ul>
                     </div>
-                    <div class="space-y-4">
+                    <div class="space-y-3.5">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
                             <button onclick="adjustQty('basic', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-basic" class="font-bold text-white text-sm">1</span>
@@ -276,19 +283,19 @@
                 </div>
 
                 <!-- Plan 2 (Bestseller) -->
-                <div class="bestseller-card p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3">
-                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-xs font-extrabold px-4.5 py-1.5 rounded-full shadow-lg" data-de="BELIEBT" data-en="BESTSELLER">BELIEBT</div>
+                <div class="bestseller-card p-6 md:p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3">
+                    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gradient-to-r from-accent to-accentPurple text-black text-[10px] md:text-xs font-extrabold px-4 py-1 rounded-full shadow-lg" data-de="BELIEBT" data-en="BESTSELLER">BELIEBT</div>
                     <div>
                         <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning (0 Delay)</h3>
-                        <p class="text-4xl font-black text-white mb-6">€35.00</p>
-                        <ul class="text-gray-300 text-sm space-y-3.5 mb-6 font-light">
+                        <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€35.00</p>
+                        <ul class="text-gray-300 text-xs md:text-sm space-y-3 mb-6 font-light">
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
                         </ul>
                     </div>
-                    <div class="space-y-4">
+                    <div class="space-y-3.5">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
                             <button onclick="adjustQty('pro', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-pro" class="font-bold text-white text-sm">1</span>
@@ -301,18 +308,18 @@
                 </div>
 
                 <!-- Plan 3 -->
-                <div class="clean-card p-8 rounded-3xl flex flex-col justify-between">
+                <div class="clean-card p-6 md:p-8 rounded-3xl flex flex-col justify-between">
                     <div>
                         <h3 class="text-lg font-bold text-white mb-2">Website Build</h3>
-                        <p class="text-4xl font-black text-white mb-6">€25.00</p>
-                        <ul class="text-gray-400 text-sm space-y-3.5 mb-6 font-light">
+                        <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€25.00</p>
+                        <ul class="text-gray-400 text-xs md:text-sm space-y-3 mb-6 font-light">
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
                         </ul>
                     </div>
-                    <div class="space-y-4">
+                    <div class="space-y-3.5">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
                             <button onclick="adjustQty('web', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-web" class="font-bold text-white text-sm">1</span>
@@ -327,63 +334,63 @@
         </section>
 
         <!-- Testimonials -->
-        <section class="mb-32">
-            <h2 class="text-3xl font-bold text-center text-white mb-12" data-de="Was Kunden sagen" data-en="Client Reviews">Was Kunden sagen</h2>
-            <div class="grid md:grid-cols-2 gap-6">
-                <div class="clean-card p-8 rounded-3xl">
-                    <div class="flex text-accent text-xs mb-4 space-x-1">
+        <section class="mb-24 md:mb-32">
+            <h2 class="text-2xl sm:text-3xl font-bold text-center text-white mb-10" data-de="Was Kunden sagen" data-en="Client Reviews">Was Kunden sagen</h2>
+            <div class="grid md:grid-cols-2 gap-5 md:gap-6">
+                <div class="clean-card p-6 md:p-8 rounded-3xl">
+                    <div class="flex text-accent text-xs mb-3 space-x-1">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
-                    <p class="text-gray-300 text-sm italic mb-6 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
+                    <p class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
                     <p class="text-xs font-bold text-white">Leon K.</p>
                 </div>
-                <div class="clean-card p-8 rounded-3xl">
-                    <div class="flex text-accent text-xs mb-4 space-x-1">
+                <div class="clean-card p-6 md:p-8 rounded-3xl">
+                    <div class="flex text-accent text-xs mb-3 space-x-1">
                         <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                     </div>
-                    <p class="text-gray-300 text-sm italic mb-6 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
+                    <p class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
                     <p class="text-xs font-bold text-white">Jonas M.</p>
                 </div>
             </div>
         </section>
 
         <!-- Kontaktformular -->
-        <section id="contact" class="max-w-xl mx-auto clean-card p-8 md:p-10 rounded-3xl mb-20 shadow-2xl">
-            <h2 class="text-2xl font-bold text-white mb-2 text-center" data-de="Kontakt aufnehmen" data-en="Get in Touch">Kontakt aufnehmen</h2>
-            <p class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
-            <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
+        <section id="contact" class="max-w-xl mx-auto clean-card p-6 sm:p-8 md:p-10 rounded-3xl mb-16 shadow-2xl">
+            <h2 class="text-xl md:text-2xl font-bold text-white mb-2 text-center" data-de="Kontakt aufnehmen" data-en="Get in Touch">Kontakt aufnehmen</h2>
+            <p class="text-xs text-gray-400 text-center mb-6 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
+            <form id="contactForm" onsubmit="handleContact(event)" class="space-y-3.5">
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
-                    <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Dein Name</label>
+                    <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs md:text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
-                    <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">E-Mail Adresse</label>
+                    <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs md:text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
                 </div>
                 <div>
-                    <label class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
-                    <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
+                    <label class="block text-xs font-medium text-gray-400 mb-1.5">Nachricht</label>
+                    <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs md:text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
                 </div>
-                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-sm shadow-xl">Nachricht senden</button>
+                <button type="submit" id="contactSubmitBtn" class="w-full py-3.5 md:py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-xs md:text-sm shadow-xl">Nachricht senden</button>
             </form>
         </section>
     </main>
 
     <!-- Shopping Cart Modal -->
     <div id="cartModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-6 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-5 shadow-2xl">
             <button onclick="toggleCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
             
             <h2 class="text-xl font-extrabold text-white">Shopping Cart</h2>
 
-            <div id="cartItemsContainer" class="space-y-3 max-h-56 overflow-y-auto pr-1">
+            <div id="cartItemsContainer" class="space-y-3 max-h-52 overflow-y-auto pr-1">
                 <p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>
             </div>
 
-            <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 space-y-3">
-                <p class="text-xs font-bold text-accent tracking-wider uppercase">Your Order</p>
+            <div class="bg-[#030305] p-4 md:p-5 rounded-2xl border border-white/10 space-y-2">
+                <p class="text-[11px] font-bold text-accent tracking-wider uppercase">Your Order</p>
                 <div class="flex justify-between items-center text-sm">
                     <span class="text-gray-400">Subtotal</span>
                     <span class="text-white font-bold text-base" id="cartSubtotalDisplay">€0.00</span>
@@ -391,7 +398,7 @@
             </div>
 
             <div class="space-y-3">
-                <button onclick="proceedToCheckout()" id="checkoutBtn" class="w-full py-4 text-center bg-accent text-black font-extrabold rounded-2xl hover:bg-sky-400 transition text-sm shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 opacity-50 cursor-not-allowed" disabled>
+                <button onclick="proceedToCheckout()" id="checkoutBtn" class="w-full py-3.5 md:py-4 text-center bg-accent text-black font-extrabold rounded-2xl hover:bg-sky-400 transition text-xs md:text-sm shadow-lg shadow-sky-500/20 flex items-center justify-center gap-2 opacity-50 cursor-not-allowed" disabled>
                     Checkout <i class="fa-solid fa-cart-shopping text-xs"></i>
                 </button>
             </div>
@@ -400,16 +407,16 @@
 
     <!-- Zahlungs-Auswahl & E-Mail Abfrage Modal -->
     <div id="paymentModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-5 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 space-y-4 shadow-2xl">
             <button onclick="togglePaymentModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <h2 class="text-xl font-bold text-white mb-1">Bestellbestätigung & Zahlung</h2>
+            <h2 class="text-lg md:text-xl font-bold text-white mb-1">Bestellbestätigung & Zahlung</h2>
             <p class="text-xs text-gray-400 font-light">Bitte gib deine E-Mail-Adresse für die Bestellbestätigung ein:</p>
             
             <div>
                 <label class="block text-xs font-medium text-gray-400 mb-1.5">Deine E-Mail Adresse *</label>
-                <input type="email" id="checkoutEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                <input type="email" id="checkoutEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs md:text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
             </div>
 
             <div class="space-y-3 pt-2">
@@ -421,11 +428,11 @@
 
     <!-- Krypto Modal -->
     <div id="cryptoModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-lg w-full relative border border-white/10 space-y-4 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-lg w-full relative border border-white/10 space-y-4 shadow-2xl">
             <button onclick="toggleCryptoModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
-            <h2 class="text-xl font-bold text-white mb-1">Krypto Wallet-Adressen</h2>
+            <h2 class="text-lg md:text-xl font-bold text-white mb-1">Krypto Wallet-Adressen</h2>
             <p class="text-xs text-gray-400 font-light">Überweise den Betrag an eine der folgenden Adressen:</p>
             
             <div class="space-y-3 text-xs">
@@ -456,7 +463,7 @@
 
     <!-- Impressum Modal -->
     <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
             <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -473,7 +480,7 @@
 
     <!-- Kundenportal Login Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="clean-card bg-[#0d0d14] p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
+        <div class="clean-card bg-[#0d0d14] p-6 md:p-8 rounded-3xl max-w-md w-full relative border border-white/10 shadow-2xl">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white transition">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
@@ -679,8 +686,11 @@
 
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
+            const icon = document.getElementById('menuIcon');
             menu.classList.toggle('hidden');
             menu.classList.toggle('flex');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-xmark');
         }
 
         function toggleImpressum() {
