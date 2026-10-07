@@ -479,7 +479,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.59</p>
+            <p class="font-mono text-accent/70">v1.61</p>
         </div>
     </footer>
 
@@ -561,6 +561,18 @@
             <div class="space-y-3 pt-2">
                 <p id="labelPaymentMethod" class="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Payment Method</p>
                 
+                <!-- Guthaben-Bezahlung -->
+                <button onclick="payWithBalance()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between text-left">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-wallet text-emerald-400 text-lg"></i>
+                        <div>
+                            <span class="text-xs font-bold text-white block">Customer Balance</span>
+                            <span class="text-[10px] text-gray-400" id="checkoutBalanceDisplay">Available: €0.00</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-emerald-400 font-bold">Pay Now →</span>
+                </button>
+
                 <a id="paypalPayLink" href="#" target="_blank" onclick="completePurchase('PayPal')" class="block w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <i class="fa-brands fa-paypal text-sky-400 text-lg"></i>
@@ -572,28 +584,34 @@
                 <div onclick="toggleCryptoSelection()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition cursor-pointer flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-coins text-amber-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">Cryptocurrency (Choose Coin)</span>
+                        <span class="text-xs font-bold text-white">Cryptocurrency (Pending Verification)</span>
                     </div>
                     <span class="text-[10px] text-accent" id="cryptoToggleText">Expand ▼</span>
                 </div>
 
                 <div id="cryptoListContainer" class="hidden space-y-2 bg-[#030305] p-3 rounded-2xl border border-white/10 text-xs">
-                    <button onclick="completePurchase('Litecoin (LTC)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Litecoin (LTC)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completePurchase('Solana (SOL)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Solana (SOL)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completePurchase('Ethereum (ETH)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Ethereum (ETH)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completePurchase('USDT (ERC20)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>USDT (ERC20)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completePurchase('USDC (SPL)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>USDC (SPL)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completePurchase('Bitcoin (BTC)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Bitcoin (BTC)</span><span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded">+10%</span></button>
+                    <button onclick="selectCryptoCoin('Litecoin (LTC)', 'LTC1QVAL3NTINOCRYPTOADDRESS998877')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Litecoin (LTC)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
+                    <button onclick="selectCryptoCoin('Solana (SOL)', 'SOL_VAL3NTINO_STORE_BLOCKCHAIN_ADDR_1122')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Solana (SOL)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
+                    <button onclick="selectCryptoCoin('Bitcoin (BTC)', 'bc1qval3ntinobitcoinaddresswalletxyz4455')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Bitcoin (BTC)</span><span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded">+10%</span></button>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 mt-4 flex items-center justify-between text-xs">
-                <div>
-                    <p id="needHelpTitle" class="text-white font-bold">Need help with this order?</p>
-                    <p id="needHelpDesc" class="text-gray-400 text-[10px]">Open a support ticket and we'll get back to you.</p>
-                </div>
-                <button onclick="toggleLogin(); togglePaymentModal();" id="needHelpBtn" class="text-accent font-bold hover:underline">Support →</button>
+    <!-- Krypto Überweisungs-Modal mit Adresse -->
+    <div id="cryptoAddressModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
+            <button onclick="document.getElementById('cryptoAddressModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h2 class="text-lg font-bold text-white">Krypto Zahlung (Pending)</h2>
+            <p class="text-xs text-gray-400">Bitte überweise den genauen Betrag von <span id="cryptoPayAmount" class="text-accent font-bold">€0.00</span> an folgende Adresse:</p>
+            
+            <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 text-xs font-mono text-accent break-all select-all" id="cryptoAddressBox">
+                ADDRESS_HERE
             </div>
+            
+            <p class="text-[10px] text-amber-400">Nach Eingang der Transaktion wird die Bestellung von Valentino bestätigt.</p>
+            
+            <button onclick="confirmCryptoPending()" class="w-full py-3 bg-accent text-black font-bold rounded-xl text-xs">Ich habe bezahlt (Pending einreichen)</button>
         </div>
     </div>
 
@@ -719,12 +737,12 @@
         </div>
     </div>
 
-    <!-- Top Up Auswahl Modal -->
+    <!-- Top Up Modal -->
     <div id="topUpModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl">
             <button onclick="openTopUpModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             <h2 class="text-lg font-bold text-white">Guthaben aufladen (Top Up)</h2>
-            <p class="text-xs text-gray-400">Wähle den Betrag und bezahle sicher via PayPal oder Krypto:</p>
+            <p class="text-xs text-gray-400">Wähle den Betrag, den du deinem Account hinzufügen möchtest:</p>
             <div class="grid grid-cols-3 gap-2">
                 <button onclick="selectTopUpAmount(10)" class="py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-bold text-white">€10.00</button>
                 <button onclick="selectTopUpAmount(25)" class="py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-bold text-white">€25.00</button>
@@ -752,17 +770,15 @@
                 <div onclick="toggleTopUpCrypto()" class="w-full p-4 bg-[#030305] hover:bg-white/5 border border-white/10 rounded-2xl transition cursor-pointer flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <i class="fa-solid fa-coins text-amber-400 text-lg"></i>
-                        <span class="text-xs font-bold text-white">Cryptocurrency</span>
+                        <span class="text-xs font-bold text-white">Cryptocurrency (Pending)</span>
                     </div>
                     <span class="text-[10px] text-accent" id="topUpCryptoToggleText">Expand ▼</span>
                 </div>
 
                 <div id="topUpCryptoList" class="hidden space-y-2 bg-[#030305] p-3 rounded-2xl border border-white/10 text-xs">
-                    <button onclick="completeTopUp('Litecoin (LTC)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Litecoin (LTC)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completeTopUp('Solana (SOL)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Solana (SOL)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completeTopUp('Ethereum (ETH)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Ethereum (ETH)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completeTopUp('USDT (ERC20)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>USDT (ERC20)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
-                    <button onclick="completeTopUp('Bitcoin (BTC)')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Bitcoin (BTC)</span><span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded">+10%</span></button>
+                    <button onclick="selectTopUpCryptoCoin('Litecoin (LTC)', 'LTC1QVAL3NTINOCRYPTOADDRESS998877')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Litecoin (LTC)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
+                    <button onclick="selectTopUpCryptoCoin('Solana (SOL)', 'SOL_VAL3NTINO_STORE_BLOCKCHAIN_ADDR_1122')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Solana (SOL)</span><i class="fa-solid fa-chevron-right text-[10px] text-accent"></i></button>
+                    <button onclick="selectTopUpCryptoCoin('Bitcoin (BTC)', 'bc1qval3ntinobitcoinaddresswalletxyz4455')" class="w-full p-2.5 bg-white/5 hover:bg-white/10 rounded-xl text-left flex justify-between items-center text-gray-300"><span>Bitcoin (BTC)</span><span class="text-[10px] bg-amber-500/20 text-amber-400 px-2 py-0.5 rounded">+10%</span></button>
                 </div>
             </div>
         </div>
@@ -772,6 +788,8 @@
     <script>
         let currentLang = 'de';
         let selectedTopUpValue = 0;
+        let pendingCryptoCoin = "";
+        let pendingCryptoAddress = "";
 
         const translations = {
             de: {
@@ -1039,19 +1057,24 @@
             document.getElementById('userAvatarLetter').innerText = email.charAt(0).toUpperCase();
             document.getElementById('statOrdersCount').innerText = orders.length;
             document.getElementById('statBalanceAmount').innerText = '€' + balance.toFixed(2);
+            document.getElementById('checkoutBalanceDisplay').innerText = `Available: €` + balance.toFixed(2);
             
             if (orders.length === 0) {
                 container.innerHTML = `<p class="text-xs text-gray-400 text-center py-2">${translations[currentLang].noOrdersText}</p>`;
             } else {
                 container.innerHTML = '';
                 orders.forEach(order => {
+                    let statusColor = order.status === 'Pending' ? 'text-amber-400' : 'text-accent';
                     container.innerHTML += `
                         <div class="bg-[#12121c] p-3 rounded-xl border border-white/5 text-xs flex justify-between items-center">
                             <div>
                                 <p class="text-white font-bold">${order.items}</p>
                                 <p class="text-[10px] text-gray-400">Invoice #${order.invoice} • ${order.date}</p>
                             </div>
-                            <span class="text-accent font-bold">${order.total}</span>
+                            <div class="text-right">
+                                <span class="${statusColor} font-bold block">${order.status || 'Completed'}</span>
+                                <span class="text-white font-bold">${order.total}</span>
+                            </div>
                         </div>
                     `;
                 });
@@ -1098,6 +1121,28 @@
             }
         }
 
+        function selectTopUpCryptoCoin(coinName, address) {
+            let email = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : null;
+            if(!email) { showToast("Bitte zuerst einloggen!"); return; }
+
+            let newOrder = {
+                items: `Top Up Guthaben (€${selectedTopUpValue.toFixed(2)}) via ${coinName}`,
+                total: `€${selectedTopUpValue.toFixed(2)}`,
+                rawTotal: selectedTopUpValue,
+                method: `Crypto (${coinName})`,
+                status: 'Pending',
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + email, JSON.stringify(existingOrders));
+
+            document.getElementById('topUpPaymentModal').classList.remove('active');
+            loadDashboardStats(email);
+            showToast(`Pending Order für €${selectedTopUpValue.toFixed(2)} erstellt! Überweise an: ${address}`);
+        }
+
         function completeTopUp(method) {
             let email = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : null;
             if(!email) { showToast("Bitte zuerst einloggen!"); return; }
@@ -1120,6 +1165,83 @@
             } else {
                 text.innerText = currentLang === 'de' ? "Einklappen ▲" : "Hide ▲";
             }
+        }
+
+        function selectCryptoCoin(coinName, address) {
+            pendingCryptoCoin = coinName;
+            pendingCryptoAddress = address;
+            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
+            document.getElementById('cryptoPayAmount').innerText = totalAmount;
+            document.getElementById('cryptoAddressBox').innerText = address;
+            document.getElementById('paymentModal').classList.remove('active');
+            document.getElementById('cryptoAddressModal').classList.add('active');
+        }
+
+        function confirmCryptoPending() {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
+            let rawNum = totalAmount.replace('€', '');
+
+            let newOrder = {
+                items: orderSummary,
+                total: totalAmount,
+                rawTotal: rawNum,
+                method: `Crypto (${pendingCryptoCoin})`,
+                status: 'Pending',
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+
+            showToast('Bestellung als Pending eingereicht. Warten auf Bestätigung.');
+            document.getElementById('cryptoAddressModal').classList.remove('active');
+            cart = [];
+            appliedDiscount = 0;
+            updateCartUI();
+        }
+
+        function payWithBalance() {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            if (!emailInput || !emailInput.includes('@')) {
+                showToast('Bitte E-Mail eingeben!');
+                return;
+            }
+            let balance = parseFloat(localStorage.getItem('balance_' + emailInput) || '0.00');
+            let totalAmountNum = parseFloat(document.getElementById('cartSubtotalDisplay').innerText.replace('€',''));
+
+            if(balance < totalAmountNum) {
+                showToast('Nicht genügend Guthaben auf dem Account! Bitte vorher Top Up nutzen.');
+                return;
+            }
+
+            let newBalance = balance - totalAmountNum;
+            localStorage.setItem('balance_' + emailInput, newBalance.toFixed(2));
+
+            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let totalAmount = document.getElementById('cartSubtotalDisplay').innerText;
+
+            let newOrder = {
+                items: orderSummary,
+                total: totalAmount,
+                rawTotal: totalAmountNum,
+                method: 'Customer Balance',
+                status: 'Completed',
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+
+            showToast('Erfolgreich mit Guthaben bezahlt!');
+            cart = [];
+            appliedDiscount = 0;
+            updateCartUI();
+            togglePaymentModal();
+            if(window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
         }
 
         function sendSupportTicket() {
@@ -1243,6 +1365,7 @@
                 total: totalAmount,
                 rawTotal: rawNum,
                 method: method,
+                status: 'Completed',
                 invoice: Math.floor(100000000000 + Math.random() * 900000000000),
                 date: new Date().toLocaleDateString('de-DE')
             };
