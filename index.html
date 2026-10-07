@@ -479,7 +479,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.61</p>
+            <p class="font-mono text-accent/70">v1.63.1</p>
         </div>
     </footer>
 
@@ -1164,7 +1164,6 @@
 
             pendingCryptoCoin = coinName + " (Top Up)";
             pendingCryptoAddress = address;
-            selectedTopUpValue = selectedTopUpValue; // Betrag behalten
 
             document.getElementById('cryptoCoinTitle').innerText = coinName;
             document.getElementById('cryptoPayAmount').innerText = '€' + selectedTopUpValue.toFixed(2);
@@ -1236,6 +1235,7 @@
 
             document.getElementById('gatewayModal').classList.remove('active');
             cart = [];
+            selectedTopUpValue = 0;
             appliedDiscount = 0;
             updateCartUI();
             if(window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
@@ -1281,7 +1281,6 @@
                 date: new Date().toLocaleDateString('de-DE')
             };
 
-            // Wenn es ein Top Up war, vermerken wir es im Order-Prozess
             if(selectedTopUpValue > 0) {
                 newOrder.isTopUp = true;
                 newOrder.topUpValue = selectedTopUpValue;
@@ -1298,7 +1297,7 @@
             selectedTopUpValue = 0;
             appliedDiscount = 0;
             updateCartUI();
-            if(window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
+            if(window.firebaseAuth.currentUser) loadDashboardStats(window.firebaseAuth.currentUser.email);
         }
 
         function payWithBalance() {
