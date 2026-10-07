@@ -3,340 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Val3ntino | Portfolio</title>
-    
-    <!-- Load Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Load FontAwesome for Icons -->
+    <title>Valentino | Portfolio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome für Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Load Tailwind CSS -->
+    <!-- Tailwind CSS (für das Design) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Tailwind Configuration -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        darkbg: '#0a0a0f',
-                        cardbg: '#14141e',
-                        neoncyan: '#00f0ff',
-                        neonpurple: '#b026ff',
+                        neonCyan: '#00f3ff',
+                        neonPurple: '#bc13fe',
+                        darkBg: '#0a0a0f',
+                        cardBg: '#15151e'
                     }
                 }
             }
         }
     </script>
-
     <style>
-        body {
-            background-color: theme('colors.darkbg');
-            color: #e2e8f0;
-            overflow-x: hidden;
-        }
-
-        /* Custom Scrollbar for gaming aesthetic */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0a0f;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #475569;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: theme('colors.neoncyan');
-        }
-
-        /* Glow effects */
-        .glow-text {
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-        
-        .card-hover {
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .card-hover:hover {
-            transform: translateY(-5px);
-            border-color: theme('colors.neoncyan');
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.15);
-        }
-
-        /* Background ambient blobs */
-        .ambient-blob {
-            position: absolute;
-            filter: blur(100px);
-            opacity: 0.15;
-            z-index: -1;
-            border-radius: 50%;
-        }
-        
-        .progress-bar-fill {
-            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        body { background-color: #0a0a0f; color: #ffffff; }
+        .neon-text-cyan { text-shadow: 0 0 10px rgba(0, 243, 255, 0.6); }
+        .neon-border { box-shadow: 0 0 15px rgba(0, 243, 255, 0.1); border: 1px solid rgba(0, 243, 255, 0.3); }
+        .neon-border:hover { box-shadow: 0 0 25px rgba(188, 19, 254, 0.4); border-color: rgba(188, 19, 254, 0.8); }
     </style>
 </head>
-<body class="antialiased selection:bg-neonpurple selection:text-white relative">
+<body class="antialiased selection:bg-neonCyan selection:text-black">
 
-    <!-- Ambient Background Lighting -->
-    <div class="ambient-blob bg-neoncyan w-96 h-96 top-0 left-0"></div>
-    <div class="ambient-blob bg-neonpurple w-96 h-96 top-1/2 right-0"></div>
-    <div class="ambient-blob bg-blue-500 w-[500px] h-[500px] bottom-0 left-1/4 opacity-10"></div>
+    <!-- Navigationsleiste -->
+    <nav class="fixed w-full z-50 bg-darkBg/90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-neonCyan to-neonPurple">Valentino</a>
+            <div class="hidden md:flex space-x-8 font-semibold">
+                <a href="#about" class="hover:text-neonCyan transition">Über mich</a>
+                <a href="#skills" class="hover:text-neonCyan transition">Skills</a>
+                <a href="#contact" class="hover:text-neonCyan transition">Kontakt</a>
+            </div>
+        </div>
+    </nav>
 
-    <!-- Navbar -->
-    <header class="fixed w-full top-0 z-50 backdrop-blur-md bg-darkbg/80 border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
-                <div class="flex-shrink-0">
-                    <a href="#home" class="text-2xl font-bold tracking-tighter">
-                        <span class="text-white">Val</span><span class="text-neoncyan glow-text">3</span><span class="text-white">ntino</span>
-                    </a>
+    <!-- Hero Bereich (Startbildschirm) -->
+    <section class="min-h-screen flex items-center justify-center pt-20 px-4">
+        <div class="text-center max-w-4xl">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-6">
+                Hi, ich bin <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonCyan to-neonPurple neon-text-cyan">Valentino</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400 mb-10 leading-relaxed">
+                Leidenschaftlicher Programmierer, PC-Tuning-Experte <br class="hidden md:block">und immer bereit für neuen Code.
+            </p>
+            <div class="flex justify-center gap-4 flex-wrap">
+                <a href="#contact" class="px-8 py-3 bg-gradient-to-r from-neonCyan to-blue-500 text-black font-bold rounded-full hover:scale-105 transition transform shadow-[0_0_15px_rgba(0,243,255,0.4)]">
+                    E-Mail schreiben
+                </a>
+                <a href="#skills" class="px-8 py-3 bg-transparent border border-gray-600 text-white font-bold rounded-full hover:border-neonPurple hover:text-neonPurple transition transform">
+                    Meine Skills
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Über mich & Hobbys -->
+    <section id="about" class="py-20 px-4 bg-cardBg">
+        <div class="max-w-5xl mx-auto">
+            <h2 class="text-4xl font-bold mb-10 text-center"><span class="text-neonCyan">#</span> Über mich & Hobbys</h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                        Mein Fokus liegt voll und ganz auf der Welt der IT. Ich verbringe meine Zeit damit, Skripte zu schreiben, neue Programmiersprachen zu lernen und Software-Lösungen zu entwickeln.
+                    </p>
+                    <p class="text-lg text-gray-300 leading-relaxed mb-6">
+                        Neben dem Coden habe ich zwei weitere große Leidenschaften: <strong>Reisen</strong> und <strong>Hardware</strong>. Ich bin gerne unterwegs, um neue Eindrücke zu sammeln. Wenn ich zuhause bin, optimiere ich Systeme auf absolutes Maximum, um die beste Performance ohne jegliche Verzögerungen (0 Input Delay) herauszuholen.
+                    </p>
                 </div>
-                <nav class="hidden md:block">
-                    <ul class="flex space-x-8 text-sm font-medium font-mono text-gray-300">
-                        <li><a href="#about" class="hover:text-neoncyan transition-colors">01. Über mich</a></li>
-                        <li><a href="#skills" class="hover:text-neoncyan transition-colors">02. Tech Stack</a></li>
-                        <li><a href="#hobbies" class="hover:text-neoncyan transition-colors">03. Hobbys</a></li>
-                        <li><a href="#contact" class="hover:text-neonpurple transition-colors">04. Kontakt</a></li>
-                    </ul>
-                </nav>
-                <!-- Mobile menu button (Simplified for single file) -->
-                <div class="md:hidden flex items-center">
-                    <button class="text-gray-300 hover:text-white focus:outline-none">
-                        <i class="fas fa-bars text-xl"></i>
-                    </button>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-6 bg-darkBg rounded-xl border border-gray-800 text-center hover:border-neonCyan transition">
+                        <i class="fa-solid fa-code text-4xl text-neonCyan mb-4"></i>
+                        <h3 class="font-bold text-lg">Coding</h3>
+                    </div>
+                    <div class="p-6 bg-darkBg rounded-xl border border-gray-800 text-center hover:border-neonPurple transition">
+                        <i class="fa-solid fa-plane-departure text-4xl text-neonPurple mb-4"></i>
+                        <h3 class="font-bold text-lg">Reisen</h3>
+                    </div>
+                    <div class="p-6 bg-darkBg rounded-xl border border-gray-800 text-center hover:border-neonCyan transition">
+                        <i class="fa-solid fa-microchip text-4xl text-neonCyan mb-4"></i>
+                        <h3 class="font-bold text-lg">PC Tuning</h3>
+                    </div>
+                    <div class="p-6 bg-darkBg rounded-xl border border-gray-800 text-center hover:border-neonPurple transition">
+                        <i class="fa-solid fa-gamepad text-4xl text-neonPurple mb-4"></i>
+                        <h3 class="font-bold text-lg">Gaming</h3>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <!-- Hero Section -->
-    <main class="pt-20">
-        <section id="home" class="min-h-screen flex items-center justify-center px-4 relative">
-            <div class="text-center z-10 max-w-4xl mx-auto">
-                <p class="font-mono text-neoncyan mb-4 tracking-widest uppercase text-sm md:text-base">System Initialization... Done.</p>
-                <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-                    Hi, ich bin <br>
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-neoncyan to-neonpurple">
-                        Luca Valentino
-                    </span>
-                </h1>
-                <h2 class="text-xl md:text-3xl text-gray-400 font-light mb-8">
-                    aka <span class="font-mono text-white glow-text">Val3ntino</span>
-                </h2>
-                <p class="max-w-2xl mx-auto text-gray-400 mb-10 text-lg leading-relaxed">
-                    Ich verbinde die Welten von Hardware-Tuning, Server-Administration und Software-Entwicklung. 
-                    Auf der ständigen Suche nach dem perfekten Ping, den höchsten FPS und sauberem Code.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#about" class="px-8 py-3 rounded-full bg-transparent border-2 border-neoncyan text-neoncyan font-mono hover:bg-neoncyan hover:text-darkbg transition-all duration-300 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                        Initialize Start()
-                    </a>
-                    <a href="#contact" class="px-8 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 text-white transition-all duration-300">
-                        Connect Server
-                    </a>
+    <!-- Skills Bereich -->
+    <section id="skills" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold mb-16 text-center"><span class="text-neonPurple">#</span> Mein Tech Stack</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                
+                <!-- Coding Skills -->
+                <div class="neon-border bg-cardBg p-8 rounded-2xl transition duration-300">
+                    <div class="w-14 h-14 rounded-full bg-blue-900/40 flex items-center justify-center mb-6 border border-blue-500/50">
+                        <i class="fa-solid fa-terminal text-2xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Programmierung</h3>
+                    <p class="text-gray-400 mb-6">Von grundlegenden Webtechnologien bis hin zu Software-Entwicklung.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">HTML & CSS</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">C++</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">Python</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">Luau / Lua</span>
+                    </div>
                 </div>
+
+                <!-- PC Tuning -->
+                <div class="neon-border bg-cardBg p-8 rounded-2xl transition duration-300">
+                    <div class="w-14 h-14 rounded-full bg-purple-900/40 flex items-center justify-center mb-6 border border-purple-500/50">
+                        <i class="fa-solid fa-gauge-high text-2xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">PC Tuning</h3>
+                    <p class="text-gray-400 mb-6">Systemoptimierung für E-Sports und höchste Hardware-Effizienz.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">Windows Tweaks</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">0 Input Delay</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">BIOS Config</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">Registry Edits</span>
+                    </div>
+                </div>
+
+                <!-- Projekte & Dev -->
+                <div class="neon-border bg-cardBg p-8 rounded-2xl transition duration-300">
+                    <div class="w-14 h-14 rounded-full bg-cyan-900/40 flex items-center justify-center mb-6 border border-cyan-500/50">
+                        <i class="fa-solid fa-network-wired text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Projekte & Dev</h3>
+                    <p class="text-gray-400 mb-6">Skripting für Server, Machine Learning Basics und Game-Development.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">OpenCV</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">FiveM Scripts</span>
+                        <span class="px-3 py-1 bg-gray-800 rounded-full text-sm font-semibold">Roblox Studio</span>
+                    </div>
+                </div>
+
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- About Section -->
-        <section id="about" class="py-24 px-4 relative">
-            <div class="max-w-6xl mx-auto">
-                <div class="flex items-center mb-12">
-                    <h2 class="text-3xl font-bold font-mono text-white"><span class="text-neonpurple">01.</span> Über mich</h2>
-                    <div class="ml-6 h-px bg-white/10 flex-grow"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-                    <div class="space-y-6 text-gray-400 text-lg leading-relaxed bg-cardbg p-8 rounded-2xl card-hover relative overflow-hidden">
-                        <!-- Decorative binary in background -->
-                        <div class="absolute -right-10 -top-10 text-9xl font-mono text-white/[0.02] rotate-12 select-none pointer-events-none">
-                            10110<br>01001
-                        </div>
-                        <p>
-                            Hallo! Mein voller Name ist <strong class="text-white">Luca Valentino Lopez Espinosa</strong>, aber in der digitalen Welt nennt man mich meistens einfach <strong class="text-neoncyan">Val3ntino</strong>.
-                        </p>
-                        <p>
-                            Ich bin in <strong class="text-white"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Frankfurt am Main</strong> zuhause – der Stadt mit dem Internetknotenpunkt DE-CIX. Passend dazu liegt meine Leidenschaft tief in allem, was mit Bits und Bytes zu tun hat.
-                        </p>
-                        <p>
-                            Egal ob es darum geht, komplexe Skripte zu schreiben, Gaming-Server zu verwalten oder das letzte Quäntchen Leistung und die geringste Latenz aus einem PC herauszuholen (Low Latency Optimization) – ich liebe die technische Herausforderung.
-                        </p>
-                    </div>
-                    
-                    <div class="flex justify-center">
-                        <div class="relative w-72 h-72 rounded-2xl overflow-hidden border border-white/10 group">
-                            <!-- Abstract Tech Image Placeholder -->
-                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cyberpunk Setup" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-gradient-to-t from-darkbg via-transparent to-transparent"></div>
-                            <div class="absolute inset-0 border-2 border-neoncyan/30 rounded-2xl z-10 pointer-events-none group-hover:border-neoncyan/70 transition-colors"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills Section -->
-        <section id="skills" class="py-24 px-4 bg-black/30">
-            <div class="max-w-6xl mx-auto">
-                <div class="flex items-center mb-16">
-                    <div class="mr-6 h-px bg-white/10 flex-grow"></div>
-                    <h2 class="text-3xl font-bold font-mono text-white"><span class="text-neoncyan">02.</span> Tech Stack & Skills</h2>
-                </div>
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    <!-- Progress Bars -->
-                    <div class="space-y-8">
-                        <div>
-                            <div class="flex justify-between text-sm font-mono mb-2">
-                                <span class="text-white"><i class="fab fa-python text-blue-400 mr-2"></i>Python</span>
-                                <span class="text-gray-400">85%</span>
-                            </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2">
-                                <div class="bg-gradient-to-r from-blue-600 to-blue-400 h-2 rounded-full progress-bar-fill shadow-[0_0_10px_rgba(59,130,246,0.5)]" style="width: 85%"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between text-sm font-mono mb-2">
-                                <span class="text-white"><i class="fas fa-gamepad text-neoncyan mr-2"></i>Luau (Roblox Studio)</span>
-                                <span class="text-gray-400">95%</span>
-                            </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2">
-                                <div class="bg-gradient-to-r from-teal-500 to-neoncyan h-2 rounded-full progress-bar-fill shadow-[0_0_10px_rgba(0,240,255,0.5)]" style="width: 95%"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between text-sm font-mono mb-2">
-                                <span class="text-white"><i class="fas fa-server text-orange-400 mr-2"></i>FiveM Server Administration</span>
-                                <span class="text-gray-400">90%</span>
-                            </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2">
-                                <div class="bg-gradient-to-r from-orange-600 to-orange-400 h-2 rounded-full progress-bar-fill shadow-[0_0_10px_rgba(251,146,60,0.5)]" style="width: 90%"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between text-sm font-mono mb-2">
-                                <span class="text-white"><i class="fas fa-eye text-purple-400 mr-2"></i>Computer Vision (OpenCV/YOLO)</span>
-                                <span class="text-gray-400">75%</span>
-                            </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2">
-                                <div class="bg-gradient-to-r from-purple-600 to-neonpurple h-2 rounded-full progress-bar-fill shadow-[0_0_10px_rgba(176,38,255,0.5)]" style="width: 75%"></div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between text-sm font-mono mb-2">
-                                <span class="text-white"><i class="fas fa-microchip text-red-400 mr-2"></i>PC Tuning & Low Latency</span>
-                                <span class="text-gray-400">98%</span>
-                            </div>
-                            <div class="w-full bg-gray-800 rounded-full h-2">
-                                <div class="bg-gradient-to-r from-red-600 to-red-400 h-2 rounded-full progress-bar-fill shadow-[0_0_10px_rgba(248,113,113,0.5)]" style="width: 98%"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Skill Tags / Badges -->
-                    <div class="flex flex-col justify-center">
-                        <h3 class="text-xl font-semibold mb-6 text-white">Technologien & Tools</h3>
-                        <div class="flex flex-wrap gap-3">
-                            <span class="px-4 py-2 bg-cardbg border border-white/10 rounded-lg text-sm text-gray-300 hover:border-neoncyan hover:text-white transition-colors cursor-default"><i class="fab fa-windows mr-2"></i>Windows OS Tuning</span>
-                            <span class="px-4 py-2 bg-cardbg border border-white/10 rounded-lg text-sm text-gray-300 hover:border-neoncyan hover:text-white transition-colors cursor-default"><i class="fas fa-network-wired mr-2"></i>Network Optimization</span>
-                            <span class="px-4 py-2 bg-cardbg border border-white/10 rounded-lg text-sm text-gray-300 hover:border-neoncyan hover:text-white transition-colors cursor-default"><i class="fas fa-database mr-2"></i>SQL</span>
-                            <span class="px-4 py-2 bg-cardbg border border-white/10 rounded-lg text-sm text-gray-300 hover:border-neoncyan hover:text-white transition-colors cursor-default"><i class="fab fa-github mr-2"></i>Git / GitHub</span>
-                            <span class="px-4 py-2 bg-cardbg border border-white/10 rounded-lg text-sm text-gray-300 hover:border-neoncyan hover:text-white transition-colors cursor-default">Lua</span>
-                            <span class="px-4 py-2 bg-cardbg border border-white/10 rounded-lg text-sm text-gray-300 hover:border-neoncyan hover:text-white transition-colors cursor-default">Machine Learning</span>
-                            <span class="px-4 py-2 bg-cardbg border border-white/10 rounded-lg text-sm text-gray-300 hover:border-neoncyan hover:text-white transition-colors cursor-default"><i class="fas fa-tachometer-alt mr-2"></i>BIOS Tweaking</span>
-                            <span class="px-4 py-2 bg-cardbg border border-white/10 rounded-lg text-sm text-gray-300 hover:border-neoncyan hover:text-white transition-colors cursor-default">Hardware Modding</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Hobbies Section -->
-        <section id="hobbies" class="py-24 px-4 relative">
-            <div class="max-w-6xl mx-auto">
-                <div class="flex items-center mb-12">
-                    <h2 class="text-3xl font-bold font-mono text-white"><span class="text-neonpurple">03.</span> Hobbys</h2>
-                    <div class="ml-6 h-px bg-white/10 flex-grow"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Hobby 1: Automotive Photography -->
-                    <div class="bg-cardbg rounded-2xl overflow-hidden card-hover group relative">
-                        <div class="h-48 overflow-hidden">
-                            <!-- Placeholder Car Image -->
-                            <img src="https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Automotive Photography" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60 group-hover:opacity-100">
-                        </div>
-                        <div class="p-8 relative">
-                            <div class="absolute -top-6 right-8 w-12 h-12 bg-darkbg rounded-full border border-white/10 flex items-center justify-center">
-                                <i class="fas fa-camera text-neonpurple text-xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-3">Automotive Photography</h3>
-                            <p class="text-gray-400">
-                                Die Faszination für Motoren, Design und Geschwindigkeit, eingefangen durch die Linse. Ich liebe es, die Ästhetik von Fahrzeugen in urbanen oder landschaftlichen Settings perfekt in Szene zu setzen.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Hobby 2: Gaming -->
-                    <div class="bg-cardbg rounded-2xl overflow-hidden card-hover group relative">
-                        <div class="h-48 overflow-hidden">
-                            <!-- Placeholder Gaming Image -->
-                            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Gaming Setup" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-60 group-hover:opacity-100">
-                        </div>
-                        <div class="p-8 relative">
-                            <div class="absolute -top-6 right-8 w-12 h-12 bg-darkbg rounded-full border border-white/10 flex items-center justify-center">
-                                <i class="fas fa-headset text-neoncyan text-xl"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold text-white mb-3">Gaming & Esports</h3>
-                            <p class="text-gray-400">
-                                Mehr als nur ein Zeitvertreib. Vom Eintauchen in komplexe Roblox-Welten über spannendes Roleplay auf FiveM-Servern bis hin zu kompetitiven Shootern, bei denen meine System-Optimierungen den Unterschied machen.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer / Contact Section -->
-    <footer id="contact" class="bg-black/50 border-t border-white/5 pt-16 pb-8 px-4 mt-12">
+    <!-- Kontakt -->
+    <section id="contact" class="py-20 px-4 bg-cardBg">
         <div class="max-w-4xl mx-auto text-center">
-            <h2 class="text-4xl font-bold text-white mb-6">Let's Connect</h2>
-            <p class="text-gray-400 mb-8 font-mono text-sm">
-                > System.out.println("Bereit für neue Projekte, Server-Optimierungen oder eine Runde Gaming.");
-            </p>
+            <h2 class="text-4xl font-bold mb-8">Kontakt</h2>
+            <p class="text-xl text-gray-400 mb-10">Lass uns in Kontakt treten! Schreib mir gerne bei Fragen zu meinen Projekten, Code oder PC-Tuning.</p>
             
-            <div class="flex justify-center space-x-6 mb-12">
-                <a href="#" class="w-12 h-12 rounded-full bg-cardbg border border-white/10 flex items-center justify-center text-gray-400 hover:text-neoncyan hover:border-neoncyan hover:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition-all">
-                    <i class="fab fa-github text-xl"></i>
-                </a>
-                <a href="#" class="w-12 h-12 rounded-full bg-cardbg border border-white/10 flex items-center justify-center text-gray-400 hover:text-neonpurple hover:border-neonpurple hover:shadow-[0_0_15px_rgba(176,38,255,0.3)] transition-all">
-                    <i class="fab fa-discord text-xl"></i>
-                </a>
-                <a href="mailto:contact@valentinolopez.de" class="w-12 h-12 rounded-full bg-cardbg border border-white/10 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all">
-                    <i class="fas fa-envelope text-xl"></i>
-                </a>
-            </div>
-            
-            <p class="text-xs text-gray-600 font-mono mt-8">
-                &copy; <script>document.write(new Date().getFullYear())</script> Luca Valentino Lopez Espinosa (Val3ntino). All rights reserved.<br>
-                Frankfurt am Main, Germany
-            </p>
+            <a href="mailto:L@valentinolopez.de" class="inline-flex items-center gap-3 px-8 py-4 bg-darkBg hover:bg-gray-800 border border-gray-700 hover:border-neonCyan transition duration-300 rounded-xl text-xl font-bold shadow-lg">
+                <i class="fa-solid fa-envelope text-neonCyan"></i>
+                L@valentinolopez.de
+            </a>
         </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 text-center border-t border-gray-800 text-gray-500 text-sm">
+        <p>&copy; 2026 Valentino. Alle Rechte vorbehalten.</p>
     </footer>
 
 </body>
