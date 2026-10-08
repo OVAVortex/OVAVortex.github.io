@@ -115,13 +115,13 @@
             const loginBtnText = document.getElementById('loginBtnText');
             const loginBtnTextMobile = document.getElementById('loginBtnTextMobile');
             const adminSection = document.getElementById('adminControlCenter');
-            const userDashboardView = document.getElementById('userDashboardView');
+            const contentDashboard = document.getElementById('contentDashboard');
             const authFormsContainer = document.getElementById('authFormsContainer');
             
             if (user) {
                 if(loginBtnText) loginBtnText.innerText = currentLang === 'de' ? "Dein Account" : "Your account";
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = currentLang === 'de' ? "Dein Account" : "Your account";
-                if(userDashboardView) userDashboardView.classList.remove('hidden');
+                if(contentDashboard) contentDashboard.classList.remove('hidden');
                 if(authFormsContainer) authFormsContainer.classList.add('hidden');
 
                 const checkoutEmailInput = document.getElementById('checkoutEmail');
@@ -142,7 +142,7 @@
             } else {
                 if(loginBtnText) loginBtnText.innerText = currentLang === 'de' ? "Anmelden" : "Log in";
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = currentLang === 'de' ? "Anmelden" : "Log in";
-                if(userDashboardView) userDashboardView.classList.add('hidden');
+                if(contentDashboard) contentDashboard.classList.add('hidden');
                 if(authFormsContainer) authFormsContainer.classList.remove('hidden');
                 if(adminSection) adminSection.classList.add('hidden');
             }
@@ -706,7 +706,7 @@
         </div>
     </div>
 
-    <!-- Dashboard & Admin Panel Modal (Überarbeiteter Login & Account Bereich) -->
+    <!-- Dashboard & Admin Panel Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-2 sm:p-6">
         <div class="bg-[#050508] border border-white/10 rounded-3xl max-w-6xl w-full relative grid md:grid-cols-[280px_1fr] shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
             <!-- Sidebar -->
@@ -742,7 +742,7 @@
                 <button onclick="toggleLogin()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
 
                 <!-- Tab 1: Dashboard -->
-                <div id="contentDashboard" class="space-y-8">
+                <div id="contentDashboard" class="hidden space-y-8">
                     <div>
                         <h2 class="text-2xl font-extrabold text-white">Welcome back</h2>
                         <p class="text-sm text-gray-400 font-light mt-1">Here's an overview of your account.</p>
@@ -858,7 +858,7 @@
                     </div>
                 </div>
 
-                <!-- Überarbeiteter & Moderner Sign In / Register Bereich -->
+                <!-- Überarbeiteter Auth-Bereich (wird nur angezeigt, wenn nicht eingeloggt) -->
                 <div id="authFormsContainer" class="space-y-6">
                     <div class="text-center">
                         <h3 class="auth-title text-2xl font-extrabold text-white mb-2">Sign In / Register</h3>
@@ -969,7 +969,6 @@
                 showToast("Language switched to English");
             }
 
-            // Texte dynamisch anpassen
             const t = translations[lang];
             document.querySelector('.hero-badge').innerText = t.heroBadge;
             document.querySelector('.hero-desc').innerText = t.heroDesc;
@@ -1024,13 +1023,13 @@
             const modal = document.getElementById('loginModal');
             modal.classList.add('active');
             if(window.firebaseAuth && window.firebaseAuth.currentUser) {
-                document.getElementById('userDashboardView').classList.remove('hidden');
+                document.getElementById('contentDashboard').classList.remove('hidden');
                 document.getElementById('authFormsContainer').classList.add('hidden');
                 document.getElementById('userEmailDisplay').innerText = window.firebaseAuth.currentUser.email;
                 loadDashboardStats(window.firebaseAuth.currentUser.email);
                 switchTab(tabName);
             } else {
-                document.getElementById('userDashboardView').classList.add('hidden');
+                document.getElementById('contentDashboard').classList.add('hidden');
                 document.getElementById('authFormsContainer').classList.remove('hidden');
             }
         }
