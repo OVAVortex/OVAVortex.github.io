@@ -310,6 +310,56 @@
     </header>
 
     <main class="max-w-6xl mx-auto px-6 md:px-12 pb-32">
+        <!-- Skills Sektion -->
+        <section id="skills" class="mb-32">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="nivex-card p-8 md:p-10 rounded-3xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-code text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Coding & Dev</h3>
+                        <p class="text-gray-300 text-base mb-8 leading-relaxed font-light">Passion for programming, modern web development, and game scripting.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">HTML & CSS</span>
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">C++</span>
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Python</span>
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Luau</span>
+                    </div>
+                </div>
+
+                <div class="nivex-card p-8 md:p-10 rounded-3xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-microchip text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">PC Tuning</h3>
+                        <p class="text-gray-300 text-base mb-8 leading-relaxed font-light">Maximum performance, custom tweaks, and uncompromising hardware optimization.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">0 Input Delay</span>
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Windows Tweaks</span>
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">BIOS Edits</span>
+                    </div>
+                </div>
+
+                <div class="nivex-card p-8 md:p-10 rounded-3xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-headphones-simple text-accent text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-4">Vibe Coding</h3>
+                        <p class="text-gray-300 text-base mb-8 leading-relaxed font-light">Coding in the perfect flow state. Focusing on clean solutions in a relaxed atmosphere.</p>
+                    </div>
+                    <div class="flex flex-wrap gap-2.5">
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Flow State</span>
+                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Creative</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Store Sektion -->
         <section id="booking" class="mb-32">
             <div class="text-center mb-16">
@@ -459,7 +509,7 @@
         </section>
     </main>
 
-    <!-- Footer -->
+    <!-- Footer (Mit Discord & Twitter) -->
     <footer class="py-16 px-8 border-t border-white/5 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-sm text-gray-400">
         <div class="space-y-4">
             <a href="#" class="text-xl font-extrabold text-white flex items-center gap-2.5">
@@ -468,7 +518,7 @@
             <p class="text-gray-400 font-light leading-relaxed">Val3ntino delivers digital products & professional PC tuning instantly after payment.</p>
             <div class="flex items-center space-x-6 pt-3">
                 <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-300 hover:text-white transition flex items-center gap-2 text-sm"><i class="fa-brands fa-x-twitter text-accent text-base"></i> Twitter / X</a>
-                <span class="text-gray-300 flex items-center gap-2 text-sm"><i class="fa-brands fa-discord text-accent text-base"></i> dri.c</span>
+                <a href="https://discord.gg/yourinvite" target="_blank" class="text-gray-300 hover:text-white transition flex items-center gap-2 text-sm"><i class="fa-brands fa-discord text-accent text-base"></i> Discord (dri.c)</a>
             </div>
         </div>
         <div>
@@ -533,7 +583,6 @@
                     <div id="resellEmItemsList" class="space-y-4 mt-6 max-h-48 overflow-y-auto"></div>
                 </div>
                 <div class="space-y-4">
-                    <!-- Gutschein-Eingabe im Checkout -->
                     <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-2">
                         <p class="text-xs font-bold text-white">Have a discount code?</p>
                         <div class="flex gap-2">
@@ -543,8 +592,8 @@
                     </div>
                     <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 space-y-2.5 text-sm">
                         <p class="font-bold text-white">Need help with this order?</p>
-                        <p class="text-gray-400 text-xs">Open a support ticket and we'll get back to you.</p>
-                        <button onclick="openSupportTicketModal()" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-accent rounded-xl font-bold text-xs transition">Open a Support Ticket ↗</button>
+                        <p class="text-gray-400 text-xs">Open a support ticket or join our Discord.</p>
+                        <a href="https://discord.gg/yourinvite" target="_blank" class="inline-block px-4 py-2 bg-white/10 hover:bg-white/20 text-accent rounded-xl font-bold text-xs transition">Join Discord (dri.c) ↗</a>
                     </div>
                 </div>
             </div>
@@ -694,7 +743,7 @@
         </div>
     </div>
 
-    <!-- Dashboard & Admin Panel Modal (Mit erweitertem Admin-Bereich für Coupons & Management) -->
+    <!-- Dashboard & Admin Panel Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-2 sm:p-6">
         <div class="bg-[#050508] border border-white/10 rounded-3xl max-w-6xl w-full relative grid md:grid-cols-[280px_1fr] shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
             <!-- Sidebar -->
@@ -759,7 +808,7 @@
                         </div>
                     </div>
 
-                    <!-- Erweiterter Admin Kontrollzentrum mit Coupon & Management -->
+                    <!-- Admin Kontrollzentrum im Dashboard -->
                     <div id="adminControlCenter" class="hidden bg-[#09090f] p-6 rounded-2xl border border-accent/40 space-y-6 shadow-xl">
                         <div class="flex items-center justify-between border-b border-white/10 pb-3">
                             <p class="text-sm font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1.5"></i> Admin Control Center</p>
