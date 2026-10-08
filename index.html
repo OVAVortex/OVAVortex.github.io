@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Val3ntino | High-End Store</title>
+    <title>Val3ntino | High-End Store & Services</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome für Icons -->
@@ -17,7 +17,7 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs -->
+    <!-- Firebase SDKs & Authentifizierung -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -55,12 +55,14 @@
             if (provider) {
                 signInWithPopup(auth, provider)
                     .then(() => {
-                        document.getElementById('authErrorMsg').innerText = "";
+                        const errEl = document.getElementById('authErrorMsg');
+                        if(errEl) errEl.innerText = "";
                         showToast(currentLang === 'de' ? "Erfolgreich angemeldet!" : "Successfully logged in!");
                         toggleLogin();
                     })
                     .catch((error) => {
-                        document.getElementById('authErrorMsg').innerText = "Social Login Fehler: " + error.message;
+                        const errEl = document.getElementById('authErrorMsg');
+                        if(errEl) errEl.innerText = "Social Login Fehler: " + error.message;
                     });
             }
         };
@@ -129,9 +131,8 @@
                     checkoutEmailInput.value = user.email || '';
                 }
                 
-                // Admin Erkennung für L@valentinolopez.de
                 if (adminSection) {
-                    if (user.email === 'L@valentinolopez.de' || user.email?.includes('admin')) {
+                    if (user.email.toLowerCase() === 'l@valentinolopez.de' || user.email.toLowerCase().includes('admin')) {
                         adminSection.classList.remove('hidden');
                         renderAdminPanelData();
                     } else {
@@ -480,7 +481,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.65</p>
+            <p class="font-mono text-accent/70">v1.78</p>
         </div>
     </footer>
 
@@ -848,7 +849,7 @@
         </div>
     </div>
 
-    <!-- JavaScript Steuerung & Admin Funktionen -->
+    <!-- JavaScript Steuerung -->
     <script>
         let currentLang = 'de';
         let selectedTopUpValue = 0;
@@ -1091,63 +1092,38 @@
             }
         }
 
-        function createAdminCoupon() {
-            let code = document.getElementById('newAdminCoupon').value.trim().toUpperCase();
-            let discount = parseFloat(document.getElementById('newAdminDiscount').value);
-            if(code && discount > 0) {
-                coupons[code] = discount;
-                showToast('Coupon ' + code + ' (€' + discount + ') created!');
-                document.getElementById('newAdminCoupon').value = '';
-                document.getElementById('newAdminDiscount').value = '';
-                renderAdminPanelData();
-            } else {
-                showToast('Please enter valid data.');
-            }
-        }
-
         function renderAdminPanelData() {
-            // Coupons anzeigen
-            const couponList = document.getElementById('adminCouponsList');
-            if(couponList) {
-                couponList.innerHTML = '';
-                for (let code in coupons) {
-                    couponList.innerHTML += `<div class="flex justify-between bg-[#12121c] px-2.5 py-1.5 rounded-lg border border-white/5"><span>${code}</span><span class="text-accent font-bold">€${coupons[code].toFixed(2)}</span></div>`;
+            const pendingList = document.getElementById('adminPendingList');
+            if(!pendingList) return;
+            pendingList.innerHTML = '';
+            let foundAny = false;
+
+            for (let i = 0; i < localStorage.length; i++) {
+                let key = localStorage.key(i);
+                if (key && key.startsWith('orders_')) {
+                    let userEmail = key.replace('orders_', '');
+                    let userOrders = JSON.parse(localStorage.getItem(key) || '[]');
+                    
+                    userOrders.forEach((ord, index) => {
+                        if (ord.status === 'Pending') {
+                            foundAny = true;
+                            pendingList.innerHTML += `
+                                <div class="bg-[#12121c] p-2.5 rounded-xl border border-white/5 space-y-1">
+                                    <div class="flex justify-between text-white font-bold">
+                                        <span>${ord.items}</span>
+                                        <span class="text-accent">${ord.total}</span>
+                                    </div>
+                                    <p class="text-[10px] text-gray-400">User: ${userEmail} • Proof: <span class="text-sky-400">${ord.proof || 'Keiner'}</span></p>
+                                    <button onclick="adminApproveOrder('${userEmail}', ${index})" class="w-full mt-1 py-1 bg-emerald-500 text-black font-bold rounded-lg text-[10px]">Freigeben & Bestätigen (Approve)</button>
+                                </div>
+                            `;
+                        }
+                    });
                 }
             }
 
-            // Alle Pending Bestellungen aller Nutzer im LocalStorage für den Admin sammeln
-            const pendingList = document.getElementById('adminPendingList');
-            if(pendingList) {
-                pendingList.innerHTML = '';
-                let foundAny = false;
-
-                for (let i = 0; i < localStorage.length; i++) {
-                    let key = localStorage.key(i);
-                    if (key && key.startsWith('orders_')) {
-                        let userEmail = key.replace('orders_', '');
-                        let userOrders = JSON.parse(localStorage.getItem(key) || '[]');
-                        
-                        userOrders.forEach((ord, index) => {
-                            if (ord.status === 'Pending') {
-                                foundAny = true;
-                                pendingList.innerHTML += `
-                                    <div class="bg-[#12121c] p-2.5 rounded-xl border border-white/5 space-y-1">
-                                        <div class="flex justify-between text-white font-bold">
-                                            <span>${ord.items}</span>
-                                            <span class="text-accent">${ord.total}</span>
-                                        </div>
-                                        <p class="text-[10px] text-gray-400">User: ${userEmail} • Proof: <span class="text-sky-400">${ord.proof || 'Keiner'}</span></p>
-                                        <button onclick="adminApproveOrder('${userEmail}', ${index})" class="w-full mt-1 py-1 bg-emerald-500 text-black font-bold rounded-lg text-[10px]">Freigeben & Bestätigen (Approve)</button>
-                                    </div>
-                                `;
-                            }
-                        });
-                    }
-                }
-
-                if(!foundAny) {
-                    pendingList.innerHTML = '<p class="text-gray-400 text-center py-2">Keine ausstehenden Zahlungen.</p>';
-                }
+            if(!foundAny) {
+                pendingList.innerHTML = '<p class="text-gray-400 text-center py-2">Keine ausstehenden Zahlungen.</p>';
             }
         }
 
@@ -1156,7 +1132,6 @@
             if(userOrders[orderIndex]) {
                 userOrders[orderIndex].status = 'Completed';
 
-                // Wenn es ein Top-Up war, jetzt dem Account gutschreiben!
                 if(userOrders[orderIndex].isTopUp) {
                     let currentBal = parseFloat(localStorage.getItem('balance_' + userEmail) || '0.00');
                     let addedVal = parseFloat(userOrders[orderIndex].topUpValue || 0);
