@@ -50,7 +50,7 @@
                     .then(() => {
                         const errEl = document.getElementById('authErrorMsg');
                         if(errEl) errEl.innerText = "";
-                        showToast("Successfully logged in!");
+                        showToast(currentLang === 'de' ? "Erfolgreich eingeloggt!" : "Successfully logged in!");
                         toggleLogin();
                     })
                     .catch((error) => {
@@ -66,15 +66,15 @@
             const msgBox = document.getElementById('authErrorMsg');
             
             if(!email || !pass) {
-                msgBox.innerText = "Please enter email and password!";
+                msgBox.innerText = currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
                 return;
             }
-            msgBox.innerText = "Logging in...";
+            msgBox.innerText = currentLang === 'de' ? "Wird eingeloggt..." : "Logging in...";
 
             signInWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast("Successfully logged in!");
+                    showToast(currentLang === 'de' ? "Erfolgreich eingeloggt!" : "Successfully logged in!");
                     toggleLogin();
                 })
                 .catch((error) => {
@@ -88,15 +88,15 @@
             const msgBox = document.getElementById('authErrorMsg');
             
             if(!email || !pass) {
-                msgBox.innerText = "Please enter email and password!";
+                msgBox.innerText = currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
                 return;
             }
-            msgBox.innerText = "Creating account...";
+            msgBox.innerText = currentLang === 'de' ? "Account wird erstellt..." : "Creating account...";
 
             createUserWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast("Account successfully created!");
+                    showToast(currentLang === 'de' ? "Account erfolgreich erstellt!" : "Account successfully created!");
                     toggleLogin();
                 })
                 .catch((error) => {
@@ -106,19 +106,21 @@
 
         window.handleLogout = function() {
             signOut(auth).then(() => {
-                showToast("Successfully logged out.");
+                showToast(currentLang === 'de' ? "Erfolgreich ausgeloggt." : "Successfully logged out.");
                 toggleLogin();
             });
         };
 
         onAuthStateChanged(auth, (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
+            const loginBtnTextMobile = document.getElementById('loginBtnTextMobile');
             const adminSection = document.getElementById('adminControlCenter');
             const userDashboardView = document.getElementById('userDashboardView');
             const authFormsContainer = document.getElementById('authFormsContainer');
             
             if (user) {
-                if(loginBtnText) loginBtnText.innerText = "Your account";
+                if(loginBtnText) loginBtnText.innerText = currentLang === 'de' ? "Dein Account" : "Your account";
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = currentLang === 'de' ? "Dein Account" : "Your account";
                 if(userDashboardView) userDashboardView.classList.remove('hidden');
                 if(authFormsContainer) authFormsContainer.classList.add('hidden');
 
@@ -138,7 +140,8 @@
                 }
                 loadDashboardStats(user.email);
             } else {
-                if(loginBtnText) loginBtnText.innerText = "Log in";
+                if(loginBtnText) loginBtnText.innerText = currentLang === 'de' ? "Anmelden" : "Log in";
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = currentLang === 'de' ? "Anmelden" : "Log in";
                 if(userDashboardView) userDashboardView.classList.add('hidden');
                 if(authFormsContainer) authFormsContainer.classList.remove('hidden');
                 if(adminSection) adminSection.classList.add('hidden');
@@ -234,9 +237,9 @@
         </a>
         
         <div class="hidden md:flex items-center space-x-8">
-            <a href="#" class="text-base font-medium text-white hover:text-accent transition">Home</a>
-            <a href="#booking" class="text-base font-medium text-gray-300 hover:text-white transition">Products</a>
-            <a href="#testimonials" class="text-base font-medium text-gray-300 hover:text-white transition">Reviews</a>
+            <a href="#" class="nav-home text-base font-medium text-white hover:text-accent transition">Home</a>
+            <a href="#booking" class="nav-products text-base font-medium text-gray-300 hover:text-white transition">Products</a>
+            <a href="#testimonials" class="nav-reviews text-base font-medium text-gray-300 hover:text-white transition">Reviews</a>
             
             <div class="relative">
                 <button onclick="toggleLangDropdown()" class="flex items-center gap-2.5 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm font-semibold text-white transition">
@@ -275,9 +278,9 @@
 
     <!-- Mobile Dropdown Menü -->
     <div id="mobileMenu" class="hidden fixed inset-x-0 top-[105px] bg-[#0d0d14]/95 border-b border-white/10 p-6 flex-col space-y-5 md:hidden z-40 shadow-2xl backdrop-blur-2xl">
-        <a href="#" onclick="toggleMobileMenu()" class="text-gray-200 hover:text-white text-lg font-medium py-1">Home</a>
-        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-200 hover:text-white text-lg font-medium py-1">Products</a>
-        <a href="#testimonials" onclick="toggleMobileMenu()" class="text-gray-200 hover:text-white text-lg font-medium py-1">Reviews</a>
+        <a href="#" onclick="toggleMobileMenu()" class="nav-home text-gray-200 hover:text-white text-lg font-medium py-1">Home</a>
+        <a href="#booking" onclick="toggleMobileMenu()" class="nav-products text-gray-200 hover:text-white text-lg font-medium py-1">Products</a>
+        <a href="#testimonials" onclick="toggleMobileMenu()" class="nav-reviews text-gray-200 hover:text-white text-lg font-medium py-1">Reviews</a>
         <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-lg font-medium py-2 flex items-center gap-2.5"><i class="fa-solid fa-user"></i> <span id="loginBtnTextMobile">Log in</span></button>
     </div>
 
@@ -285,7 +288,7 @@
     <header class="max-w-5xl mx-auto px-6 md:px-12 pt-56 md:pt-64 pb-24 md:pb-32 text-center relative">
         <div class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-sm font-semibold mb-8 shadow-xl backdrop-blur-md">
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Available for freelance & high-end projects</span>
+            <span class="hero-badge">Available for freelance & high-end projects</span>
         </div>
 
         <h1 class="text-5xl sm:text-6xl md:text-8xl font-extrabold text-white tracking-tight mb-6">
@@ -294,14 +297,14 @@
         <p class="text-2xl md:text-4xl text-gray-400 font-light mb-6">
             aka <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-pink-400 to-accentSky font-bold">Val3ntino</span>
         </p>
-        <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-light px-4 mb-8">
+        <p class="hero-desc text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed font-light px-4 mb-8">
             I build clean web applications, optimize Windows & hardware for uncompromising performance, and create custom game scripts.
         </p>
 
         <!-- Discord Button -->
         <div class="flex justify-center">
             <a href="https://discord.gg/YE2jHSwM7" target="_blank" class="inline-flex items-center gap-4 px-8 py-4 bg-accent hover:opacity-95 text-white font-bold rounded-full text-base md:text-lg shadow-xl shadow-pink-500/25 transition transform hover:scale-105">
-                <span class="flex items-center gap-2.5"><i class="fa-brands fa-discord text-xl"></i> Join Discord Community</span>
+                <span class="flex items-center gap-2.5"><i class="fa-brands fa-discord text-xl"></i> <span class="discord-btn-text">Join Discord Community</span></span>
                 <i class="fa-solid fa-arrow-right text-sm"></i>
             </a>
         </div>
@@ -311,8 +314,8 @@
         <!-- Store Sektion -->
         <section id="booking" class="mb-32">
             <div class="text-center mb-16">
-                <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4">Store & Services</h2>
-                <p class="text-gray-400 text-base md:text-lg font-light px-4">Choose your package, add it to cart or buy instantly.</p>
+                <h2 class="store-title text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4">Store & Services</h2>
+                <p class="store-desc text-gray-400 text-base md:text-lg font-light px-4">Choose your package, add it to cart or buy instantly.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8 items-stretch">
@@ -416,7 +419,7 @@
 
         <!-- Testimonials -->
         <section id="testimonials" class="mb-32">
-            <h2 class="text-3xl sm:text-4xl font-bold text-center text-white mb-12">What Clients Say</h2>
+            <h2 class="reviews-title text-3xl sm:text-4xl font-bold text-center text-white mb-12">What Clients Say</h2>
             <div class="grid md:grid-cols-2 gap-8">
                 <div class="nivex-card p-8 md:p-10 rounded-3xl">
                     <div class="flex text-accent text-sm mb-4 space-x-1.5">
@@ -437,22 +440,22 @@
 
         <!-- Kontaktformular -->
         <section id="contact" class="max-w-2xl mx-auto nivex-card p-8 sm:p-10 md:p-12 rounded-3xl mb-16 shadow-2xl">
-            <h2 class="text-2xl md:text-3xl font-bold text-white mb-3 text-center">Get in Touch</h2>
-            <p class="text-sm text-gray-400 text-center mb-10 font-light">Send me a direct message – I'll reply as soon as possible.</p>
+            <h2 class="contact-title text-2xl md:text-3xl font-bold text-white mb-3 text-center">Get in Touch</h2>
+            <p class="contact-desc text-sm text-gray-400 text-center mb-10 font-light">Send me a direct message – I'll reply as soon as possible.</p>
             <form id="contactForm" onsubmit="handleContact(event)" class="space-y-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Your Name</label>
+                    <label class="name-label block text-sm font-medium text-gray-300 mb-2">Your Name</label>
                     <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-base focus:outline-none focus:border-accent transition" required placeholder="Your name...">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                    <label class="email-label block text-sm font-medium text-gray-300 mb-2">Email Address</label>
                     <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-base focus:outline-none focus:border-accent transition" required placeholder="you@example.com">
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Message</label>
+                    <label class="msg-label block text-sm font-medium text-gray-300 mb-2">Message</label>
                     <textarea rows="5" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-base focus:outline-none focus:border-accent transition" required placeholder="Your message..."></textarea>
                 </div>
-                <button type="submit" id="contactSubmitBtn" class="w-full py-4.5 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-base shadow-xl">Send Message</button>
+                <button type="submit" id="contactSubmitBtn" class="send-btn w-full py-4.5 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-base shadow-xl">Send Message</button>
             </form>
         </section>
     </main>
@@ -463,26 +466,26 @@
             <a href="#" class="text-xl font-extrabold text-white flex items-center gap-2.5">
                 <span class="w-2.5 h-2.5 rounded-full bg-accent"></span> Val3ntino
             </a>
-            <p class="text-gray-400 font-light leading-relaxed">Val3ntino delivers digital products & professional PC tuning instantly after payment.</p>
+            <p class="footer-desc text-gray-400 font-light leading-relaxed">Val3ntino delivers digital products & professional PC tuning instantly after payment.</p>
             <div class="flex items-center space-x-6 pt-3">
                 <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-300 hover:text-white transition flex items-center gap-2 text-sm"><i class="fa-brands fa-x-twitter text-accent text-base"></i> Twitter / X</a>
                 <a href="https://discord.gg/YE2jHSwM7" target="_blank" class="text-gray-300 hover:text-white transition flex items-center gap-2 text-sm"><i class="fa-brands fa-discord text-accent text-base"></i> Discord (dri.c)</a>
             </div>
         </div>
         <div>
-            <p class="text-white font-bold mb-4 uppercase tracking-wider text-xs">Navigation</p>
+            <p class="nav-title text-white font-bold mb-4 uppercase tracking-wider text-xs">Navigation</p>
             <ul class="space-y-3 font-light text-sm">
-                <li><a href="#" class="hover:text-white transition">Home</a></li>
-                <li><a href="#booking" class="hover:text-white transition">Products</a></li>
-                <li><a href="#testimonials" class="hover:text-white transition">Reviews</a></li>
+                <li><a href="#" class="nav-home hover:text-white transition">Home</a></li>
+                <li><a href="#booking" class="nav-products hover:text-white transition">Products</a></li>
+                <li><a href="#testimonials" class="nav-reviews hover:text-white transition">Reviews</a></li>
             </ul>
         </div>
         <div>
-            <p class="text-white font-bold mb-4 uppercase tracking-wider text-xs">Your account</p>
+            <p class="acc-title text-white font-bold mb-4 uppercase tracking-wider text-xs">Your account</p>
             <ul class="space-y-3 font-light text-sm">
-                <li><button onclick="openDashboardTab('dashboard')" class="hover:text-white transition text-left">Dashboard</button></li>
-                <li><button onclick="openDashboardTab('orders')" class="hover:text-white transition text-left">Orders</button></li>
-                <li><button onclick="openDashboardTab('tickets')" class="hover:text-white transition text-left">My Tickets</button></li>
+                <li><button onclick="openDashboardTab('dashboard')" class="dash-btn hover:text-white transition text-left">Dashboard</button></li>
+                <li><button onclick="openDashboardTab('orders')" class="orders-btn hover:text-white transition text-left">Orders</button></li>
+                <li><button onclick="openDashboardTab('tickets')" class="tickets-btn hover:text-white transition text-left">My Tickets</button></li>
             </ul>
         </div>
     </footer>
@@ -703,7 +706,7 @@
         </div>
     </div>
 
-    <!-- Dashboard & Admin Panel Modal -->
+    <!-- Dashboard & Admin Panel Modal (Überarbeiteter Login & Account Bereich) -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-2 sm:p-6">
         <div class="bg-[#050508] border border-white/10 rounded-3xl max-w-6xl w-full relative grid md:grid-cols-[280px_1fr] shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
             <!-- Sidebar -->
@@ -855,24 +858,36 @@
                     </div>
                 </div>
 
-                <!-- Fallback Auth Forms -->
+                <!-- Überarbeiteter & Moderner Sign In / Register Bereich -->
                 <div id="authFormsContainer" class="space-y-6">
-                    <h3 class="text-xl font-bold text-white text-center">Sign In / Register</h3>
+                    <div class="text-center">
+                        <h3 class="auth-title text-2xl font-extrabold text-white mb-2">Sign In / Register</h3>
+                        <p class="auth-subtitle text-xs text-gray-400">Access your account or create a new one instantly.</p>
+                    </div>
+
                     <div class="space-y-3">
-                        <button onclick="loginWithProvider('google')" class="w-full py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-sm font-semibold text-white flex items-center justify-center gap-3">
+                        <button onclick="loginWithProvider('google')" class="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-sm font-semibold text-white flex items-center justify-center gap-3 transition">
                             <i class="fa-brands fa-google text-accent text-base"></i> Continue with Google
                         </button>
-                        <button onclick="loginWithProvider('github')" class="w-full py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-sm font-semibold text-white flex items-center justify-center gap-3">
+                        <button onclick="loginWithProvider('github')" class="w-full py-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-sm font-semibold text-white flex items-center justify-center gap-3">
                             <i class="fa-brands fa-github text-base"></i> Continue with GitHub
                         </button>
                     </div>
-                    <div id="authErrorMsg" class="text-sm text-red-400 font-medium text-center"></div>
-                    <div class="space-y-4 pt-3">
-                        <input type="email" id="loginEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-sm" placeholder="Email Address">
-                        <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-sm" placeholder="Password">
+
+                    <div class="relative flex py-2 items-center">
+                        <div class="flex-grow border-t border-white/10"></div>
+                        <span class="auth-divider flex-shrink mx-4 text-xs text-gray-500 uppercase font-mono">Or with email</span>
+                        <div class="flex-grow border-t border-white/10"></div>
+                    </div>
+
+                    <div id="authErrorMsg" class="text-xs text-red-400 font-medium text-center"></div>
+
+                    <div class="space-y-4">
+                        <input type="email" id="loginEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-sm focus:outline-none focus:border-accent transition" placeholder="Email Address">
+                        <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-sm focus:outline-none focus:border-accent transition" placeholder="Password (min. 6 chars)">
                         <div class="grid grid-cols-2 gap-3 pt-2">
-                            <button type="button" onclick="executeLogin()" class="w-full py-4 bg-accent text-white font-bold rounded-2xl text-sm">Sign In</button>
-                            <button type="button" onclick="executeRegister()" class="w-full py-4 bg-white/10 text-white font-bold rounded-2xl text-sm">Register</button>
+                            <button type="button" onclick="executeLogin()" class="signin-btn w-full py-4 bg-accent text-white font-extrabold rounded-2xl text-sm shadow-lg shadow-pink-500/20 hover:opacity-95 transition">Sign In</button>
+                            <button type="button" onclick="executeRegister()" class="register-btn w-full py-4 bg-white/10 hover:bg-white/20 text-white font-extrabold rounded-2xl text-sm transition">Register</button>
                         </div>
                     </div>
                 </div>
@@ -880,13 +895,108 @@
         </div>
     </div>
 
-    <!-- JavaScript Steuerung -->
+    <!-- JavaScript Steuerung & Übersetzungen -->
     <script>
         let currentLang = 'en';
         const translations = {
-            en: { cartEmptyText: "Your cart is empty." },
-            de: { cartEmptyText: "Dein Warenkorb ist leer." }
+            en: {
+                cartEmptyText: "Your cart is empty.",
+                heroBadge: "Available for freelance & high-end projects",
+                heroDesc: "I build clean web applications, optimize Windows & hardware for uncompromising performance, and create custom game scripts.",
+                discordText: "Join Discord Community",
+                storeTitle: "Store & Services",
+                storeDesc: "Choose your package, add it to cart or buy instantly.",
+                reviewsTitle: "What Clients Say",
+                contactTitle: "Get in Touch",
+                contactDesc: "Send me a direct message – I'll reply as soon as possible.",
+                nameLabel: "Your Name",
+                emailLabel: "Email Address",
+                msgLabel: "Message",
+                sendBtn: "Send Message",
+                footerDesc: "Val3ntino delivers digital products & professional PC tuning instantly after payment.",
+                navTitle: "Navigation",
+                accTitle: "Your account",
+                dashBtn: "Dashboard",
+                ordersBtn: "Orders",
+                ticketsBtn: "My Tickets",
+                authTitle: "Sign In / Register",
+                authSub: "Access your account or create a new one instantly.",
+                authDiv: "Or with email",
+                signInBtn: "Sign In",
+                regBtn: "Register"
+            },
+            de: {
+                cartEmptyText: "Dein Warenkorb ist leer.",
+                heroBadge: "Verfügbar für Freelance & High-End Projekte",
+                heroDesc: "Ich entwickle saubere Web-Apps, optimiere Windows & Hardware für kompromisslose Performance und erstelle individuelle Skripte.",
+                discordText: "Discord Community beitreten",
+                storeTitle: "Store & Services",
+                storeDesc: "Wähle dein Paket, lege es in den Warenkorb oder kaufe direkt.",
+                reviewsTitle: "Das sagen Kunden",
+                contactTitle: "Kontaktiere mich",
+                contactDesc: "Sende mir eine direkte Nachricht – ich antworte so schnell wie möglich.",
+                nameLabel: "Dein Name",
+                emailLabel: "E-Mail-Adresse",
+                msgLabel: "Nachricht",
+                sendBtn: "Nachricht senden",
+                footerDesc: "Val3ntino liefert digitale Produkte & professionelles PC-Tuning sofort nach Zahlungseingang.",
+                navTitle: "Navigation",
+                accTitle: "Dein Account",
+                dashBtn: "Dashboard",
+                ordersBtn: "Bestellungen",
+                ticketsBtn: "Meine Tickets",
+                authTitle: "Anmelden / Registrieren",
+                authSub: "Greife auf dein Konto zu oder erstelle sofort ein neues.",
+                authDiv: "Oder mit E-Mail",
+                signInBtn: "Anmelden",
+                regBtn: "Registrieren"
+            }
         };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('currentLangLabel').innerText = lang.toUpperCase();
+            document.getElementById('currentFlagIcon').innerText = lang === 'de' ? '🇩🇪' : '🇬🇧';
+            document.getElementById('langDropdownMenu').classList.add('hidden');
+            
+            if(lang === 'de') {
+                document.getElementById('checkDe').classList.remove('hidden');
+                document.getElementById('checkEn').classList.add('hidden');
+                showToast("Sprache zu Deutsch gewechselt");
+            } else {
+                document.getElementById('checkEn').classList.remove('hidden');
+                document.getElementById('checkDe').classList.add('hidden');
+                showToast("Language switched to English");
+            }
+
+            // Texte dynamisch anpassen
+            const t = translations[lang];
+            document.querySelector('.hero-badge').innerText = t.heroBadge;
+            document.querySelector('.hero-desc').innerText = t.heroDesc;
+            document.querySelector('.discord-btn-text').innerText = t.discordText;
+            document.querySelector('.store-title').innerText = t.storeTitle;
+            document.querySelector('.store-desc').innerText = t.storeDesc;
+            document.querySelector('.reviews-title').innerText = t.reviewsTitle;
+            document.querySelector('.contact-title').innerText = t.contactTitle;
+            document.querySelector('.contact-desc').innerText = t.contactDesc;
+            document.querySelector('.name-label').innerText = t.nameLabel;
+            document.querySelector('.email-label').innerText = t.emailLabel;
+            document.querySelector('.msg-label').innerText = t.msgLabel;
+            document.querySelector('.send-btn').innerText = t.sendBtn;
+            document.querySelector('.footer-desc').innerText = t.footerDesc;
+            document.querySelector('.nav-title').innerText = t.navTitle;
+            document.querySelector('.acc-title').innerText = t.accTitle;
+            document.querySelector('.dash-btn').innerText = t.dashBtn;
+            document.querySelector('.orders-btn').innerText = t.ordersBtn;
+            document.querySelector('.tickets-btn').innerText = t.ticketsBtn;
+            document.querySelector('.auth-title').innerText = t.authTitle;
+            document.querySelector('.auth-subtitle').innerText = t.authSub;
+            document.querySelector('.auth-divider').innerText = t.authDiv;
+            document.querySelector('.signin-btn').innerText = t.signInBtn;
+            document.querySelector('.register-btn').innerText = t.regBtn;
+
+            updateCartUI();
+        }
 
         let coupons = { "VAL3NTINO": 5.00, "PRO10": 10.00 };
         let appliedDiscount = 0;
@@ -908,24 +1018,6 @@
         function toggleLangDropdown() {
             let menu = document.getElementById('langDropdownMenu');
             menu.classList.toggle('hidden');
-        }
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.getElementById('currentLangLabel').innerText = lang.toUpperCase();
-            document.getElementById('currentFlagIcon').innerText = lang === 'de' ? '🇩🇪' : '🇬🇧';
-            document.getElementById('langDropdownMenu').classList.add('hidden');
-            
-            if(lang === 'de') {
-                document.getElementById('checkDe').classList.remove('hidden');
-                document.getElementById('checkEn').classList.add('hidden');
-                showToast("Sprache zu Deutsch gewechselt");
-            } else {
-                document.getElementById('checkEn').classList.remove('hidden');
-                document.getElementById('checkDe').classList.add('hidden');
-                showToast("Language switched to English");
-            }
-            updateCartUI();
         }
 
         function openDashboardTab(tabName) {
