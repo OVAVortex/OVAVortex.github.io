@@ -17,7 +17,7 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs & Vollständige Auth Steuerung -->
+    <!-- Firebase SDKs & Authentifizierung -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -481,7 +481,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.74</p>
+            <p class="font-mono text-accent/70">v1.75</p>
         </div>
     </footer>
 
@@ -652,6 +652,17 @@
         let quantities = { basic: 1, pro: 1, web: 1 };
         let cart = [];
         let currentLang = 'de';
+
+        const translations = {
+            de: {
+                login: "Anmelden",
+                dashboard: "Dashboard"
+            },
+            en: {
+                login: "Sign In",
+                dashboard: "Dashboard"
+            }
+        };
 
         function showToast(msg) {
             let t = document.getElementById("toast");
