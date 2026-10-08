@@ -17,7 +17,7 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs & Authentifizierung -->
+    <!-- Firebase SDKs & Vollständige Auth Steuerung -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -481,7 +481,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.75</p>
+            <p class="font-mono text-accent/70">v1.76</p>
         </div>
     </footer>
 
@@ -654,18 +654,13 @@
         let currentLang = 'de';
 
         const translations = {
-            de: {
-                login: "Anmelden",
-                dashboard: "Dashboard"
-            },
-            en: {
-                login: "Sign In",
-                dashboard: "Dashboard"
-            }
+            de: { login: "Anmelden", dashboard: "Dashboard" },
+            en: { login: "Sign In", dashboard: "Dashboard" }
         };
 
         function showToast(msg) {
             let t = document.getElementById("toast");
+            if(!t) return;
             t.innerText = msg;
             t.className = "show";
             setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000);
@@ -719,13 +714,18 @@
 
         function loadDashboardStats(email) {
             const container = document.getElementById('userOrdersContainer');
+            if(!container) return;
             let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
             let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
             
-            document.getElementById('userAvatarLetter').innerText = email.charAt(0).toUpperCase();
-            document.getElementById('userEmailDisplay').innerText = email;
-            document.getElementById('statOrdersCount').innerText = orders.filter(o => o.status === 'Completed' && !o.isTopUp).length;
-            document.getElementById('statBalanceAmount').innerText = '€' + balance.toFixed(2);
+            const avatarEl = document.getElementById('userAvatarLetter');
+            if(avatarEl) avatarEl.innerText = email.charAt(0).toUpperCase();
+            const emailDisp = document.getElementById('userEmailDisplay');
+            if(emailDisp) emailDisp.innerText = email;
+            const ordersCount = document.getElementById('statOrdersCount');
+            if(ordersCount) ordersCount.innerText = orders.filter(o => o.status === 'Completed' && !o.isTopUp).length;
+            const balAmt = document.getElementById('statBalanceAmount');
+            if(balAmt) balAmt.innerText = '€' + balance.toFixed(2);
             
             if (orders.length === 0) {
                 container.innerHTML = '<p class="text-xs text-gray-400 text-center py-2">Noch keine Bestellungen.</p>';
@@ -747,7 +747,8 @@
 
         function adjustQty(type, change) {
             quantities[type] = Math.max(1, quantities[type] + change);
-            document.getElementById('qty-' + type).innerText = quantities[type];
+            const qtyEl = document.getElementById('qty-' + type);
+            if(qtyEl) qtyEl.innerText = quantities[type];
         }
 
         function addItemToCart(name, price, type) {
@@ -767,30 +768,57 @@
                 subtotal += item.price * item.qty;
                 listHTML += `<div class="bg-[#030305] p-3 rounded-xl border border-white/10 flex justify-between items-center text-xs text-white"><p>${item.name} (x${item.qty})</p><span>€${(item.price * item.qty).toFixed(2)}</span></div>`;
             });
-            document.getElementById('cartBadge').innerText = totalCount;
-            document.getElementById('cartItemsContainer').innerHTML = listHTML || '<p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>';
-            document.getElementById('cartSubtotalDisplay').innerText = '€' + subtotal.toFixed(2);
-            document.getElementById('resellEmTotalDisplay').innerText = '€' + subtotal.toFixed(2);
-            document.getElementById('resellEmItemsList').innerHTML = listHTML;
+            const badge = document.getElementById('cartBadge');
+            if(badge) badge.innerText = totalCount;
+            const badgeMob = document.getElementById('cartBadgeMobile');
+            if(badgeMob) badgeMob.innerText = totalCount;
+            
+            const itemsContainer = document.getElementById('cartItemsContainer');
+            if(itemsContainer) itemsContainer.innerHTML = listHTML || '<p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>';
+            
+            const subtotalDisp = document.getElementById('cartSubtotalDisplay');
+            if(subtotalDisp) subtotalDisp.innerText = '€' + subtotal.toFixed(2);
+            
+            const resellTotal = document.getElementById('resellEmTotalDisplay');
+            if(resellTotal) resellTotal.innerText = '€' + subtotal.toFixed(2);
+            
+            const resellItems = document.getElementById('resellEmItemsList');
+            if(resellItems) resellItems.innerHTML = listHTML;
             
             let btn = document.getElementById('checkoutBtn');
-            if(cart.length > 0) {
-                btn.disabled = false;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-            } else {
-                btn.disabled = true;
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            if(btn) {
+                if(cart.length > 0) {
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                } else {
+                    btn.disabled = true;
+                    btn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
             }
         }
 
-        function toggleCartModal() { document.getElementById('cartModal').classList.toggle('active'); }
-        function proceedToCheckout() { toggleCartModal(); document.getElementById('paymentModal').classList.add('active'); }
-        function togglePaymentModal() { document.getElementById('paymentModal').classList.toggle('active'); }
-        function openTopUpModal() { document.getElementById('topUpModal').classList.toggle('active'); }
+        function toggleCartModal() { 
+            const m = document.getElementById('cartModal');
+            if(m) m.classList.toggle('active'); 
+        }
+        function proceedToCheckout() { 
+            toggleCartModal(); 
+            const pm = document.getElementById('paymentModal');
+            if(pm) pm.classList.add('active'); 
+        }
+        function togglePaymentModal() { 
+            const pm = document.getElementById('paymentModal');
+            if(pm) pm.classList.toggle('active'); 
+        }
+        function openTopUpModal() { 
+            const tm = document.getElementById('topUpModal');
+            if(tm) tm.classList.toggle('active'); 
+        }
 
         function selectTopUpAmount(amount) {
-            document.getElementById('topUpModal').classList.remove('active');
-            let email = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : "guest@val.de";
+            const tm = document.getElementById('topUpModal');
+            if(tm) tm.classList.remove('active');
+            let email = window.firebaseAuth && window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : "guest@val.de";
             
             let newOrder = {
                 items: `Top Up Guthaben (€${amount.toFixed(2)})`,
@@ -811,9 +839,12 @@
         }
 
         function executeResellEmCheckout() {
-            let email = document.getElementById('checkoutEmail').value.trim();
+            let emailInput = document.getElementById('checkoutEmail');
+            let email = emailInput ? emailInput.value.trim() : "";
+            let agbBox = document.getElementById('resellEmAgb');
+            
             if(!email || !email.includes('@')) { showToast('Bitte E-Mail eingeben!'); return; }
-            if(!document.getElementById('resellEmAgb').checked) { showToast('Bitte AGB akzeptieren!'); return; }
+            if(agbBox && !agbBox.checked) { showToast('Bitte AGB akzeptieren!'); return; }
 
             let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
             let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
@@ -839,17 +870,31 @@
             if(window.firebaseAuth.currentUser) loadDashboardStats(email);
         }
 
-        function toggleLogin() { document.getElementById('loginModal').classList.toggle('active'); }
+        function toggleLogin() { 
+            const lm = document.getElementById('loginModal');
+            if(lm) lm.classList.toggle('active'); 
+        }
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
-            menu.classList.toggle('flex');
+            if(menu) {
+                menu.classList.toggle('hidden');
+                menu.classList.toggle('flex');
+            }
         }
-        function toggleImpressum() { document.getElementById('impressumModal').classList.toggle('active'); }
-        function handleContact(e) { e.preventDefault(); showToast('Nachricht erfolgreich gesendet!'); document.getElementById('contactForm').reset(); }
+        function toggleImpressum() { 
+            const im = document.getElementById('impressumModal');
+            if(im) im.classList.toggle('active'); 
+        }
+        function handleContact(e) { 
+            e.preventDefault(); 
+            showToast('Nachricht erfolgreich gesendet!'); 
+            const cf = document.getElementById('contactForm');
+            if(cf) cf.reset(); 
+        }
         function toggleLanguage() {
             currentLang = currentLang === 'de' ? 'en' : 'de';
-            document.getElementById('langLabel').innerText = currentLang === 'de' ? 'EN / DE' : 'DE / EN';
+            const lbl = document.getElementById('langLabel');
+            if(lbl) lbl.innerText = currentLang === 'de' ? 'EN / DE' : 'DE / EN';
             showToast(currentLang === 'de' ? "Sprache zu Deutsch gewechselt" : "Language switched to English");
         }
     </script>
