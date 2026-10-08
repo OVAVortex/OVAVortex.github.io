@@ -23,7 +23,7 @@
             GithubAuthProvider,
             OAuthProvider,
             signInWithPopup 
-        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyBVHSbnkj96Jofi5NgD9cHukegytHXP2zc",
@@ -50,7 +50,7 @@
                     .then(() => {
                         const errEl = document.getElementById('authErrorMsg');
                         if(errEl) errEl.innerText = "";
-                        showToast(currentLang === 'de' ? "Erfolgreich eingeloggt!" : "Successfully logged in!");
+                        showToast(window.currentLang === 'de' ? "Erfolgreich eingeloggt!" : "Successfully logged in!");
                         toggleLogin();
                     })
                     .catch((error) => {
@@ -66,15 +66,15 @@
             const msgBox = document.getElementById('authErrorMsg');
             
             if(!email || !pass) {
-                msgBox.innerText = currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
+                msgBox.innerText = window.currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
                 return;
             }
-            msgBox.innerText = currentLang === 'de' ? "Wird eingeloggt..." : "Logging in...";
+            msgBox.innerText = window.currentLang === 'de' ? "Wird eingeloggt..." : "Logging in...";
 
             signInWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast(currentLang === 'de' ? "Erfolgreich eingeloggt!" : "Successfully logged in!");
+                    showToast(window.currentLang === 'de' ? "Erfolgreich eingeloggt!" : "Successfully logged in!");
                     toggleLogin();
                 })
                 .catch((error) => {
@@ -88,15 +88,15 @@
             const msgBox = document.getElementById('authErrorMsg');
             
             if(!email || !pass) {
-                msgBox.innerText = currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
+                msgBox.innerText = window.currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
                 return;
             }
-            msgBox.innerText = currentLang === 'de' ? "Account wird erstellt..." : "Creating account...";
+            msgBox.innerText = window.currentLang === 'de' ? "Account wird erstellt..." : "Creating account...";
 
             createUserWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast(currentLang === 'de' ? "Account erfolgreich erstellt!" : "Account successfully created!");
+                    showToast(window.currentLang === 'de' ? "Account erfolgreich erstellt!" : "Account successfully created!");
                     toggleLogin();
                 })
                 .catch((error) => {
@@ -106,7 +106,7 @@
 
         window.handleLogout = function() {
             signOut(auth).then(() => {
-                showToast(currentLang === 'de' ? "Erfolgreich ausgeloggt." : "Successfully logged out.");
+                showToast(window.currentLang === 'de' ? "Erfolgreich ausgeloggt." : "Successfully logged out.");
                 toggleLogin();
             });
         };
@@ -119,8 +119,8 @@
             const authFormsContainer = document.getElementById('authFormsContainer');
             
             if (user) {
-                if(loginBtnText) loginBtnText.innerText = currentLang === 'de' ? "Dein Account" : "Your account";
-                if(loginBtnTextMobile) loginBtnTextMobile.innerText = currentLang === 'de' ? "Dein Account" : "Your account";
+                if(loginBtnText) loginBtnText.innerText = window.currentLang === 'de' ? "Dein Account" : "Your account";
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = window.currentLang === 'de' ? "Dein Account" : "Your account";
                 if(contentDashboard) contentDashboard.classList.remove('hidden');
                 if(authFormsContainer) authFormsContainer.classList.add('hidden');
 
@@ -140,8 +140,8 @@
                 }
                 loadDashboardStats(user.email);
             } else {
-                if(loginBtnText) loginBtnText.innerText = currentLang === 'de' ? "Anmelden" : "Log in";
-                if(loginBtnTextMobile) loginBtnTextMobile.innerText = currentLang === 'de' ? "Anmelden" : "Log in";
+                if(loginBtnText) loginBtnText.innerText = window.currentLang === 'de' ? "Anmelden" : "Log in";
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = window.currentLang === 'de' ? "Anmelden" : "Log in";
                 if(contentDashboard) contentDashboard.classList.add('hidden');
                 if(authFormsContainer) authFormsContainer.classList.remove('hidden');
                 if(adminSection) adminSection.classList.add('hidden');
@@ -226,7 +226,7 @@
     <div id="toast">Notification</div>
 
     <!-- Announcement Bar -->
-    <div class="sale-banner w-full bg-gradient-to-r from-accent via-pink-600 to-accentSky text-white border-b border-white/10 py-3 px-6 text-center text-xs md:text-sm font-extrabold tracking-wide absolute top-0 left-0 right-0 z-50 shadow-lg">
+    <div class="w-full bg-gradient-to-r from-accent via-pink-600 to-accentSky text-white border-b border-white/10 py-3 px-6 text-center text-xs md:text-sm font-extrabold tracking-wide absolute top-0 left-0 right-0 z-50 shadow-lg">
         🔥 VAL3NTINO : 30% OFF — LIMITED TIME SALE ACTIVE NOW! ⚡
     </div>
 
@@ -771,7 +771,7 @@
                         </div>
                     </div>
 
-                    <!-- Admin Kontrollzentrum mit Discord Chat & AI Integration -->
+                    <!-- Admin Kontrollzentrum -->
                     <div id="adminControlCenter" class="hidden bg-[#09090f] p-6 rounded-2xl border border-accent/40 space-y-6 shadow-xl">
                         <div class="flex items-center justify-between border-b border-white/10 pb-3">
                             <p class="text-sm font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1.5"></i> Admin Control Center & Bot Chat</p>
@@ -794,7 +794,7 @@
                                     <p class="text-gray-500 text-center">Keine Chat-Nachrichten vorhanden.</p>
                                 </div>
                                 <div class="flex gap-2">
-                                    <input type="text" id="adminChatReplyInput" class="w-full bg-[#09090f] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Nachricht an Discord senden...">
+                                    <input type="text" id="adminChatReplyInput" class="w-full bg-[#09090f] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Nachricht an Discord senden..." onkeypress="if(event.key === 'Enter') sendeAnDiscordAdmin()">
                                     <button onclick="sendeAnDiscordAdmin()" class="px-4 py-2 bg-[#5865F2] text-white font-bold rounded-xl text-xs">An Discord ↗</button>
                                 </div>
                             </div>
@@ -911,7 +911,7 @@
         </div>
     </div>
 
-    <!-- Dein Discord Live-Chat Widget (Schwebend unten rechts) -->
+    <!-- Dein Discord Live-Chat Widget -->
     <div class="fixed bottom-6 right-6 z-50">
         <div id="discordChatWidget" class="hidden bg-[#2f3136] p-4 rounded-2xl shadow-2xl w-80 text-white font-sans border border-white/10 mb-3">
             <div class="flex justify-between items-center mb-3">
@@ -1061,7 +1061,6 @@
             
             if(!nachricht) return alert('Bitte gib eine Nachricht ein!');
 
-            // In LocalStorage speichern, damit der Admin im Panel mitlesen kann
             let chatHistory = JSON.parse(localStorage.getItem('site_chat_messages') || '[]');
             chatHistory.push({ sender: name, text: nachricht, time: new Date().toLocaleTimeString() });
             localStorage.setItem('site_chat_messages', JSON.stringify(chatHistory));
