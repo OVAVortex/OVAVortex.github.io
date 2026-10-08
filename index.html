@@ -56,7 +56,7 @@
                 signInWithPopup(auth, provider)
                     .then(() => {
                         document.getElementById('authErrorMsg').innerText = "";
-                        showToast("Erfolgreich angemeldet!");
+                        showToast(currentLang === 'de' ? "Erfolgreich angemeldet!" : "Successfully logged in!");
                         toggleLogin();
                     })
                     .catch((error) => {
@@ -71,15 +71,15 @@
             const msgBox = document.getElementById('authErrorMsg');
             
             if(!email || !pass) {
-                msgBox.innerText = "Bitte E-Mail und Passwort eingeben!";
+                msgBox.innerText = currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
                 return;
             }
-            msgBox.innerText = "Logge ein...";
+            msgBox.innerText = currentLang === 'de' ? "Logge ein..." : "Logging in...";
 
             signInWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast("Erfolgreich eingeloggt!");
+                    showToast(currentLang === 'de' ? "Erfolgreich eingeloggt!" : "Successfully logged in!");
                     toggleLogin();
                 })
                 .catch((error) => {
@@ -93,15 +93,15 @@
             const msgBox = document.getElementById('authErrorMsg');
             
             if(!email || !pass) {
-                msgBox.innerText = "Bitte E-Mail und Passwort eingeben!";
+                msgBox.innerText = currentLang === 'de' ? "Bitte E-Mail und Passwort eingeben!" : "Please enter email and password!";
                 return;
             }
-            msgBox.innerText = "Erstelle Account...";
+            msgBox.innerText = currentLang === 'de' ? "Erstelle Account..." : "Creating account...";
 
             createUserWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast("Account erfolgreich erstellt!");
+                    showToast(currentLang === 'de' ? "Account erfolgreich erstellt!" : "Account successfully created!");
                     toggleLogin();
                 })
                 .catch((error) => {
@@ -111,7 +111,7 @@
 
         window.handleLogout = function() {
             signOut(auth).then(() => {
-                showToast("Erfolgreich abgemeldet.");
+                showToast(currentLang === 'de' ? "Erfolgreich abgemeldet." : "Successfully logged out.");
                 toggleLogin();
             });
         };
@@ -122,14 +122,13 @@
             const adminSection = document.getElementById('adminControlCenter');
             
             if (user) {
-                if(loginBtnText) loginBtnText.innerText = "Dashboard";
-                if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Dashboard";
+                if(loginBtnText) loginBtnText.innerText = translations[currentLang].dashboard;
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = translations[currentLang].dashboard;
                 const checkoutEmailInput = document.getElementById('checkoutEmail');
                 if (checkoutEmailInput && !checkoutEmailInput.value) {
                     checkoutEmailInput.value = user.email || '';
                 }
                 
-                // Zuverlässige Admin-Prüfung für L@valentinolopez.de
                 if (adminSection) {
                     if (user.email.toLowerCase() === 'l@valentinolopez.de' || user.email.toLowerCase().includes('admin')) {
                         adminSection.classList.remove('hidden');
@@ -141,8 +140,8 @@
 
                 loadDashboardStats(user.email);
             } else {
-                if(loginBtnText) loginBtnText.innerText = "Anmelden";
-                if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Anmelden";
+                if(loginBtnText) loginBtnText.innerText = translations[currentLang].login;
+                if(loginBtnTextMobile) loginBtnTextMobile.innerText = translations[currentLang].login;
                 if(adminSection) adminSection.classList.add('hidden');
             }
         });
@@ -163,15 +162,36 @@
         }
     </script>
     <style>
-        body { background-color: #030305; color: #f4f4f5; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        body { 
+            background-color: #030305; 
+            background-image: radial-gradient(circle at 50% 0%, #0d0d1a 0%, #030305 70%);
+            color: #f4f4f5; 
+            overflow-x: hidden; 
+            -webkit-tap-highlight-color: transparent; 
+        }
         .modal { display: none; }
         .modal.active { display: flex; }
+
+        .hero-glow {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(700px, 90vw);
+            height: 350px;
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.12) 0%, rgba(56, 189, 248, 0.04) 45%, transparent 75%);
+            filter: blur(90px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .nivex-card {
             background: linear-gradient(145deg, rgba(13, 13, 22, 0.95) 0%, rgba(7, 7, 14, 0.95) 100%);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 15px 35px -10px rgba(0,0,0,0.6);
             backdrop-filter: blur(16px);
         }
+
         #toast {
             visibility: hidden;
             min-width: 250px;
@@ -198,88 +218,300 @@
 </head>
 <body class="antialiased selection:bg-accent selection:text-white">
 
+    <div class="hero-glow"></div>
     <div id="toast">Benachrichtigung</div>
 
+    <!-- Announcement Bar -->
+    <div class="w-full bg-[#0a0a10] border-b border-white/5 py-2 px-4 text-center text-[11px] font-medium text-gray-400 absolute top-0 left-0 right-0 z-50">
+        <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse mr-1.5"></span> <span id="announcementText">⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE</span>
+    </div>
+
     <!-- Navigation -->
-    <nav class="w-full py-4 px-5 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-0 bg-[#030305]/90 backdrop-blur-2xl z-50">
+    <nav class="w-full py-4 px-5 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-[33px] bg-[#030305]/90 backdrop-blur-2xl z-50">
         <a href="#" class="text-lg md:text-xl font-extrabold tracking-tight text-white hover:text-accent transition flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></span> Val3ntino<span class="text-accent">.</span>
         </a>
         
         <div class="hidden md:flex items-center space-x-8">
-            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition">Store & Services</a>
+            <a href="#skills" id="navSkills" class="text-sm font-medium text-gray-400 hover:text-white transition">Skills</a>
+            <a href="#booking" id="navStore" class="text-sm font-medium text-gray-400 hover:text-white transition">Preise & Store</a>
+            <a href="#contact" id="navContact" class="text-sm font-medium text-gray-400 hover:text-white transition">Kontakt</a>
+            
+            <button onclick="toggleLanguage()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-bold text-accent transition flex items-center gap-1.5">
+                <i class="fa-solid fa-globe"></i> <span id="langLabel">EN / DE</span>
+            </button>
+
             <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-white transition flex items-center justify-center">
                 <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
                 <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-accent text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-md">0</span>
             </button>
+
             <button onclick="toggleLogin()" class="text-sm font-semibold text-accent hover:text-white transition flex items-center gap-2 bg-accent/10 px-4.5 py-2 rounded-xl border border-accent/25 shadow-sm"><i class="fa-solid fa-user text-xs"></i> <span id="loginBtnText">Anmelden</span></button>
+        </div>
+
+        <div class="flex items-center space-x-2.5 md:hidden">
+            <button onclick="toggleLanguage()" class="px-2.5 py-1.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-accent">
+                <span id="langLabelMobile">DE</span>
+            </button>
+            <button onclick="toggleCartModal()" class="relative p-2.5 bg-white/5 border border-white/10 rounded-xl text-white">
+                <i class="fa-solid fa-cart-shopping text-accent text-sm"></i>
+                <span id="cartBadgeMobile" class="absolute -top-1 -right-1 bg-accent text-white text-[9px] font-extrabold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+            </button>
+            <button onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-lg p-2">
+                <i class="fa-solid fa-bars" id="menuIcon"></i>
+            </button>
         </div>
     </nav>
 
+    <!-- Mobile Dropdown Menü -->
+    <div id="mobileMenu" class="hidden fixed inset-x-0 top-[102px] bg-[#0d0d14]/95 border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-2xl">
+        <a href="#skills" onclick="toggleMobileMenu()" id="mobileNavSkills" class="text-gray-300 hover:text-white text-base font-medium py-1">Skills</a>
+        <a href="#booking" onclick="toggleMobileMenu()" id="mobileNavStore" class="text-gray-300 hover:text-white text-base font-medium py-1">Preise & Store</a>
+        <a href="#contact" onclick="toggleMobileMenu()" id="mobileNavContact" class="text-gray-300 hover:text-white text-base font-medium py-1">Kontakt</a>
+        <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium py-2 flex items-center gap-2"><i class="fa-solid fa-user"></i> <span id="loginBtnTextMobile">Anmelden</span></button>
+    </div>
+
     <!-- Hero Header -->
-    <header class="max-w-4xl mx-auto px-5 md:px-8 pt-44 pb-20 text-center relative">
-        <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4">
+    <header class="max-w-4xl mx-auto px-5 md:px-8 pt-48 md:pt-60 pb-20 md:pb-28 text-center relative">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold mb-6 md:mb-8 shadow-xl backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span id="heroBadge">Verfügbar für Aufträge & High-End Projekte</span>
+        </div>
+
+        <h1 id="heroTitle" class="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-4 md:mb-6">
             Hi, ich bin Valentino.
         </h1>
-        <p class="text-xl md:text-3xl text-gray-400 font-light mb-6">
+        <p class="text-xl md:text-3xl text-gray-400 font-light mb-6 md:mb-8">
             aka <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent via-pink-400 to-accentSky font-bold">Val3ntino</span>
+        </p>
+        <p id="heroDesc" class="text-sm md:text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed font-light px-2">
+            Ich entwickle saubere Web-Anwendungen, optimiere Windows & Hardware auf kompromisslose Performance und erschaffe kreative Game-Scripts.
         </p>
     </header>
 
-    <main class="max-w-5xl mx-auto px-5 md:px-8 pb-24">
-        <!-- Store Sektion -->
-        <section id="booking" class="mb-24">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">Store & Services</h2>
-                <p class="text-gray-400 text-xs md:text-sm font-light">Wähle dein Paket und lege es in den Warenkorb.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 items-stretch">
-                <div class="nivex-card p-6 rounded-3xl flex flex-col justify-between">
+    <main class="max-w-5xl mx-auto px-5 md:px-8 pb-24 md:pb-32">
+        <!-- Skills Sektion -->
+        <section id="skills" class="mb-24 md:mb-32">
+            <div class="grid md:grid-cols-3 gap-5 md:gap-6">
+                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
                     <div>
-                        <h3 class="text-lg font-bold text-white mb-2">Basic PC-Tuning</h3>
-                        <p class="text-3xl font-black text-white mb-6">€15.00</p>
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-code text-accent text-lg"></i>
+                        </div>
+                        <h3 id="skill1Title" class="text-lg font-bold text-white mb-2.5 md:mb-3">Coding & Dev</h3>
+                        <p id="skill1Desc" class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Leidenschaft fürs Programmieren, moderne Web-Entwicklung und Game-Scripts.</p>
                     </div>
-                    <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="w-full py-3.5 bg-accent/10 border border-accent/30 rounded-2xl font-bold text-accent text-xs flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
-                    </button>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">HTML & CSS</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">C++</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Python</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Luau</span>
+                    </div>
                 </div>
 
-                <div class="nivex-card p-6 rounded-3xl border-accent/50 flex flex-col justify-between">
+                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
                     <div>
-                        <h3 class="text-xl font-bold text-white mb-2">Pro Tuning</h3>
-                        <p class="text-3xl font-black text-white mb-6">€35.00</p>
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-microchip text-accent text-lg"></i>
+                        </div>
+                        <h3 id="skill2Title" class="text-lg font-bold text-white mb-2.5 md:mb-3">PC Tuning</h3>
+                        <p id="skill2Desc" class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Maximale Performance, Custom Tweaks und kompromisslose Hardware-Optimierungen.</p>
                     </div>
-                    <button onclick="addItemToCart('Pro Tuning', 35.00, 'pro')" class="w-full py-4 bg-accent text-white rounded-2xl font-bold text-xs flex items-center justify-center gap-2 shadow-lg">
-                        <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
-                    </button>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">0 Input Delay</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Windows Tweaks</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">BIOS Edits</span>
+                    </div>
                 </div>
 
-                <div class="nivex-card p-6 rounded-3xl flex flex-col justify-between">
+                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
                     <div>
-                        <h3 class="text-lg font-bold text-white mb-2">Website Build</h3>
-                        <p class="text-3xl font-black text-white mb-6">€25.00</p>
+                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
+                            <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
+                        </div>
+                        <h3 id="skill3Title" class="text-lg font-bold text-white mb-2.5 md:mb-3">Vibe Coding</h3>
+                        <p id="skill3Desc" class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Coden im perfekten Flow-State. Fokus auf saubere Lösungen in entspannter Atmosphäre.</p>
                     </div>
-                    <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="w-full py-3.5 bg-accent/10 border border-accent/30 rounded-2xl font-bold text-accent text-xs flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
-                    </button>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Flow State</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Creative</span>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- Booking / Store Sektion -->
+        <section id="booking" class="mb-24 md:mb-32">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 id="storeTitle" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">Store & Services</h2>
+                <p id="storeDesc" class="text-gray-400 text-xs md:text-sm font-light px-4">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 md:gap-8 items-stretch">
+                <!-- Plan 1 -->
+                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">Basic PC-Tuning</h3>
+                        <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€15.00</p>
+                        <ul class="text-gray-400 text-xs md:text-sm space-y-3 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Windows Basis-Optimierung</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hintergrunddienste stoppen</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-3.5">
+                        <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
+                            <button onclick="adjustQty('basic', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span id="qty-basic" class="font-bold text-white text-sm">1</span>
+                            <button onclick="adjustQty('basic', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                        <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="addToCartText w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Plan 2 (Bestseller) -->
+                <div class="nivex-card p-6 md:p-8 rounded-3xl relative flex flex-col justify-between transform md:-translate-y-3 border-accent/50">
+                    <div id="popularBadge" class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-accent text-white text-[10px] md:text-xs font-extrabold px-4 py-1 rounded-full shadow-lg">BELIEBT</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2 mt-2">Pro Tuning (0 Delay)</h3>
+                        <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€35.00</p>
+                        <ul class="text-gray-300 text-xs md:text-sm space-y-3 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Alles aus Basic</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> BIOS & Registry Edits</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> 0 Input Delay Setup</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-3.5">
+                        <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
+                            <button onclick="adjustQty('pro', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span id="qty-pro" class="font-bold text-white text-sm">1</span>
+                            <button onclick="adjustQty('pro', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                        <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro')" class="addToCartText w-full py-4 text-center bg-accent text-white rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Plan 3 -->
+                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">Website Build</h3>
+                        <p class="text-3xl md:text-4xl font-black text-white mb-5 md:mb-6">€25.00</p>
+                        <ul class="text-gray-400 text-xs md:text-sm space-y-3 mb-6 font-light">
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Cleanes Portfolio Design</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Responsive (Handy & PC)</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Kontaktformular & Setup</li>
+                            <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-3.5">
+                        <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
+                            <button onclick="adjustQty('web', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
+                            <span id="qty-web" class="font-bold text-white text-sm">1</span>
+                            <button onclick="adjustQty('web', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
+                        </div>
+                        <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="addToCartText w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
+                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="mb-24 md:mb-32">
+            <h2 id="testimonialsTitle" class="text-2xl sm:text-3xl font-bold text-center text-white mb-10">Was Kunden sagen</h2>
+            <div class="grid md:grid-cols-2 gap-5 md:gap-6">
+                <div class="nivex-card p-6 md:p-8 rounded-3xl">
+                    <div class="flex text-accent text-xs mb-3 space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p id="testi1" class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Das Pro Tuning hat meinen PC unfassbar schnell gemacht. Null Input Delay in Games, absolut empfehlenswert!&quot;</p>
+                    <p class="text-xs font-bold text-white">Leon K.</p>
+                </div>
+                <div class="nivex-card p-6 md:p-8 rounded-3xl">
+                    <div class="flex text-accent text-xs mb-3 space-x-1">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    </div>
+                    <p id="testi2" class="text-gray-300 text-xs md:text-sm italic mb-5 font-light leading-relaxed">&quot;Super saubere Arbeit beim Website Build. Meine Seite sieht extrem clean aus und war super schnell online.&quot;</p>
+                    <p class="text-xs font-bold text-white">Jonas M.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kontaktformular -->
+        <section id="contact" class="max-w-xl mx-auto nivex-card p-6 sm:p-8 md:p-10 rounded-3xl mb-16 shadow-2xl">
+            <h2 id="contactTitle" class="text-xl md:text-2xl font-bold text-white mb-2 text-center">Kontakt aufnehmen</h2>
+            <p id="contactDesc" class="text-xs text-gray-400 text-center mb-8 font-light">Schreib mir direkt dein Anliegen – ich antworte schnellstmöglich.</p>
+            <form id="contactForm" onsubmit="handleContact(event)" class="space-y-4">
+                <div>
+                    <label id="labelName" class="block text-xs font-medium text-gray-400 mb-2">Dein Name</label>
+                    <input type="text" id="contactName" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Wie darf ich dich nennen?">
+                </div>
+                <div>
+                    <label id="labelEmail" class="block text-xs font-medium text-gray-400 mb-2">E-Mail Adresse</label>
+                    <input type="email" id="contactEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="deine@email.de">
+                </div>
+                <div>
+                    <label id="labelMessage" class="block text-xs font-medium text-gray-400 mb-2">Nachricht</label>
+                    <textarea rows="4" id="contactMessage" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-sm focus:outline-none focus:border-accent transition" required placeholder="Dein Anliegen..."></textarea>
+                </div>
+                <button type="submit" id="contactSubmitBtn" class="w-full py-4 bg-white text-black font-bold rounded-2xl hover:bg-gray-200 transition text-sm shadow-xl">Nachricht senden</button>
+            </form>
+        </section>
     </main>
+
+    <!-- Footer -->
+    <footer class="py-12 px-8 border-t border-white/5 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-gray-500">
+        <div class="flex items-center space-x-6">
+            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
+                <i class="fa-brands fa-x-twitter text-accent"></i> Twitter / X
+            </a>
+            <span class="text-gray-400 flex items-center gap-2">
+                <i class="fa-brands fa-discord text-accent"></i> Discord: dri.c
+            </span>
+        </div>
+        <div class="flex items-center gap-6">
+            <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
+            <p>&copy; 2026 Valentino.</p>
+            <p class="font-mono text-accent/70">v1.68</p>
+        </div>
+    </footer>
+
+    <!-- Impressum Modal -->
+    <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative shadow-2xl">
+            <button onclick="toggleImpressum()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h2 class="text-xl font-bold text-white mb-6">Impressum</h2>
+            <div class="text-gray-300 text-sm space-y-3 font-light leading-relaxed">
+                <p><strong>Angaben gemäß § 5 TMG:</strong></p>
+                <p>Valentino Lopez</p>
+                <p>Europa-Allee 2<br>60327 Frankfurt am Main</p>
+                <p class="mt-6 text-white font-medium">Kontakt:</p>
+                <p>E-Mail: L@valentinolopez.de</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Warenkorb Modal -->
     <div id="cartModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-6 rounded-3xl max-w-md w-full relative space-y-6 shadow-2xl">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-6 shadow-2xl">
             <button onclick="toggleCartModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            <h2 class="text-xl font-extrabold text-white">Shopping Cart</h2>
+            
+            <h2 id="cartTitle" class="text-xl font-extrabold text-white">Shopping Cart</h2>
             <div id="cartItemsContainer" class="space-y-3 max-h-52 overflow-y-auto pr-1">
-                <p class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>
+                <p id="cartEmptyText" class="text-xs text-gray-400 text-center py-6">Dein Warenkorb ist leer.</p>
             </div>
+
             <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 flex justify-between items-center text-sm">
                 <span class="text-white font-bold">Gesamtsumme</span>
                 <span class="text-accent font-bold text-base" id="cartSubtotalDisplay">€0.00</span>
             </div>
+
             <button onclick="proceedToCheckout()" id="checkoutBtn" class="w-full py-4 text-center bg-accent text-white font-extrabold rounded-2xl text-xs opacity-50 cursor-not-allowed shadow-lg" disabled>Checkout</button>
         </div>
     </div>
@@ -311,7 +543,7 @@
         </div>
     </div>
 
-    <!-- Dashboard mit Admin Kontrollzentrum -->
+    <!-- Dashboard & Admin Panel -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-xl w-full relative space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -339,17 +571,24 @@
                     </div>
                 </div>
 
-                <!-- ADMIN KONTROLLZENTRUM (Erscheint nur für L@valentinolopez.de) -->
+                <!-- ADMIN KONTROLLZENTRUM -->
                 <div id="adminControlCenter" class="hidden bg-[#030305] p-5 rounded-2xl border border-accent/40 space-y-4 shadow-xl">
                     <div class="flex items-center justify-between border-b border-white/10 pb-2">
                         <p class="text-xs font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Control Center</p>
-                        <span class="text-[9px] bg-accent/20 text-white px-2 py-0.5 rounded font-bold">STAFF</span>
+                        <span class="text-[9px] bg-accent/20 text-white px-2 py-0.5 rounded font-bold">L@valentinolopez.de</span>
                     </div>
                     <div class="space-y-2">
                         <p class="text-[11px] font-bold text-white">Ausstehende Zahlungen (Pending)</p>
                         <div id="adminPendingList" class="space-y-2 max-h-40 overflow-y-auto text-xs">
                             <p class="text-gray-400 text-center py-2">Keine ausstehenden Zahlungen.</p>
                         </div>
+                    </div>
+                </div>
+
+                <div id="dashOrdersSection" class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-3">
+                    <p class="text-xs font-bold text-white">Latest Orders</p>
+                    <div id="userOrdersContainer" class="space-y-2 max-h-40 overflow-y-auto">
+                        <p class="text-xs text-gray-400 text-center py-2">Noch keine Bestellungen.</p>
                     </div>
                 </div>
 
@@ -566,6 +805,7 @@
         function toggleLogin() { document.getElementById('loginModal').classList.toggle('active'); }
         function switchDashboardTab(tab) {}
         function handleContact(e) { e.preventDefault(); }
+        function toggleLanguage() {}
     </script>
 </body>
 </html>
