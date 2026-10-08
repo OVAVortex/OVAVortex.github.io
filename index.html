@@ -349,7 +349,7 @@
         <section id="booking" class="mb-24 md:mb-32">
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">Store & Services</h2>
-                <p class="text-gray-400 text-xs md:text-sm font-light px-4">Wähle deine Menge und lege Pakete in den Warenkorb.</p>
+                <p class="text-gray-400 text-xs md:text-sm font-light px-4">Wähle deine Menge und lege Pakete in den Warenkorb oder starte direkt den Kauf.</p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-6 md:gap-8 items-stretch">
@@ -364,15 +364,20 @@
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Standard FPS Boost</li>
                         </ul>
                     </div>
-                    <div class="space-y-3.5">
+                    <div class="space-y-3">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
                             <button onclick="adjustQty('basic', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-basic" class="font-bold text-white text-sm">1</span>
                             <button onclick="adjustQty('basic', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
-                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
-                        </button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="py-3 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-bold text-white text-[11px] flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-cart-plus text-accent"></i> Warenkorb
+                            </button>
+                            <button onclick="buyNow('Basic PC-Tuning', 15.00, 'basic')" class="py-3 text-center bg-accent hover:opacity-90 text-white rounded-xl transition font-bold text-[11px] flex items-center justify-center gap-1.5 shadow-md">
+                                <i class="fa-solid fa-bolt"></i> Jetzt kaufen
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -389,15 +394,20 @@
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Max. Performance Garantie</li>
                         </ul>
                     </div>
-                    <div class="space-y-3.5">
+                    <div class="space-y-3">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
                             <button onclick="adjustQty('pro', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-pro" class="font-bold text-white text-sm">1</span>
                             <button onclick="adjustQty('pro', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro')" class="w-full py-4 text-center bg-accent text-white rounded-2xl hover:opacity-95 transition font-bold text-xs shadow-lg flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
-                        </button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro')" class="py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-bold text-white text-[11px] flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-cart-plus text-accent"></i> Warenkorb
+                            </button>
+                            <button onclick="buyNow('Pro Tuning (0 Delay)', 35.00, 'pro')" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-xl transition font-bold text-[11px] flex items-center justify-center gap-1.5 shadow-lg">
+                                <i class="fa-solid fa-bolt"></i> Jetzt kaufen
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -413,15 +423,20 @@
                             <li><i class="fa-solid fa-check text-accent mr-2.5"></i> Hilfe bei GitHub Pages</li>
                         </ul>
                     </div>
-                    <div class="space-y-3.5">
+                    <div class="space-y-3">
                         <div class="flex items-center justify-between bg-[#030305] border border-white/10 rounded-2xl p-1.5">
                             <button onclick="adjustQty('web', -1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-minus text-xs"></i></button>
                             <span id="qty-web" class="font-bold text-white text-sm">1</span>
                             <button onclick="adjustQty('web', 1)" class="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-xs"></i></button>
                         </div>
-                        <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="w-full py-3.5 text-center bg-accent/10 hover:bg-accent/20 border border-accent/30 rounded-2xl transition font-bold text-accent text-xs flex items-center justify-center gap-2 shadow-md">
-                            <i class="fa-solid fa-cart-plus"></i> In den Warenkorb
-                        </button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="py-3 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition font-bold text-white text-[11px] flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-cart-plus text-accent"></i> Warenkorb
+                            </button>
+                            <button onclick="buyNow('Website Build', 25.00, 'web')" class="py-3 text-center bg-accent hover:opacity-90 text-white rounded-xl transition font-bold text-[11px] flex items-center justify-center gap-1.5 shadow-md">
+                                <i class="fa-solid fa-bolt"></i> Jetzt kaufen
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -483,7 +498,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.83</p>
+            <p class="font-mono text-accent/70">v1.84</p>
         </div>
     </footer>
 
@@ -652,7 +667,6 @@
 
         function showToast(msg) {
             let t = document.getElementById("toast");
-            if(!t) return;
             t.innerText = msg;
             t.className = "show";
             setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000);
@@ -706,7 +720,6 @@
 
         function loadDashboardStats(email) {
             const container = document.getElementById('userOrdersContainer');
-            if(!container) return;
             let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
             let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
             
@@ -745,6 +758,18 @@
             else cart.push({ name, price, qty });
             updateCartUI();
             toggleCartModal();
+        }
+
+        function buyNow(name, price, type) {
+            let qty = quantities[type];
+            let existing = cart.find(i => i.name === name);
+            if (existing) {
+                existing.qty = qty;
+            } else {
+                cart = [{ name, price, qty }];
+            }
+            updateCartUI();
+            document.getElementById('paymentModal').classList.add('active');
         }
 
         function updateCartUI() {
