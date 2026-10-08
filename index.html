@@ -498,7 +498,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.84</p>
+            <p class="font-mono text-accent/70">v1.85</p>
         </div>
     </footer>
 
@@ -757,7 +757,7 @@
             if (existing) existing.qty += qty;
             else cart.push({ name, price, qty });
             updateCartUI();
-            toggleCartModal();
+            showToast("Zum Warenkorb hinzugefügt!");
         }
 
         function buyNow(name, price, type) {
