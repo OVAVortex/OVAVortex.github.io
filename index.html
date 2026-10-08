@@ -57,8 +57,8 @@
                     .then(() => {
                         const errEl = document.getElementById('authErrorMsg');
                         if(errEl) errEl.innerText = "";
-                        window.showToast("Erfolgreich angemeldet!");
-                        window.toggleLogin();
+                        showToast("Erfolgreich angemeldet!");
+                        toggleLogin();
                     })
                     .catch((error) => {
                         const errEl = document.getElementById('authErrorMsg');
@@ -81,8 +81,8 @@
             signInWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    window.showToast("Erfolgreich eingeloggt!");
-                    window.toggleLogin();
+                    showToast("Erfolgreich eingeloggt!");
+                    toggleLogin();
                 })
                 .catch((error) => {
                     msgBox.innerText = "Login Fehler: " + error.message;
@@ -103,8 +103,8 @@
             createUserWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    window.showToast("Account erfolgreich erstellt!");
-                    window.toggleLogin();
+                    showToast("Account erfolgreich erstellt!");
+                    toggleLogin();
                 })
                 .catch((error) => {
                     msgBox.innerText = "Registrierungsfehler: " + error.message;
@@ -113,8 +113,8 @@
 
         window.handleLogout = function() {
             signOut(auth).then(() => {
-                window.showToast("Erfolgreich abgemeldet.");
-                window.toggleLogin();
+                showToast("Erfolgreich abgemeldet.");
+                toggleLogin();
             });
         };
 
@@ -122,10 +122,16 @@
             const loginBtnText = document.getElementById('loginBtnText');
             const loginBtnTextMobile = document.getElementById('loginBtnTextMobile');
             const adminSection = document.getElementById('adminControlCenter');
+            const dashboardView = document.getElementById('userDashboardView');
+            const authForms = document.getElementById('authFormsContainer');
             
             if (user) {
                 if(loginBtnText) loginBtnText.innerText = "Dashboard";
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Dashboard";
+                
+                if(dashboardView) dashboardView.classList.remove('hidden');
+                if(authForms) authForms.classList.add('hidden');
+
                 const checkoutEmailInput = document.getElementById('checkoutEmail');
                 if (checkoutEmailInput && !checkoutEmailInput.value) {
                     checkoutEmailInput.value = user.email || '';
@@ -135,16 +141,19 @@
                     const userEmailLower = user.email.toLowerCase().trim();
                     if (userEmailLower === 'l@valentinolopez.de' || userEmailLower.includes('admin')) {
                         adminSection.classList.remove('hidden');
-                        window.renderAdminPanelData();
+                        renderAdminPanelData();
                     } else {
                         adminSection.classList.add('hidden');
                     }
                 }
 
-                window.loadDashboardStats(user.email);
+                loadDashboardStats(user.email);
             } else {
                 if(loginBtnText) loginBtnText.innerText = "Anmelden";
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Anmelden";
+                
+                if(dashboardView) dashboardView.classList.add('hidden');
+                if(authForms) authForms.classList.remove('hidden');
                 if(adminSection) adminSection.classList.add('hidden');
             }
         });
@@ -474,7 +483,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.82</p>
+            <p class="font-mono text-accent/70">v1.83</p>
         </div>
     </footer>
 
@@ -536,7 +545,7 @@
         </div>
     </div>
 
-    <!-- Dashboard & Admin Panel -->
+    <!-- Dashboard & Admin Panel Modal -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-xl w-full relative space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
             <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -643,6 +652,7 @@
 
         function showToast(msg) {
             let t = document.getElementById("toast");
+            if(!t) return;
             t.innerText = msg;
             t.className = "show";
             setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000);
@@ -696,6 +706,7 @@
 
         function loadDashboardStats(email) {
             const container = document.getElementById('userOrdersContainer');
+            if(!container) return;
             let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
             let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
             
