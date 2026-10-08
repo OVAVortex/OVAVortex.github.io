@@ -125,7 +125,7 @@
             const authForms = document.getElementById('authFormsContainer');
             
             if (user) {
-                if(loginBtnText) loginBtnText.innerText = "Dashboard";
+                if(loginBtnText) loginBtnText.innerText = "Your account";
                 
                 if(dashboardView) dashboardView.classList.remove('hidden');
                 if(authForms) authForms.classList.add('hidden');
@@ -173,7 +173,7 @@
     <style>
         body { 
             background-color: #030305; 
-            background-image: radial-gradient(circle at 50% 0%, #0d0d1a 0%, #030305 70%);
+            background-image: radial-gradient(circle at 50% 0%, #12051a 0%, #030305 70%);
             color: #f4f4f5; 
             overflow-x: hidden; 
             -webkit-tap-highlight-color: transparent; 
@@ -235,20 +235,20 @@
         <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse mr-1.5"></span> ⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE
     </div>
 
-    <!-- Navigation -->
+    <!-- Navigation (ResellEm Header Style) -->
     <nav class="w-full py-3.5 px-6 md:px-16 flex justify-between items-center border-b border-white/5 fixed top-[33px] bg-[#030305]/90 backdrop-blur-2xl z-50">
         <a href="#" class="text-lg md:text-xl font-extrabold tracking-tight text-white hover:text-accent transition flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-accent animate-pulse"></span> Val3ntino<span class="text-accent">.</span>
         </a>
         
         <div class="hidden md:flex items-center space-x-6">
-            <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white transition">Skills</a>
-            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition">Pricing & Store</a>
-            <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition">Contact</a>
+            <a href="#" class="text-sm font-medium text-white hover:text-accent transition">Home</a>
+            <a href="#booking" class="text-sm font-medium text-gray-400 hover:text-white transition">Products</a>
+            <a href="#testimonials" class="text-sm font-medium text-gray-400 hover:text-white transition">Reviews</a>
             
             <!-- Flaggen Sprachauswahl Dropdown -->
             <div class="relative">
-                <button onclick="toggleLangDropdown()" class="flex items-center gap-2 px-3.5 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition">
+                <button onclick="toggleLangDropdown()" class="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition">
                     <span id="currentFlagIcon">🇬🇧</span> <span id="currentLangLabel">EN</span> <i class="fa-solid fa-chevron-down text-[9px] text-gray-400"></i>
                 </button>
                 <div id="langDropdownMenu" class="hidden absolute right-0 mt-2 w-36 bg-[#0d0d14] border border-white/10 rounded-2xl shadow-2xl py-2 z-50 backdrop-blur-xl">
@@ -261,7 +261,7 @@
                 </div>
             </div>
 
-            <button onclick="toggleLogin()" class="px-5 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition flex items-center gap-2">
+            <button onclick="toggleLogin()" class="px-4.5 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-xs font-semibold text-white transition flex items-center gap-2">
                 <span id="loginBtnText">Log in</span>
             </button>
 
@@ -284,9 +284,9 @@
 
     <!-- Mobile Dropdown Menü -->
     <div id="mobileMenu" class="hidden fixed inset-x-0 top-[95px] bg-[#0d0d14]/95 border-b border-white/10 p-6 flex-col space-y-4 md:hidden z-40 shadow-2xl backdrop-blur-2xl">
-        <a href="#skills" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Skills</a>
-        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Pricing & Store</a>
-        <a href="#contact" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Contact</a>
+        <a href="#" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Home</a>
+        <a href="#booking" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Products</a>
+        <a href="#testimonials" onclick="toggleMobileMenu()" class="text-gray-300 hover:text-white text-base font-medium py-1">Reviews</a>
         <button onclick="toggleMobileMenu(); toggleLogin();" class="text-left text-accent text-base font-medium py-2 flex items-center gap-2"><i class="fa-solid fa-user"></i> <span id="loginBtnTextMobile">Log in</span></button>
     </div>
 
@@ -309,57 +309,7 @@
     </header>
 
     <main class="max-w-5xl mx-auto px-5 md:px-8 pb-24 md:pb-32">
-        <!-- Skills Sektion -->
-        <section id="skills" class="mb-24 md:mb-32">
-            <div class="grid md:grid-cols-3 gap-5 md:gap-6">
-                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-code text-accent text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">Coding & Dev</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Passion for programming, modern web development, and game scripting.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">HTML & CSS</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">C++</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Python</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Luau</span>
-                    </div>
-                </div>
-
-                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-microchip text-accent text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">PC Tuning</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Maximum performance, custom tweaks, and uncompromising hardware optimization.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">0 Input Delay</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Windows Tweaks</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">BIOS Edits</span>
-                    </div>
-                </div>
-
-                <div class="nivex-card p-6 md:p-8 rounded-3xl flex flex-col justify-between group">
-                    <div>
-                        <div class="w-12 h-12 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-5 md:mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-headphones-simple text-accent text-lg"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-white mb-2.5 md:mb-3">Vibe Coding</h3>
-                        <p class="text-gray-400 text-xs md:text-sm mb-5 md:mb-6 leading-relaxed font-light">Coding in the perfect flow state. Focusing on clean solutions in a relaxed atmosphere.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Flow State</span>
-                        <span class="px-3 py-1 bg-white/5 rounded-xl text-xs font-medium text-gray-300 border border-white/5">Creative</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Booking / Store Sektion (Mit Produktbildern) -->
+        <!-- Store Sektion -->
         <section id="booking" class="mb-24 md:mb-32">
             <div class="text-center mb-12 md:mb-16">
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3">Store & Services</h2>
@@ -466,7 +416,7 @@
         </section>
 
         <!-- Testimonials -->
-        <section class="mb-24 md:mb-32">
+        <section id="testimonials" class="mb-24 md:mb-32">
             <h2 class="text-2xl sm:text-3xl font-bold text-center text-white mb-10">What Clients Say</h2>
             <div class="grid md:grid-cols-2 gap-5 md:gap-6">
                 <div class="nivex-card p-6 md:p-8 rounded-3xl">
@@ -508,22 +458,38 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="py-12 px-8 border-t border-white/5 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6 text-xs text-gray-500">
-        <div class="flex items-center space-x-6">
-            <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition flex items-center gap-2">
-                <i class="fa-brands fa-x-twitter text-accent"></i> Twitter / X
+    <!-- Footer (ResellEm Style) -->
+    <footer class="py-16 px-8 border-t border-white/5 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 text-xs text-gray-400">
+        <div class="space-y-3">
+            <a href="#" class="text-lg font-extrabold text-white flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-accent"></span> Val3ntino
             </a>
-            <span class="text-gray-400 flex items-center gap-2">
-                <i class="fa-brands fa-discord text-accent"></i> Discord: dri.c
-            </span>
+            <p class="text-gray-500 font-light leading-relaxed">Val3ntino delivers digital products & professional PC tuning instantly after payment.</p>
+            <div class="flex items-center space-x-4 pt-2">
+                <a href="https://x.com/vai3ntino?s=11" target="_blank" class="text-gray-400 hover:text-white transition"><i class="fa-brands fa-x-twitter text-sm"></i></a>
+                <span class="text-gray-400"><i class="fa-brands fa-discord text-sm"></i> dri.c</span>
+            </div>
         </div>
-        <div class="flex items-center gap-6">
-            <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Imprint</button>
-            <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.90</p>
+        <div>
+            <p class="text-white font-bold mb-3 uppercase tracking-wider text-[10px]">Navigation</p>
+            <ul class="space-y-2 font-light">
+                <li><a href="#" class="hover:text-white transition">Home</a></li>
+                <li><a href="#booking" class="hover:text-white transition">Products</a></li>
+                <li><a href="#testimonials" class="hover:text-white transition">Reviews</a></li>
+            </ul>
+        </div>
+        <div>
+            <p class="text-white font-bold mb-3 uppercase tracking-wider text-[10px]">Your account</p>
+            <ul class="space-y-2 font-light">
+                <li><button onclick="toggleLogin()" class="hover:text-white transition text-left">Dashboard</button></li>
+                <li><button onclick="toggleLogin()" class="hover:text-white transition text-left">Orders & Invoices</button></li>
+                <li><button onclick="toggleLogin()" class="hover:text-white transition text-left">My Tickets</button></li>
+            </ul>
         </div>
     </footer>
+    <div class="py-6 text-center text-[10px] text-gray-600 border-t border-white/5">
+        Copyright © Val3ntino 2026
+    </div>
 
     <!-- Impressum Modal -->
     <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
@@ -568,7 +534,7 @@
                 <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-2 text-xs">
                     <p class="font-bold text-white">Need help with this order?</p>
                     <p class="text-gray-400 text-[11px]">Open a support ticket and we'll get back to you.</p>
-                    <button onclick="showToast('Support ticket option')" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-accent rounded-xl font-bold text-[11px] transition">Open a Support Ticket ↗</button>
+                    <button onclick="openSupportTicketModal()" class="px-3 py-1.5 bg-white/10 hover:bg-white/20 text-accent rounded-xl font-bold text-[11px] transition">Open a Support Ticket ↗</button>
                 </div>
             </div>
             <div class="p-6 md:p-8 flex flex-col justify-between space-y-6">
@@ -683,108 +649,201 @@
         </div>
     </div>
 
-    <!-- Dashboard & Admin Panel -->
-    <div id="loginModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-xl w-full relative space-y-5 shadow-2xl max-h-[90vh] overflow-y-auto">
-            <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="modal fixed inset-0 bg-black/90 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-4 shadow-2xl text-center">
+            <button onclick="document.getElementById('feedbackModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h2 class="text-lg font-bold text-white">Leave Feedback</h2>
+            <p class="text-xs text-gray-400">How was your experience with order <span id="feedbackInvoiceNum" class="text-accent font-mono"></span>?</p>
             
-            <div id="userDashboardView" class="hidden space-y-5">
-                <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 flex justify-between items-center">
-                    <div class="flex items-center gap-3">
-                        <div id="userAvatarLetter" class="w-12 h-12 rounded-2xl bg-accent text-white font-black text-lg flex items-center justify-center shadow-lg">L</div>
-                        <div>
-                            <p class="text-sm font-bold text-white">Welcome back</p>
-                            <p class="text-xs text-gray-400" id="userEmailDisplay"></p>
-                        </div>
-                    </div>
-                    <button onclick="openTopUpModal()" class="px-3.5 py-2 bg-accent text-white font-bold rounded-xl text-xs shadow-lg">Top Up →</button>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10">
-                        <p class="text-lg font-black text-white" id="statOrdersCount">0</p>
-                        <p class="text-[11px] text-gray-400">Completed orders</p>
-                    </div>
-                    <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10">
-                        <p class="text-lg font-black text-accent" id="statBalanceAmount">€0.00</p>
-                        <p class="text-[11px] text-gray-400">Available balance</p>
-                    </div>
-                </div>
-
-                <!-- ADMIN KONTROLLZENTRUM -->
-                <div id="adminControlCenter" class="hidden bg-[#0a0a14] p-5 rounded-2xl border border-accent/40 space-y-4 shadow-xl">
-                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
-                        <div class="flex items-center gap-2">
-                            <span class="w-8 h-8 rounded-xl bg-accent/20 flex items-center justify-center text-accent"><i class="fa-solid fa-shield-halved"></i></span>
-                            <div>
-                                <p class="text-xs font-bold text-white uppercase tracking-wider">Admin Control Center</p>
-                                <p class="text-[10px] text-gray-400">Staff Portal • L@valentinolopez.de</p>
-                            </div>
-                        </div>
-                        <span class="px-2.5 py-1 bg-accent/20 text-accent text-[10px] font-extrabold rounded-full">ACTIVE</span>
-                    </div>
-                    <div class="space-y-2">
-                        <p class="text-[11px] font-bold text-gray-300">Ausstehende Zahlungen (Pending)</p>
-                        <div id="adminPendingList" class="space-y-2 max-h-48 overflow-y-auto pr-1 text-xs">
-                            <p class="text-gray-500 text-center py-3">Keine ausstehenden Zahlungen.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="dashOrdersSection" class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-3">
-                    <p class="text-xs font-bold text-white">Latest Orders</p>
-                    <div id="userOrdersContainer" class="space-y-2 max-h-40 overflow-y-auto">
-                        <p class="text-xs text-gray-400 text-center py-2">Noch keine Bestellungen.</p>
-                    </div>
-                </div>
-
-                <button onclick="handleLogout()" class="w-full py-3 bg-red-500/10 text-red-400 rounded-2xl text-xs font-semibold">Logout</button>
+            <div class="flex justify-center gap-2 text-xl text-amber-400 py-2">
+                <i class="fa-solid fa-star cursor-pointer hover:scale-125 transition"></i>
+                <i class="fa-solid fa-star cursor-pointer hover:scale-125 transition"></i>
+                <i class="fa-solid fa-star cursor-pointer hover:scale-125 transition"></i>
+                <i class="fa-solid fa-star cursor-pointer hover:scale-125 transition"></i>
+                <i class="fa-solid fa-star cursor-pointer hover:scale-125 transition"></i>
             </div>
 
-            <div id="authFormsContainer" class="space-y-4">
-                <h3 class="text-base font-bold text-white text-center">Sign In / Register</h3>
-                
-                <div class="space-y-2">
-                    <button onclick="loginWithProvider('google')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-google text-accent"></i> Continue with Google
-                    </button>
-                    <button onclick="loginWithProvider('github')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-github"></i> Continue with GitHub
-                    </button>
-                    <button onclick="loginWithProvider('apple')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
-                        <i class="fa-brands fa-apple"></i> Continue with Apple
-                    </button>
-                </div>
-
-                <div class="relative flex py-1 items-center">
-                    <div class="flex-grow border-t border-white/10"></div>
-                    <span class="flex-shrink mx-3 text-[10px] text-gray-500 uppercase">Or with email</span>
-                    <div class="flex-grow border-t border-white/10"></div>
-                </div>
-
-                <div id="authErrorMsg" class="text-xs text-red-400 font-medium text-center"></div>
-
-                <div class="space-y-3">
-                    <input type="email" id="loginEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs" placeholder="Email Address">
-                    <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-2.5 text-white text-xs" placeholder="Password (min. 6 chars)">
-                    <div class="grid grid-cols-2 gap-2 pt-1">
-                        <button type="button" onclick="executeLogin()" class="w-full py-3 bg-accent text-white font-bold rounded-2xl text-xs">Sign In</button>
-                        <button type="button" onclick="executeRegister()" class="w-full py-3 bg-white/10 text-white font-bold rounded-2xl text-xs">Register</button>
-                    </div>
-                </div>
-            </div>
+            <textarea rows="3" id="feedbackCommentInput" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs focus:outline-none focus:border-accent" placeholder="Write your review here..."></textarea>
+            <button onclick="submitUserFeedback()" class="w-full py-3.5 bg-accent text-white font-bold rounded-2xl text-xs shadow-lg">Submit Feedback</button>
         </div>
     </div>
 
-    <!-- Top Up Modal -->
-    <div id="topUpModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-6 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl">
-            <button onclick="openTopUpModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
-            <h2 class="text-lg font-bold text-white">Top Up Balance</h2>
-            <div class="grid grid-cols-3 gap-2">
-                <button onclick="selectTopUpAmount(10)" class="py-3 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-white">€10.00</button>
-                <button onclick="selectTopUpAmount(25)" class="py-3 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-white">€25.00</button>
-                <button onclick="selectTopUpAmount(50)" class="py-3 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-white">€50.00</button>
+    <!-- Support Ticket Modal -->
+    <div id="supportTicketModal" class="modal fixed inset-0 bg-black/90 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-6 md:p-8 rounded-3xl max-w-md w-full relative space-y-4 shadow-2xl text-center">
+            <button onclick="document.getElementById('supportTicketModal').classList.toggle('active')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
+            <h2 class="text-lg font-bold text-white">Open Support Ticket</h2>
+            <p class="text-xs text-gray-400">Describe your issue regarding your order.</p>
+            
+            <input type="text" id="ticketSubjectInput" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs" placeholder="Subject...">
+            <textarea rows="3" id="ticketMsgInput" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs" placeholder="Describe your problem..."></textarea>
+            <button onclick="submitSupportTicket()" class="w-full py-3.5 bg-accent text-white font-bold rounded-2xl text-xs shadow-lg">Send Ticket ↗</button>
+        </div>
+    </div>
+
+    <!-- Dashboard & Admin Panel (ResellEm Style Sidebar) -->
+    <div id="loginModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-2 sm:p-6">
+        <div class="bg-[#050508] border border-white/10 rounded-3xl max-w-5xl w-full relative grid md:grid-cols-[260px_1fr] shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
+            <!-- Sidebar (Genau wie in Screenshot 4-7) -->
+            <div class="bg-[#09090f] p-6 border-b md:border-b-0 md:border-r border-white/10 flex flex-col justify-between space-y-6">
+                <div class="space-y-6">
+                    <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <div id="userAvatarLetter" class="w-8 h-8 rounded-xl bg-accent text-white font-black text-xs flex items-center justify-center shadow">L</div>
+                            <div>
+                                <p class="text-[11px] font-bold text-white">Your account</p>
+                                <p class="text-[10px] text-gray-400 truncate max-w-[120px]" id="userEmailDisplay"></p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-ellipsis-vertical text-gray-400 text-xs"></i>
+                    </div>
+
+                    <div class="space-y-1 text-xs">
+                        <button onclick="switchTab('dashboard')" id="tabDashBtn" class="w-full text-left px-3.5 py-2.5 rounded-xl bg-accent/20 text-accent font-bold flex items-center gap-2.5"><i class="fa-solid fa-house text-xs"></i> Dashboard</button>
+                        <button onclick="switchTab('orders')" id="tabOrdersBtn" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white font-medium flex items-center gap-2.5 transition"><i class="fa-solid fa-box text-xs"></i> Orders</button>
+                        <button onclick="switchTab('tickets')" id="tabTicketsBtn" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white font-medium flex items-center gap-2.5 transition"><i class="fa-solid fa-headset text-xs"></i> Tickets</button>
+                        <button onclick="switchTab('balance')" id="tabBalanceBtn" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white font-medium flex items-center justify-between transition">
+                            <span class="flex items-center gap-2.5"><i class="fa-solid fa-wallet text-xs"></i> Balance</span>
+                            <span class="text-accent font-bold text-[11px]" id="sidebarBalanceDisplay">€0.00</span>
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="handleLogout()" class="w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-red-500/10 text-red-400 font-medium flex items-center gap-2.5 text-xs transition"><i class="fa-solid fa-right-from-bracket text-xs"></i> Log out</button>
+            </div>
+
+            <!-- Content Area -->
+            <div class="p-6 md:p-8 relative overflow-y-auto">
+                <button onclick="toggleLogin()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-lg"><i class="fa-solid fa-xmark"></i></button>
+
+                <!-- Tab 1: Dashboard -->
+                <div id="contentDashboard" class="space-y-6">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-white">Welcome back</h2>
+                        <p class="text-xs text-gray-400 font-light mt-0.5">Here's an overview of your account.</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+                        <div class="bg-[#09090f] p-4 rounded-2xl border border-white/10 space-y-1">
+                            <i class="fa-solid fa-box text-accent text-sm mb-1"></i>
+                            <p class="text-xl font-black text-white" id="statOrdersCount">0</p>
+                            <p class="text-[10px] text-gray-400">Completed orders</p>
+                        </div>
+                        <div class="bg-[#09090f] p-4 rounded-2xl border border-white/10 space-y-1">
+                            <i class="fa-solid fa-wallet text-emerald-400 text-sm mb-1"></i>
+                            <p class="text-xl font-black text-white" id="statSpentAmount">€0.00</p>
+                            <p class="text-[10px] text-gray-400">Total spent</p>
+                        </div>
+                        <div class="bg-[#09090f] p-4 rounded-2xl border border-white/10 space-y-1">
+                            <i class="fa-solid fa-calendar text-sky-400 text-sm mb-1"></i>
+                            <p class="text-xs font-bold text-white pt-1" id="customerSinceDate">Oct 2026</p>
+                            <p class="text-[10px] text-gray-400">Customer since</p>
+                        </div>
+                        <div class="bg-[#09090f] p-4 rounded-2xl border border-white/10 space-y-1">
+                            <i class="fa-solid fa-credit-card text-purple-400 text-sm mb-1"></i>
+                            <p class="text-xl font-black text-accent" id="statBalanceAmount">€0.00</p>
+                            <p class="text-[10px] text-gray-400">Balance</p>
+                        </div>
+                    </div>
+
+                    <!-- Admin Kontrollzentrum im Dashboard -->
+                    <div id="adminControlCenter" class="hidden bg-[#09090f] p-5 rounded-2xl border border-accent/40 space-y-4 shadow-xl">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                            <p class="text-xs font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1"></i> Admin Control Center</p>
+                            <span class="text-[9px] bg-accent/20 text-white px-2 py-0.5 rounded font-bold">L@valentinolopez.de</span>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-[11px] font-bold text-white">Ausstehende Zahlungen (Pending)</p>
+                            <div id="adminPendingList" class="space-y-2 max-h-40 overflow-y-auto text-xs">
+                                <p class="text-gray-400 text-center py-2">Keine ausstehenden Zahlungen.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-[#09090f] p-5 rounded-2xl border border-white/10 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <p class="text-xs font-bold text-white">Latest order</p>
+                            <button onclick="switchTab('orders')" class="text-accent text-[11px] font-semibold hover:underline">View all →</button>
+                        </div>
+                        <div id="latestOrderContainer" class="text-xs text-gray-400 py-2">No orders yet.</div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Orders -->
+                <div id="contentOrders" class="hidden space-y-5">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-white">Orders</h2>
+                        <p class="text-xs text-gray-400 font-light mt-0.5">Invoices, tickets and feedback for every purchase.</p>
+                    </div>
+                    <div id="fullOrdersListContainer" class="space-y-3">
+                        <p class="text-xs text-gray-400 text-center py-8">No orders yet.</p>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Tickets -->
+                <div id="contentTickets" class="hidden space-y-5">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-white">Support tickets</h2>
+                        <p class="text-xs text-gray-400 font-light mt-0.5">Your conversations with our support team.</p>
+                    </div>
+                    <div class="bg-accent/10 border border-accent/30 p-3.5 rounded-2xl text-[11px] text-accent">
+                        ℹ️ Open a new ticket from the <button onclick="switchTab('orders')" class="underline font-bold">orders</button> page using the "Open ticket" button next to an order.
+                    </div>
+                    <div class="bg-[#09090f] p-12 rounded-2xl border border-white/10 text-center space-y-2">
+                        <i class="fa-solid fa-headset text-2xl text-gray-500 mb-1"></i>
+                        <p class="text-sm font-bold text-white">No Tickets Yet</p>
+                        <p class="text-xs text-gray-400">Support conversations will show up here.</p>
+                    </div>
+                </div>
+
+                <!-- Tab 4: Balance -->
+                <div id="contentBalance" class="hidden space-y-6">
+                    <div>
+                        <h2 class="text-xl font-extrabold text-white">Balance</h2>
+                        <p class="text-xs text-gray-400 font-light mt-0.5">Top up once, pay instantly at checkout.</p>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="bg-[#09090f] p-6 rounded-2xl border border-white/10 flex flex-col justify-between space-y-4">
+                            <i class="fa-solid fa-wallet text-accent text-lg"></i>
+                            <div>
+                                <p class="text-3xl font-black text-white" id="balanceTabAmount">€0.00</p>
+                                <p class="text-xs text-gray-400 mt-1 font-light">Available balance, used automatically at checkout.</p>
+                            </div>
+                        </div>
+                        <div class="bg-[#09090f] p-6 rounded-2xl border border-white/10 space-y-4">
+                            <p class="text-xs font-bold text-white">Top up</p>
+                            <p class="text-[11px] text-gray-400">Pick an amount to add to your balance.</p>
+                            <div class="grid grid-cols-3 gap-2">
+                                <button onclick="selectTopUpAmount(10)" class="py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-white">€10.00</button>
+                                <button onclick="selectTopUpAmount(25)" class="py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-white">€25.00</button>
+                                <button onclick="selectTopUpAmount(50)" class="py-2.5 bg-white/5 border border-white/10 rounded-xl text-xs font-bold text-white">€50.00</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fallback Auth Forms wenn nicht eingeloggt -->
+                <div id="authFormsContainer" class="space-y-4">
+                    <h3 class="text-base font-bold text-white text-center">Sign In / Register</h3>
+                    <div class="space-y-2">
+                        <button onclick="loginWithProvider('google')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-google text-accent"></i> Continue with Google
+                        </button>
+                        <button onclick="loginWithProvider('github')" class="w-full py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl text-xs font-semibold text-white flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-github"></i> Continue with GitHub
+                        </button>
+                    </div>
+                    <div id="authErrorMsg" class="text-xs text-red-400 font-medium text-center"></div>
+                    <div class="space-y-3 pt-2">
+                        <input type="email" id="loginEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs" placeholder="Email Address">
+                        <input type="password" id="loginPass" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs" placeholder="Password">
+                        <div class="grid grid-cols-2 gap-2 pt-1">
+                            <button type="button" onclick="executeLogin()" class="w-full py-3.5 bg-accent text-white font-bold rounded-2xl text-xs">Sign In</button>
+                            <button type="button" onclick="executeRegister()" class="w-full py-3.5 bg-white/10 text-white font-bold rounded-2xl text-xs">Register</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -811,14 +870,32 @@
             document.getElementById('currentLangLabel').innerText = lang.toUpperCase();
             document.getElementById('currentFlagIcon').innerText = lang === 'de' ? '🇩🇪' : '🇬🇧';
             document.getElementById('langDropdownMenu').classList.add('hidden');
-            if(lang === 'de') {
-                document.getElementById('checkDe').classList.remove('hidden');
-                document.getElementById('checkEn').classList.add('hidden');
-                showToast("Sprache zu Deutsch gewechselt");
-            } else {
-                document.getElementById('checkEn').classList.remove('hidden');
-                document.getElementById('checkDe').classList.add('hidden');
-                showToast("Language switched to English");
+            showToast(lang === 'de' ? "Sprache zu Deutsch gewechselt" : "Language switched to English");
+        }
+
+        function switchTab(tab) {
+            document.getElementById('contentDashboard').classList.add('hidden');
+            document.getElementById('contentOrders').classList.add('hidden');
+            document.getElementById('contentTickets').classList.add('hidden');
+            document.getElementById('contentBalance').classList.add('hidden');
+
+            document.getElementById('tabDashBtn').className = "w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white font-medium flex items-center gap-2.5 transition";
+            document.getElementById('tabOrdersBtn').className = "w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white font-medium flex items-center gap-2.5 transition";
+            document.getElementById('tabTicketsBtn').className = "w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white font-medium flex items-center gap-2.5 transition";
+            document.getElementById('tabBalanceBtn').className = "w-full text-left px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-gray-400 hover:text-white font-medium flex items-center justify-between transition";
+
+            if(tab === 'dashboard') {
+                document.getElementById('contentDashboard').classList.remove('hidden');
+                document.getElementById('tabDashBtn').className = "w-full text-left px-3.5 py-2.5 rounded-xl bg-accent/20 text-accent font-bold flex items-center gap-2.5";
+            } else if(tab === 'orders') {
+                document.getElementById('contentOrders').classList.remove('hidden');
+                document.getElementById('tabOrdersBtn').className = "w-full text-left px-3.5 py-2.5 rounded-xl bg-accent/20 text-accent font-bold flex items-center gap-2.5";
+            } else if(tab === 'tickets') {
+                document.getElementById('contentTickets').classList.remove('hidden');
+                document.getElementById('tabTicketsBtn').className = "w-full text-left px-3.5 py-2.5 rounded-xl bg-accent/20 text-accent font-bold flex items-center gap-2.5";
+            } else if(tab === 'balance') {
+                document.getElementById('contentBalance').classList.remove('hidden');
+                document.getElementById('tabBalanceBtn').className = "w-full text-left px-3.5 py-2.5 rounded-xl bg-accent/20 text-accent font-bold flex items-center justify-between";
             }
         }
 
@@ -843,14 +920,14 @@
                                         <span class="text-accent">${ord.total}</span>
                                     </div>
                                     <p class="text-[10px] text-gray-400">User: ${userEmail} • Proof: ${ord.proof || 'Keiner'}</p>
-                                    <button onclick="adminApproveOrder('${userEmail}', ${index})" class="w-full py-1.5 bg-emerald-500 text-black font-extrabold rounded-lg text-[10px]">Freigeben & Bestätigen ✓</button>
+                                    <button onclick="adminApproveOrder('${userEmail}', ${index})" class="w-full py-1.5 bg-emerald-500 text-black font-extrabold rounded-lg text-[10px]">Approve ✓</button>
                                 </div>
                             `;
                         }
                     });
                 }
             }
-            if(!found) pendingList.innerHTML = '<p class="text-gray-500 text-center py-3 text-xs">Keine ausstehenden Zahlungen.</p>';
+            if(!found) pendingList.innerHTML = '<p class="text-gray-500 text-center py-3 text-xs">No pending payments.</p>';
         }
 
         function adminApproveOrder(email, index) {
@@ -862,7 +939,7 @@
                     localStorage.setItem('balance_' + email, (bal + orders[index].topUpValue).toFixed(2));
                 }
                 localStorage.setItem('orders_' + email, JSON.stringify(orders));
-                showToast('Bestellung bestätigt!');
+                showToast('Order approved!');
                 renderAdminPanelData();
                 if(window.firebaseAuth.currentUser && window.firebaseAuth.currentUser.email.toLowerCase() === email.toLowerCase()) loadDashboardStats(email);
             }
@@ -870,33 +947,94 @@
 
         function loadDashboardStats(email) {
             const container = document.getElementById('userOrdersContainer');
+            const fullContainer = document.getElementById('fullOrdersListContainer');
+            const latestContainer = document.getElementById('latestOrderContainer');
             if(!container) return;
+
             let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
             let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
+            let totalSpent = orders.filter(o => o.status === 'Completed' && !o.isTopUp).reduce((sum, o) => sum + parseFloat(o.rawTotal || 0), 0);
             
             document.getElementById('userAvatarLetter').innerText = email.charAt(0).toUpperCase();
             document.getElementById('userEmailDisplay').innerText = email;
             document.getElementById('statOrdersCount').innerText = orders.filter(o => o.status === 'Completed' && !o.isTopUp).length;
+            document.getElementById('statSpentAmount').innerText = '€' + totalSpent.toFixed(2);
             document.getElementById('statBalanceAmount').innerText = '€' + balance.toFixed(2);
+            document.getElementById('balanceTabAmount').innerText = '€' + balance.toFixed(2);
+            document.getElementById('sidebarBalanceDisplay').innerText = '€' + balance.toFixed(2);
             document.getElementById('checkoutBalanceDisplay').innerText = `Available: €` + balance.toFixed(2);
             
             if (orders.length === 0) {
                 container.innerHTML = '<p class="text-xs text-gray-400 text-center py-2">No orders yet.</p>';
+                fullContainer.innerHTML = '<p class="text-xs text-gray-400 text-center py-8">No orders yet.</p>';
+                latestContainer.innerHTML = 'No orders yet.';
             } else {
+                let latest = orders[0];
+                latestContainer.innerHTML = `
+                    <div class="flex justify-between items-center text-xs">
+                        <div>
+                            <p class="font-bold text-white">${latest.items}</p>
+                            <p class="text-[10px] text-gray-400">Invoice <span class="text-accent font-mono">#${latest.invoice}</span> - ${latest.date}</p>
+                        </div>
+                        <span class="text-accent font-bold">${latest.total}</span>
+                    </div>
+                `;
+
                 container.innerHTML = '';
-                orders.forEach(ord => {
-                    container.innerHTML += `
-                        <div class="bg-[#12121c] p-3 rounded-xl border border-white/5 text-xs flex justify-between items-center">
-                            <div>
-                                <p class="text-white font-bold">${ord.items}</p>
-                                <p class="text-[10px] text-gray-400">Invoice #${ord.invoice} • ${ord.date}</p>
-                                ${ord.proof ? `<p class="text-[9px] text-sky-400 mt-0.5">Proof: ${ord.proof}</p>` : ''}
+                fullContainer.innerHTML = '';
+
+                orders.forEach((ord, idx) => {
+                    let statusBadge = ord.status === 'Pending' ? '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">Pending</span>' : '<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Completed</span>';
+                    
+                    let orderHTML = `
+                        <div class="bg-[#09090f] p-4 rounded-2xl border border-white/10 space-y-3">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="text-sm font-bold text-white">${ord.items}</p>
+                                    <p class="text-[10px] text-gray-400 font-mono mt-0.5">#${ord.invoice} • <span class="text-accent font-bold">${ord.total}</span> via ${ord.method} • ${ord.date}</p>
+                                </div>
+                                <div>${statusBadge}</div>
                             </div>
-                            <span class="${ord.status === 'Pending' ? 'text-amber-400' : 'text-accent'} font-bold">${ord.status}</span>
+                            <div class="flex flex-wrap gap-2 pt-2 border-t border-white/5">
+                                <button onclick="viewInvoice('${ord.invoice}', '${ord.items}', '${ord.total}', '${ord.date}')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-[11px] font-semibold text-accent flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-file-invoice text-[10px]"></i> View invoice ↗
+                                </button>
+                                <button onclick="openSupportTicketModal()" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-[11px] font-semibold text-gray-300 flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-headset text-[10px]"></i> Open ticket
+                                </button>
+                                <button onclick="openFeedbackModal('${ord.invoice}')" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-[11px] font-semibold text-gray-300 flex items-center gap-1.5 transition">
+                                    <i class="fa-solid fa-star text-[10px] text-amber-400"></i> Leave feedback
+                                </button>
+                            </div>
                         </div>
                     `;
+                    container.innerHTML += orderHTML;
+                    fullContainer.innerHTML += orderHTML;
                 });
             }
+        }
+
+        function viewInvoice(invoice, items, total, date) {
+            alert("INVOICE #" + invoice + "\nItems: " + items + "\nTotal: " + total + "\nDate: " + date + "\nStatus: Valid & Verified");
+        }
+
+        function openFeedbackModal(invoice) {
+            document.getElementById('feedbackInvoiceNum').innerText = "#" + invoice;
+            document.getElementById('feedbackModal').classList.add('active');
+        }
+
+        function submitUserFeedback() {
+            showToast("Feedback submitted successfully! Thank you.");
+            document.getElementById('feedbackModal').classList.remove('active');
+        }
+
+        function openSupportTicketModal() {
+            document.getElementById('supportTicketModal').classList.add('active');
+        }
+
+        function submitSupportTicket() {
+            showToast("Support ticket created successfully!");
+            document.getElementById('supportTicketModal').classList.remove('active');
         }
 
         function adjustQty(type, change) {
@@ -971,9 +1109,7 @@
         function openTopUpModal() { document.getElementById('topUpModal').classList.toggle('active'); }
 
         function selectTopUpAmount(amount) {
-            document.getElementById('topUpModal').classList.remove('active');
             let email = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : "guest@val.de";
-            
             let newOrder = {
                 items: `Top Up Balance (€${amount.toFixed(2)})`,
                 total: `€${amount.toFixed(2)}`,
