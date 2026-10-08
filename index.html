@@ -232,7 +232,7 @@
     <div class="hero-glow"></div>
     <div id="toast">Notification</div>
 
-    <!-- Announcement Bar mit VAL3NTINO : 30% off -->
+    <!-- Announcement Bar -->
     <div class="w-full bg-gradient-to-r from-accent via-pink-600 to-accentSky text-white border-b border-white/10 py-3 px-6 text-center text-xs md:text-sm font-extrabold tracking-wide absolute top-0 left-0 right-0 z-50 shadow-lg">
         🔥 VAL3NTINO : 30% OFF — LIMITED TIME SALE ACTIVE NOW! ⚡
     </div>
@@ -400,7 +400,7 @@
                             <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic', 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=100&h=100&fit=crop')" class="py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-cart-plus text-accent"></i> Cart
                             </button>
-                            <button onclick="buyNow('Basic PC-Tuning', 15.00, 'basic', 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=100&h=100&fit=crop')" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
+                            <button onclick="redirectToSellAuth('Basic PC-Tuning', 15.00)" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
                                 <i class="fa-solid fa-bolt"></i> Buy Now
                             </button>
                         </div>
@@ -433,7 +433,7 @@
                             <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro', 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=100&h=100&fit=crop')" class="py-4 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-cart-plus text-accent"></i> Cart
                             </button>
-                            <button onclick="buyNow('Pro Tuning (0 Delay)', 35.00, 'pro', 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=100&h=100&fit=crop')" class="py-4 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
+                            <button onclick="redirectToSellAuth('Pro Tuning (0 Delay)', 35.00)" class="py-4 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
                                 <i class="fa-solid fa-bolt"></i> Buy Now
                             </button>
                         </div>
@@ -465,7 +465,7 @@
                             <button onclick="addItemToCart('Website Build', 25.00, 'web', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=100&h=100&fit=crop')" class="py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-cart-plus text-accent"></i> Cart
                             </button>
-                            <button onclick="buyNow('Website Build', 25.00, 'web', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=100&h=100&fit=crop')" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-md">
+                            <button onclick="redirectToSellAuth('Website Build', 25.00)" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
                                 <i class="fa-solid fa-bolt"></i> Buy Now
                             </button>
                         </div>
@@ -577,144 +577,7 @@
                 <span class="text-white font-bold">Total</span>
                 <span class="text-accent font-bold text-lg" id="cartSubtotalDisplay">€0.00</span>
             </div>
-            <button onclick="proceedToCheckout()" id="checkoutBtn" class="w-full py-4 text-center bg-accent text-white font-extrabold rounded-2xl text-sm opacity-50 cursor-not-allowed shadow-lg" disabled>Checkout</button>
-        </div>
-    </div>
-
-    <!-- ResellEm Style Checkout Modal -->
-    <div id="paymentModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-4 sm:p-6">
-        <div class="bg-[#050508] border border-white/10 rounded-3xl max-w-5xl w-full relative grid md:grid-cols-2 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
-            <div class="bg-[#09090f] p-8 md:p-10 border-b md:border-b-0 md:border-r border-white/10 flex flex-col justify-between space-y-6">
-                <div>
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-2">ORDER TOTAL</p>
-                    <p class="text-4xl font-black text-white" id="resellEmTotalDisplay">€0.00</p>
-                    <div id="resellEmItemsList" class="space-y-4 mt-6 max-h-48 overflow-y-auto"></div>
-                </div>
-                <div class="space-y-4">
-                    <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-2">
-                        <p class="text-xs font-bold text-white">Have a discount code?</p>
-                        <div class="flex gap-2">
-                            <input type="text" id="checkoutCouponInput" class="w-full bg-[#09090f] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Enter coupon...">
-                            <button onclick="applyCheckoutCoupon()" class="px-4 py-2 bg-accent text-white font-bold rounded-xl text-xs">Apply</button>
-                        </div>
-                    </div>
-                    <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 space-y-2.5 text-sm">
-                        <p class="font-bold text-white">Need help with this order?</p>
-                        <p class="text-gray-400 text-xs">Open a support ticket or join our Discord.</p>
-                        <a href="https://discord.gg/YE2jHSwM7" target="_blank" class="inline-block px-4 py-2 bg-white/10 hover:bg-white/20 text-accent rounded-xl font-bold text-xs transition">Join Discord (dri.c) ↗</a>
-                    </div>
-                </div>
-            </div>
-            <div class="p-8 md:p-10 flex flex-col justify-between space-y-8">
-                <button onclick="togglePaymentModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
-                <div class="space-y-6">
-                    <div class="flex items-center gap-3 text-sm font-bold text-accent">
-                        <span>1. Order Information</span>
-                        <span class="text-gray-600">—</span>
-                        <span class="text-gray-500">2. Confirm & Pay</span>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-300 mb-2">E-mail Address *</label>
-                        <input type="email" id="checkoutEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-sm focus:outline-none focus:border-accent" placeholder="you@example.com">
-                    </div>
-                    
-                    <div class="space-y-4 pt-2">
-                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Payment Method</p>
-                        <button onclick="payWithPayPalFF()" class="w-full p-5 bg-[#030305] border border-sky-500/40 rounded-2xl flex items-center justify-between text-left hover:border-sky-400 transition">
-                            <div class="flex items-center gap-4">
-                                <i class="fa-brands fa-paypal text-sky-400 text-xl"></i>
-                                <div>
-                                    <span class="text-sm font-bold text-white block">PayPal Friends & Family</span>
-                                    <span class="text-xs text-sky-400">Automatische Bezahlung (Webhook Ready)</span>
-                                </div>
-                            </div>
-                            <span class="text-xs text-sky-400 font-bold">Pay Now →</span>
-                        </button>
-
-                        <button onclick="openCryptoSelectionModal()" class="w-full p-5 bg-[#030305] border border-accent/40 rounded-2xl flex items-center justify-between text-left hover:border-accent transition">
-                            <div class="flex items-center gap-4">
-                                <i class="fa-solid fa-coins text-amber-400 text-xl"></i>
-                                <span class="text-sm font-bold text-white">Cryptocurrency (Litecoin, Solana, Bitcoin...)</span>
-                            </div>
-                            <span class="text-xs text-accent font-bold">Select Coin →</span>
-                        </button>
-
-                        <button onclick="payWithAccountBalance()" class="w-full p-5 bg-[#030305] border border-white/10 rounded-2xl flex items-center justify-between text-left hover:border-white/20 transition">
-                            <div class="flex items-center gap-4">
-                                <i class="fa-solid fa-wallet text-emerald-400 text-xl"></i>
-                                <div>
-                                    <span class="text-sm font-bold text-white block">Account Balance</span>
-                                    <span class="text-xs text-gray-400" id="checkoutBalanceDisplay">Available: €0.00</span>
-                                </div>
-                            </div>
-                            <span class="text-xs text-emerald-400 font-bold">Pay Now →</span>
-                        </button>
-                    </div>
-
-                    <div class="space-y-3 pt-2">
-                        <label class="flex items-center gap-3 cursor-pointer text-sm text-gray-300">
-                            <input type="checkbox" id="resellEmAgb" class="accent-accent w-4 h-4"> I agree to Terms of Service.
-                        </label>
-                    </div>
-                </div>
-                <button onclick="executeResellEmCheckout()" class="w-full py-4.5 text-center bg-accent text-white font-extrabold rounded-2xl text-sm shadow-lg shadow-pink-500/20 hover:opacity-95 transition">Continue to Payment →</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Crypto Auswahl Modal -->
-    <div id="cryptoSelectionModal" class="modal fixed inset-0 bg-black/90 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-8 rounded-3xl max-w-xl w-full relative space-y-6 shadow-2xl">
-            <button onclick="document.getElementById('cryptoSelectionModal').classList.toggle('active')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
-            <div class="flex items-center justify-between bg-[#030305] p-4 rounded-2xl border border-accent/40 text-sm">
-                <span class="text-accent font-bold flex items-center gap-2.5"><i class="fa-solid fa-coins"></i> Paying with Cryptocurrency</span>
-                <button onclick="document.getElementById('cryptoSelectionModal').classList.remove('active'); document.getElementById('paymentModal').classList.add('active');" class="text-accent text-xs underline">Change</button>
-            </div>
-            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">CHOOSE A COIN</p>
-            
-            <div class="grid grid-cols-2 gap-4 text-sm">
-                <button onclick="selectCryptoCoin('Litecoin (LTC)', 'LTC1QVAL3NTINOCRYPTOADDRESS998877')" class="p-5 bg-[#030305] hover:border-accent border border-white/10 rounded-2xl text-left flex justify-between items-center transition">
-                    <span class="flex items-center gap-3 font-bold text-white"><i class="fa-solid fa-litecoin-sign text-sky-400 text-base"></i> Litecoin</span>
-                </button>
-                <button onclick="selectCryptoCoin('Ethereum (ETH)', '0xVAL3NTINOETHEREUMWALLETADDRESS998877')" class="p-5 bg-[#030305] hover:border-accent border border-white/10 rounded-2xl text-left flex justify-between items-center transition">
-                    <span class="flex items-center gap-3 font-bold text-white"><i class="fa-solid fa-ethereum text-indigo-400 text-base"></i> Ethereum</span>
-                    <span class="text-xs bg-white/5 text-gray-400 px-2.5 py-1 rounded">+5%</span>
-                </button>
-                <button onclick="selectCryptoCoin('Solana (SOL)', 'SOL_VAL3NTINO_STORE_BLOCKCHAIN_ADDR_1122')" class="p-5 bg-[#030305] hover:border-accent border border-white/10 rounded-2xl text-left flex justify-between items-center transition">
-                    <span class="flex items-center gap-3 font-bold text-white"><i class="fa-solid fa-bolt text-purple-400 text-base"></i> Solana</span>
-                    <span class="text-xs bg-white/5 text-gray-400 px-2.5 py-1 rounded">+5%</span>
-                </button>
-                <button onclick="selectCryptoCoin('Bitcoin (BTC)', 'bc1qval3ntinobitcoinaddresswalletxyz4455')" class="p-5 bg-[#030305] hover:border-accent border border-white/10 rounded-2xl text-left flex justify-between items-center transition">
-                    <span class="flex items-center gap-3 font-bold text-white"><i class="fa-solid fa-bitcoin-sign text-amber-400 text-base"></i> Bitcoin</span>
-                    <span class="text-xs bg-amber-500/20 text-amber-400 px-2.5 py-1 rounded">+6%</span>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Zahlungsanweisung & Beweis Modal -->
-    <div id="instructionModal" class="modal fixed inset-0 bg-black/90 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-8 rounded-3xl max-w-lg w-full relative space-y-6 shadow-2xl text-center">
-            <button onclick="document.getElementById('instructionModal').classList.toggle('active')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
-            <div class="w-14 h-14 rounded-2xl bg-accent/20 border border-accent/40 flex items-center justify-center mx-auto text-accent text-2xl">
-                <i class="fa-solid fa-wallet"></i>
-            </div>
-            <h2 class="text-xl font-bold text-white" id="modalInstructionTitle">Payment Instructions</h2>
-            <p class="text-sm text-gray-400">Send <span id="instructionTotalDisplay" class="text-accent font-bold">€0.00</span> to:</p>
-            
-            <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 text-left space-y-4 text-sm">
-                <div class="border-t border-white/10 pt-3">
-                    <p class="font-bold text-white flex items-center gap-2" id="selectedCoinLabel"><i class="fa-solid fa-coins text-amber-400 text-base"></i> Crypto Address:</p>
-                    <p class="font-mono text-xs text-gray-300 select-all bg-[#0d0d14] p-3 rounded-xl mt-1.5 break-all" id="targetPaymentAddress">LTC1QVAL3NTINOCRYPTOADDRESS998877</p>
-                </div>
-            </div>
-
-            <div class="text-left space-y-2">
-                <label class="block text-sm font-medium text-gray-300">Payment Proof / Transaction ID *</label>
-                <input type="text" id="finalPaymentProof" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-sm" placeholder="Crypto Hash...">
-            </div>
-
-            <button onclick="finalizeOrderWithProof()" class="w-full py-4.5 text-center bg-emerald-500 text-black font-extrabold rounded-2xl text-sm shadow-lg hover:bg-emerald-400 transition">Confirm Payment & Submit (Pending) ✓</button>
+            <button onclick="proceedToSellAuthCheckout()" id="checkoutBtn" class="w-full py-4 text-center bg-accent text-white font-extrabold rounded-2xl text-sm opacity-50 cursor-not-allowed shadow-lg" disabled>Checkout with SellAuth</button>
         </div>
     </div>
 
@@ -1045,18 +908,6 @@
             renderAdminCoupons();
         }
 
-        function applyCheckoutCoupon() {
-            let code = document.getElementById('checkoutCouponInput').value.trim().toUpperCase();
-            let coupons = JSON.parse(localStorage.getItem('admin_coupons') || '{}');
-            if(coupons[code] !== undefined) {
-                appliedDiscount = coupons[code];
-                showToast('Coupon applied: ' + appliedDiscount + '% OFF!');
-                updateCartUI();
-            } else {
-                showToast('Invalid coupon code!');
-            }
-        }
-
         function renderAdminPanelData() {
             const pendingList = document.getElementById('adminPendingList');
             if(!pendingList) return;
@@ -1121,7 +972,6 @@
             document.getElementById('statBalanceAmount').innerText = '€' + balance.toFixed(2);
             document.getElementById('balanceTabAmount').innerText = '€' + balance.toFixed(2);
             document.getElementById('sidebarBalanceDisplay').innerText = '€' + balance.toFixed(2);
-            document.getElementById('checkoutBalanceDisplay').innerText = `Available: €` + balance.toFixed(2);
             
             if (orders.length === 0) {
                 fullContainer.innerHTML = '<p class="text-sm text-gray-400 text-center py-12">No orders yet.</p>';
@@ -1205,16 +1055,12 @@
             showToast("Added to cart!");
         }
 
-        function buyNow(name, price, type, imgUrl) {
-            let qty = quantities[type];
-            let existing = cart.find(i => i.name === name);
-            if (existing) {
-                existing.qty = qty;
-            } else {
-                cart = [{ name, price, qty, img: imgUrl }];
-            }
-            updateCartUI();
-            document.getElementById('paymentModal').classList.add('active');
+        // Direkte Weiterleitung zum SellAuth Checkout Gateway
+        function redirectToSellAuth(productName, price) {
+            showToast("Redirecting to secure SellAuth checkout...");
+            setTimeout(() => {
+                window.open("https://sellauth.com", "_blank");
+            }, 800);
         }
 
         function removeFromCart(index) {
@@ -1241,16 +1087,10 @@
                     </div>`;
             });
 
-            if(appliedDiscount > 0) {
-                subtotal = subtotal * (1 - appliedDiscount / 100);
-            }
-
             document.getElementById('cartBadge').innerText = totalCount;
             document.getElementById('cartBadgeMobile').innerText = totalCount;
             document.getElementById('cartItemsContainer').innerHTML = listHTML || '<p class="text-sm text-gray-400 text-center py-8">Your cart is empty.</p>';
             document.getElementById('cartSubtotalDisplay').innerText = '€' + subtotal.toFixed(2);
-            document.getElementById('resellEmTotalDisplay').innerText = '€' + subtotal.toFixed(2);
-            document.getElementById('resellEmItemsList').innerHTML = listHTML;
             
             let btn = document.getElementById('checkoutBtn');
             if(cart.length > 0) {
@@ -1263,164 +1103,20 @@
         }
 
         function toggleCartModal() { document.getElementById('cartModal').classList.toggle('active'); }
-        function proceedToCheckout() { toggleCartModal(); document.getElementById('paymentModal').classList.add('active'); }
-        function togglePaymentModal() { document.getElementById('paymentModal').classList.toggle('active'); }
-        function openTopUpModal() { document.getElementById('topUpModal').classList.toggle('active'); }
+        
+        function proceedToSellAuthCheckout() {
+            toggleCartModal();
+            showToast("Redirecting to SellAuth Checkout...");
+            setTimeout(() => {
+                window.open("https://sellauth.com", "_blank");
+            }, 800);
+        }
 
         function selectTopUpAmount(amount) {
-            let email = window.firebaseAuth.currentUser ? window.firebaseAuth.currentUser.email : "guest@val.de";
-            let newOrder = {
-                items: `Top Up Balance (€${amount.toFixed(2)})`,
-                total: `€${amount.toFixed(2)}`,
-                rawTotal: amount,
-                method: 'Top Up (Pending)',
-                status: 'Pending',
-                isTopUp: true,
-                topUpValue: amount,
-                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
-                date: new Date().toLocaleDateString('de-DE')
-            };
-            let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
-            orders.unshift(newOrder);
-            localStorage.setItem('orders_' + email, JSON.stringify(orders));
-            showToast('Top Up submitted as Pending!');
-            if(window.firebaseAuth.currentUser) loadDashboardStats(email);
-        }
-
-        function payWithPayPalFF() {
-            let email = document.getElementById('checkoutEmail').value.trim();
-            if(!email || !email.includes('@')) { showToast('Please enter your email address!'); return; }
-            if(!document.getElementById('resellEmAgb').checked) { showToast('Please agree to Terms of Service!'); return; }
-
-            let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-            if(appliedDiscount > 0) subtotal = subtotal * (1 - appliedDiscount / 100);
-
-            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
-            let invoiceId = Math.floor(100000000000 + Math.random() * 900000000000);
-            
-            let newOrder = {
-                items: orderSummary,
-                total: '€' + subtotal.toFixed(2),
-                rawTotal: subtotal,
-                method: 'PayPal F&F (Automatic Webhook)',
-                status: 'Pending',
-                invoice: invoiceId,
-                date: new Date().toLocaleDateString('de-DE')
-            };
-
-            let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
-            orders.unshift(newOrder);
-            localStorage.setItem('orders_' + email, JSON.stringify(orders));
-
-            showToast('Redirecting to secure PayPal Checkout...');
+            showToast("Redirecting to SellAuth Top Up...");
             setTimeout(() => {
-                window.open(`https://paypal.me/valentinolopez1e/${subtotal.toFixed(2)}EUR`, '_blank');
-                document.getElementById('paymentModal').classList.remove('active');
-                cart = [];
-                updateCartUI();
-                if(window.firebaseAuth.currentUser) loadDashboardStats(email);
-            }, 1000);
-        }
-
-        function openCryptoSelectionModal() {
-            let email = document.getElementById('checkoutEmail').value.trim();
-            if(!email || !email.includes('@')) { showToast('Please enter email address first!'); return; }
-            document.getElementById('paymentModal').classList.remove('active');
-            document.getElementById('cryptoSelectionModal').classList.add('active');
-        }
-
-        function selectCryptoCoin(coinName, address) {
-            let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-            if(appliedDiscount > 0) subtotal = subtotal * (1 - appliedDiscount / 100);
-
-            document.getElementById('cryptoSelectionModal').classList.remove('active');
-            document.getElementById('instructionTotalDisplay').innerText = '€' + subtotal.toFixed(2);
-            document.getElementById('modalInstructionTitle').innerText = "Crypto Payment (" + coinName + ")";
-            document.getElementById('selectedCoinLabel').innerHTML = `<i class="fa-solid fa-coins text-amber-400"></i> ${coinName} Address:`;
-            document.getElementById('targetPaymentAddress').innerText = address;
-            document.getElementById('instructionModal').classList.add('active');
-        }
-
-        function payWithAccountBalance() {
-            let email = document.getElementById('checkoutEmail').value.trim();
-            if(!email || !email.includes('@')) { showToast('Please enter email address!'); return; }
-            if(!document.getElementById('resellEmAgb').checked) { showToast('Please agree to Terms of Service!'); return; }
-
-            let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
-            let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-            if(appliedDiscount > 0) subtotal = subtotal * (1 - appliedDiscount / 100);
-
-            if(balance < subtotal) {
-                showToast('Insufficient balance! Please use Top Up.');
-                return;
-            }
-
-            localStorage.setItem('balance_' + email, (balance - subtotal).toFixed(2));
-            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
-
-            let newOrder = {
-                items: orderSummary,
-                total: '€' + subtotal.toFixed(2),
-                rawTotal: subtotal,
-                method: 'Account Balance',
-                status: 'Completed',
-                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
-                date: new Date().toLocaleDateString('de-DE')
-            };
-
-            let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
-            orders.unshift(newOrder);
-            localStorage.setItem('orders_' + email, JSON.stringify(orders));
-
-            showToast('Paid successfully with Account Balance!');
-            document.getElementById('paymentModal').classList.remove('active');
-            cart = [];
-            updateCartUI();
-            if(window.firebaseAuth.currentUser) loadDashboardStats(email);
-        }
-
-        function executeResellEmCheckout() {
-            let email = document.getElementById('checkoutEmail').value.trim();
-            if(!email || !email.includes('@')) { showToast('Please enter email!'); return; }
-            if(!document.getElementById('resellEmAgb').checked) { showToast('Please agree to Terms of Service!'); return; }
-            payWithPayPalFF();
-        }
-
-        function finalizeOrderWithProof() {
-            let email = document.getElementById('checkoutEmail').value.trim();
-            let proof = document.getElementById('finalPaymentProof').value.trim();
-
-            if(!proof) {
-                showToast('Please enter payment proof or TxID!');
-                return;
-            }
-
-            let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-            if(appliedDiscount > 0) subtotal = subtotal * (1 - appliedDiscount / 100);
-
-            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
-
-            let newOrder = {
-                items: orderSummary,
-                total: '€' + subtotal.toFixed(2),
-                rawTotal: subtotal,
-                method: 'Manual Payment (Pending Proof)',
-                status: 'Pending',
-                proof: proof,
-                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
-                date: new Date().toLocaleDateString('de-DE')
-            };
-
-            let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
-            orders.unshift(newOrder);
-            localStorage.setItem('orders_' + email, JSON.stringify(orders));
-
-            showToast('Order submitted successfully! Waiting for admin approval.');
-            document.getElementById('instructionModal').classList.remove('active');
-            document.getElementById('finalPaymentProof').value = '';
-            cart = [];
-            updateCartUI();
-            if(window.firebaseAuth.currentUser) loadDashboardStats(email);
+                window.open("https://sellauth.com", "_blank");
+            }, 800);
         }
 
         function toggleLogin() { document.getElementById('loginModal').classList.toggle('active'); }
