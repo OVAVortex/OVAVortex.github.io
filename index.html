@@ -17,7 +17,7 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs & Authentifizierung -->
+    <!-- Firebase SDKs & Vollständige Auth Steuerung -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -131,8 +131,10 @@
                     checkoutEmailInput.value = user.email || '';
                 }
                 
+                // Automatische Admin-Erkennung unabhängig von Groß-/Kleinschreibung (funktioniert mit l@valentinolopez.de)
                 if (adminSection) {
-                    if (user.email.toLowerCase() === 'l@valentinolopez.de' || user.email.toLowerCase().includes('admin')) {
+                    const cleanEmail = user.email.toLowerCase().trim();
+                    if (cleanEmail === 'l@valentinolopez.de' || cleanEmail.includes('admin')) {
                         adminSection.classList.remove('hidden');
                         renderAdminPanelData();
                     } else {
@@ -481,7 +483,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" id="footerImpressum" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.78</p>
+            <p class="font-mono text-accent/70">v1.65</p>
         </div>
     </footer>
 
@@ -1141,7 +1143,7 @@
                 localStorage.setItem('orders_' + userEmail, JSON.stringify(userOrders));
                 showToast('Bestellung erfolgreich freigegeben!');
                 renderAdminPanelData();
-                if(window.firebaseAuth.currentUser && window.firebaseAuth.currentUser.email === userEmail) {
+                if(window.firebaseAuth.currentUser && window.firebaseAuth.currentUser.email.toLowerCase() === userEmail.toLowerCase()) {
                     loadDashboardStats(userEmail);
                 }
             }
