@@ -232,13 +232,13 @@
     <div class="hero-glow"></div>
     <div id="toast">Notification</div>
 
-    <!-- Announcement Bar -->
-    <div class="w-full bg-[#0a0a10] border-b border-white/5 py-3 px-6 text-center text-xs font-semibold text-gray-300 absolute top-0 left-0 right-0 z-50">
-        <span class="inline-block w-2.5 h-2.5 rounded-full bg-accent animate-pulse mr-2"></span> ⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE
+    <!-- Announcement Bar mit VAL3NTINO : 30% off -->
+    <div class="w-full bg-gradient-to-r from-accent via-pink-600 to-accentSky text-white border-b border-white/10 py-3 px-6 text-center text-xs md:text-sm font-extrabold tracking-wide absolute top-0 left-0 right-0 z-50 shadow-lg">
+        🔥 VAL3NTINO : 30% OFF — LIMITED TIME SALE ACTIVE NOW! ⚡
     </div>
 
     <!-- Navigation -->
-    <nav class="w-full py-5 px-8 md:px-20 flex justify-between items-center border-b border-white/5 fixed top-[41px] bg-[#030305]/90 backdrop-blur-2xl z-50">
+    <nav class="w-full py-5 px-8 md:px-20 flex justify-between items-center border-b border-white/5 fixed top-[45px] bg-[#030305]/90 backdrop-blur-2xl z-50">
         <a href="#" class="text-xl md:text-2xl font-extrabold tracking-tight text-white hover:text-accent transition flex items-center gap-2.5">
             <span class="w-3 h-3 rounded-full bg-accent animate-pulse"></span> Val3ntino<span class="text-accent">.</span>
         </a>
@@ -308,7 +308,7 @@
             I build clean web applications, optimize Windows & hardware for uncompromising performance, and create custom game scripts.
         </p>
 
-        <!-- Discord Button im exakten Kapsel-Stil unter dem Text -->
+        <!-- Discord Button -->
         <div class="flex justify-center">
             <a href="https://discord.gg/YE2jHSwM7" target="_blank" class="inline-flex items-center gap-4 px-8 py-4 bg-accent hover:opacity-95 text-white font-bold rounded-full text-base md:text-lg shadow-xl shadow-pink-500/25 transition transform hover:scale-105">
                 <span class="flex items-center gap-2.5"><i class="fa-brands fa-discord text-xl"></i> Join Discord Community</span>
@@ -945,7 +945,8 @@
         }
 
         function toggleLangDropdown() {
-            document.getElementById('langDropdownMenu').classList.toggle('hidden');
+            let menu = document.getElementById('langDropdownMenu');
+            menu.classList.toggle('hidden');
         }
 
         function setLanguage(lang) {
@@ -953,7 +954,16 @@
             document.getElementById('currentLangLabel').innerText = lang.toUpperCase();
             document.getElementById('currentFlagIcon').innerText = lang === 'de' ? '🇩🇪' : '🇬🇧';
             document.getElementById('langDropdownMenu').classList.add('hidden');
-            showToast(lang === 'de' ? "Sprache zu Deutsch gewechselt" : "Language switched to English");
+            
+            if(lang === 'de') {
+                document.getElementById('checkDe').classList.remove('hidden');
+                document.getElementById('checkEn').classList.add('hidden');
+                showToast("Sprache zu Deutsch gewechselt");
+            } else {
+                document.getElementById('checkEn').classList.remove('hidden');
+                document.getElementById('checkDe').classList.add('hidden');
+                showToast("Language switched to English");
+            }
         }
 
         function openDashboardTab(tabName) {
