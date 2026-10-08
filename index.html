@@ -57,8 +57,8 @@
                     .then(() => {
                         const errEl = document.getElementById('authErrorMsg');
                         if(errEl) errEl.innerText = "";
-                        showToast("Erfolgreich angemeldet!");
-                        toggleLogin();
+                        window.showToast("Erfolgreich angemeldet!");
+                        window.toggleLogin();
                     })
                     .catch((error) => {
                         const errEl = document.getElementById('authErrorMsg');
@@ -81,8 +81,8 @@
             signInWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast("Erfolgreich eingeloggt!");
-                    toggleLogin();
+                    window.showToast("Erfolgreich eingeloggt!");
+                    window.toggleLogin();
                 })
                 .catch((error) => {
                     msgBox.innerText = "Login Fehler: " + error.message;
@@ -103,8 +103,8 @@
             createUserWithEmailAndPassword(auth, email, pass)
                 .then(() => {
                     msgBox.innerText = "";
-                    showToast("Account erfolgreich erstellt!");
-                    toggleLogin();
+                    window.showToast("Account erfolgreich erstellt!");
+                    window.toggleLogin();
                 })
                 .catch((error) => {
                     msgBox.innerText = "Registrierungsfehler: " + error.message;
@@ -113,8 +113,8 @@
 
         window.handleLogout = function() {
             signOut(auth).then(() => {
-                showToast("Erfolgreich abgemeldet.");
-                toggleLogin();
+                window.showToast("Erfolgreich abgemeldet.");
+                window.toggleLogin();
             });
         };
 
@@ -135,13 +135,13 @@
                     const userEmailLower = user.email.toLowerCase().trim();
                     if (userEmailLower === 'l@valentinolopez.de' || userEmailLower.includes('admin')) {
                         adminSection.classList.remove('hidden');
-                        renderAdminPanelData();
+                        window.renderAdminPanelData();
                     } else {
                         adminSection.classList.add('hidden');
                     }
                 }
 
-                loadDashboardStats(user.email);
+                window.loadDashboardStats(user.email);
             } else {
                 if(loginBtnText) loginBtnText.innerText = "Anmelden";
                 if(loginBtnTextMobile) loginBtnTextMobile.innerText = "Anmelden";
@@ -474,7 +474,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.81</p>
+            <p class="font-mono text-accent/70">v1.82</p>
         </div>
     </footer>
 
@@ -588,7 +588,6 @@
                 <button onclick="handleLogout()" class="w-full py-3 bg-red-500/10 text-red-400 rounded-2xl text-xs font-semibold">Logout</button>
             </div>
 
-            <!-- Login / Reg Form mit Social Logins -->
             <div id="authFormsContainer" class="space-y-4">
                 <h3 class="text-base font-bold text-white text-center">Anmelden / Registrieren</h3>
                 
