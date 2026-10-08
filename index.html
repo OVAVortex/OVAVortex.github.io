@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentino | Val3ntino Store</title>
+    <title>Val3ntino | High-End Store</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- FontAwesome für Icons -->
@@ -17,7 +17,7 @@
             emailjs.init("XhAioNEZFhrM7CPL2");
         })();
     </script>
-    <!-- Firebase SDKs & Auth Steuerung -->
+    <!-- Firebase SDKs & Vollständige Auth Steuerung -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { 
@@ -223,7 +223,7 @@
 
     <!-- Announcement Bar -->
     <div class="w-full bg-[#0a0a10] border-b border-white/5 py-2 px-4 text-center text-[11px] font-medium text-gray-400 absolute top-0 left-0 right-0 z-50">
-        <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse mr-1.5"></span> ⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE
+        <span class="inline-block w-2 h-2 rounded-full bg-accent animate-pulse mr-1.5"></span> <span id="announcementText">⚡ HIGH-END TUNING & WEB SERVICES — SECURE PAYMENTS ACTIVE</span>
     </div>
 
     <!-- Navigation -->
@@ -471,7 +471,7 @@
         <div class="flex items-center gap-6">
             <button onclick="toggleImpressum()" class="hover:text-gray-300 transition">Impressum</button>
             <p>&copy; 2026 Valentino.</p>
-            <p class="font-mono text-accent/70">v1.70</p>
+            <p class="font-mono text-accent/70">v1.71</p>
         </div>
     </footer>
 
@@ -636,7 +636,7 @@
 
     <script>
         let quantities = { basic: 1, pro: 1, web: 1 };
-        let card = [];
+        let cart = [];
 
         function showToast(msg) {
             let t = document.getElementById("toast");
