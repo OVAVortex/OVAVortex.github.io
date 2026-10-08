@@ -532,10 +532,20 @@
                     <p class="text-4xl font-black text-white" id="resellEmTotalDisplay">€0.00</p>
                     <div id="resellEmItemsList" class="space-y-4 mt-6 max-h-48 overflow-y-auto"></div>
                 </div>
-                <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 space-y-2.5 text-sm">
-                    <p class="font-bold text-white">Need help with this order?</p>
-                    <p class="text-gray-400 text-xs">Open a support ticket and we'll get back to you.</p>
-                    <button onclick="openSupportTicketModal()" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-accent rounded-xl font-bold text-xs transition">Open a Support Ticket ↗</button>
+                <div class="space-y-4">
+                    <!-- Gutschein-Eingabe im Checkout -->
+                    <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 space-y-2">
+                        <p class="text-xs font-bold text-white">Have a discount code?</p>
+                        <div class="flex gap-2">
+                            <input type="text" id="checkoutCouponInput" class="w-full bg-[#09090f] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Enter coupon...">
+                            <button onclick="applyCheckoutCoupon()" class="px-4 py-2 bg-accent text-white font-bold rounded-xl text-xs">Apply</button>
+                        </div>
+                    </div>
+                    <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 space-y-2.5 text-sm">
+                        <p class="font-bold text-white">Need help with this order?</p>
+                        <p class="text-gray-400 text-xs">Open a support ticket and we'll get back to you.</p>
+                        <button onclick="openSupportTicketModal()" class="px-4 py-2 bg-white/10 hover:bg-white/20 text-accent rounded-xl font-bold text-xs transition">Open a Support Ticket ↗</button>
+                    </div>
                 </div>
             </div>
             <div class="p-8 md:p-10 flex flex-col justify-between space-y-8">
@@ -553,8 +563,6 @@
                     
                     <div class="space-y-4 pt-2">
                         <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Payment Method</p>
-                        
-                        <!-- Automatische PayPal FF Integration -->
                         <button onclick="payWithPayPalFF()" class="w-full p-5 bg-[#030305] border border-sky-500/40 rounded-2xl flex items-center justify-between text-left hover:border-sky-400 transition">
                             <div class="flex items-center gap-4">
                                 <i class="fa-brands fa-paypal text-sky-400 text-xl"></i>
@@ -686,7 +694,7 @@
         </div>
     </div>
 
-    <!-- Dashboard & Admin Panel Modal -->
+    <!-- Dashboard & Admin Panel Modal (Mit erweitertem Admin-Bereich für Coupons & Management) -->
     <div id="loginModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-2 sm:p-6">
         <div class="bg-[#050508] border border-white/10 rounded-3xl max-w-6xl w-full relative grid md:grid-cols-[280px_1fr] shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
             <!-- Sidebar -->
@@ -751,17 +759,30 @@
                         </div>
                     </div>
 
-                    <!-- Admin Kontrollzentrum im Dashboard -->
-                    <div id="adminControlCenter" class="hidden bg-[#09090f] p-6 rounded-2xl border border-accent/40 space-y-5 shadow-xl">
+                    <!-- Erweiterter Admin Kontrollzentrum mit Coupon & Management -->
+                    <div id="adminControlCenter" class="hidden bg-[#09090f] p-6 rounded-2xl border border-accent/40 space-y-6 shadow-xl">
                         <div class="flex items-center justify-between border-b border-white/10 pb-3">
                             <p class="text-sm font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1.5"></i> Admin Control Center</p>
                             <span class="text-[10px] bg-accent/20 text-white px-2.5 py-1 rounded font-bold">L@valentinolopez.de</span>
                         </div>
+                        
+                        <!-- Pending Payments -->
                         <div class="space-y-3">
                             <p class="text-xs font-bold text-white">Ausstehende Zahlungen (Pending)</p>
                             <div id="adminPendingList" class="space-y-3 max-h-48 overflow-y-auto text-sm">
                                 <p class="text-gray-400 text-center py-3">Keine ausstehenden Zahlungen.</p>
                             </div>
+                        </div>
+
+                        <!-- Coupon Generator -->
+                        <div class="border-t border-white/10 pt-4 space-y-3">
+                            <p class="text-xs font-bold text-white"><i class="fa-solid fa-ticket text-accent mr-1"></i> Gutscheine verwalten (Coupons)</p>
+                            <div class="grid grid-cols-2 gap-3">
+                                <input type="text" id="newCouponCode" class="bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Code (z.B. VAL3NTINO)">
+                                <input type="number" id="newCouponPercent" class="bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Rabatt in % (z.B. 15)">
+                            </div>
+                            <button onclick="adminCreateCoupon()" class="w-full py-2.5 bg-accent text-white font-bold rounded-xl text-xs shadow">Gutschein erstellen +</button>
+                            <div id="adminCouponList" class="space-y-2 text-xs pt-1 max-h-32 overflow-y-auto"></div>
                         </div>
                     </div>
 
@@ -857,6 +878,7 @@
         let quantities = { basic: 1, pro: 1, web: 1 };
         let cart = [];
         let currentLang = 'en';
+        let appliedDiscount = 0;
 
         function showToast(msg) {
             let t = document.getElementById("toast");
@@ -918,6 +940,56 @@
             }
         }
 
+        // Admin Coupon System
+        function adminCreateCoupon() {
+            let code = document.getElementById('newCouponCode').value.trim().toUpperCase();
+            let percent = parseFloat(document.getElementById('newCouponPercent').value);
+            if(!code || isNaN(percent)) { showToast('Please enter valid coupon code & percent!'); return; }
+
+            let coupons = JSON.parse(localStorage.getItem('admin_coupons') || '{}');
+            coupons[code] = percent;
+            localStorage.setItem('admin_coupons', JSON.stringify(coupons));
+            showToast('Coupon ' + code + ' created (' + percent + '%)!');
+            document.getElementById('newCouponCode').value = '';
+            document.getElementById('newCouponPercent').value = '';
+            renderAdminCoupons();
+        }
+
+        function renderAdminCoupons() {
+            let list = document.getElementById('adminCouponList');
+            if(!list) return;
+            let coupons = JSON.parse(localStorage.getItem('admin_coupons') || '{}');
+            list.innerHTML = '';
+            for(let code in coupons) {
+                list.innerHTML += `
+                    <div class="bg-[#030305] p-2.5 rounded-xl border border-white/5 flex justify-between items-center text-white">
+                        <span><b>${code}</b> : ${coupons[code]}% off</span>
+                        <button onclick="adminDeleteCoupon('${code}')" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            }
+        }
+
+        function adminDeleteCoupon(code) {
+            let coupons = JSON.parse(localStorage.getItem('admin_coupons') || '{}');
+            delete coupons[code];
+            localStorage.setItem('admin_coupons', JSON.stringify(coupons));
+            showToast('Coupon deleted.');
+            renderAdminCoupons();
+        }
+
+        function applyCheckoutCoupon() {
+            let code = document.getElementById('checkoutCouponInput').value.trim().toUpperCase();
+            let coupons = JSON.parse(localStorage.getItem('admin_coupons') || '{}');
+            if(coupons[code] !== undefined) {
+                appliedDiscount = coupons[code];
+                showToast('Coupon applied: ' + appliedDiscount + '% OFF!');
+                updateCartUI();
+            } else {
+                showToast('Invalid coupon code!');
+            }
+        }
+
         function renderAdminPanelData() {
             const pendingList = document.getElementById('adminPendingList');
             if(!pendingList) return;
@@ -947,6 +1019,7 @@
                 }
             }
             if(!found) pendingList.innerHTML = '<p class="text-gray-500 text-center py-4 text-sm">No pending payments.</p>';
+            renderAdminCoupons();
         }
 
         function adminApproveOrder(email, index) {
@@ -984,7 +1057,6 @@
             document.getElementById('checkoutBalanceDisplay').innerText = `Available: €` + balance.toFixed(2);
             
             if (orders.length === 0) {
-                container.innerHTML = '<p class="text-sm text-gray-400 text-center py-4">No orders yet.</p>';
                 fullContainer.innerHTML = '<p class="text-sm text-gray-400 text-center py-12">No orders yet.</p>';
                 latestContainer.innerHTML = 'No orders yet.';
             } else {
@@ -999,13 +1071,11 @@
                     </div>
                 `;
 
-                container.innerHTML = '';
                 fullContainer.innerHTML = '';
-
                 orders.forEach((ord, idx) => {
                     let statusBadge = ord.status === 'Pending' ? '<span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">Pending</span>' : '<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Completed</span>';
                     
-                    let orderHTML = `
+                    fullContainer.innerHTML += `
                         <div class="bg-[#09090f] p-5 rounded-2xl border border-white/10 space-y-4">
                             <div class="flex justify-between items-start">
                                 <div>
@@ -1027,8 +1097,6 @@
                             </div>
                         </div>
                     `;
-                    container.innerHTML += orderHTML;
-                    fullContainer.innerHTML += orderHTML;
                 });
             }
         }
@@ -1105,6 +1173,11 @@
                         <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 p-2"><i class="fa-solid fa-trash text-sm"></i></button>
                     </div>`;
             });
+
+            if(appliedDiscount > 0) {
+                subtotal = subtotal * (1 - appliedDiscount / 100);
+            }
+
             document.getElementById('cartBadge').innerText = totalCount;
             document.getElementById('cartBadgeMobile').innerText = totalCount;
             document.getElementById('cartItemsContainer').innerHTML = listHTML || '<p class="text-sm text-gray-400 text-center py-8">Your cart is empty.</p>';
@@ -1147,17 +1220,17 @@
             if(window.firebaseAuth.currentUser) loadDashboardStats(email);
         }
 
-        // Automatische PayPal FF Bezahlung via SellAuth Webhook Forwarder
         function payWithPayPalFF() {
             let email = document.getElementById('checkoutEmail').value.trim();
             if(!email || !email.includes('@')) { showToast('Please enter your email address!'); return; }
             if(!document.getElementById('resellEmAgb').checked) { showToast('Please agree to Terms of Service!'); return; }
 
             let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
-            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            if(appliedDiscount > 0) subtotal = subtotal * (1 - appliedDiscount / 100);
 
-            // Erstelle die Bestellung im System als Pending, bis der Webhook von SellAuth / PayPal das OK gibt
+            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
             let invoiceId = Math.floor(100000000000 + Math.random() * 900000000000);
+            
             let newOrder = {
                 items: orderSummary,
                 total: '€' + subtotal.toFixed(2),
@@ -1173,8 +1246,6 @@
             localStorage.setItem('orders_' + email, JSON.stringify(orders));
 
             showToast('Redirecting to secure PayPal Checkout...');
-            
-            // Weiterleitung zu deinem PayPal / SellAuth Link mit übergebenem Betrag und Rechnungs-ID
             setTimeout(() => {
                 window.open(`https://paypal.me/valentinolopez1e/${subtotal.toFixed(2)}EUR`, '_blank');
                 document.getElementById('paymentModal').classList.remove('active');
@@ -1193,6 +1264,8 @@
 
         function selectCryptoCoin(coinName, address) {
             let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+            if(appliedDiscount > 0) subtotal = subtotal * (1 - appliedDiscount / 100);
+
             document.getElementById('cryptoSelectionModal').classList.remove('active');
             document.getElementById('instructionTotalDisplay').innerText = '€' + subtotal.toFixed(2);
             document.getElementById('modalInstructionTitle').innerText = "Crypto Payment (" + coinName + ")";
@@ -1208,6 +1281,7 @@
 
             let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
             let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+            if(appliedDiscount > 0) subtotal = subtotal * (1 - appliedDiscount / 100);
 
             if(balance < subtotal) {
                 showToast('Insufficient balance! Please use Top Up.');
@@ -1255,6 +1329,8 @@
             }
 
             let subtotal = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+            if(appliedDiscount > 0) subtotal = subtotal * (1 - appliedDiscount / 100);
+
             let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
 
             let newOrder = {
