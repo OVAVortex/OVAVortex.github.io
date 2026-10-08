@@ -10,13 +10,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init("XhAioNEZFhrM7CPL2");
-        })();
-    </script>
     <!-- Firebase SDKs & Auth Core -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -121,14 +114,13 @@
         onAuthStateChanged(auth, (user) => {
             const loginBtnText = document.getElementById('loginBtnText');
             const adminSection = document.getElementById('adminControlCenter');
-            const dashboardView = document.getElementById('userDashboardView');
-            const authForms = document.getElementById('authFormsContainer');
+            const userDashboardView = document.getElementById('userDashboardView');
+            const authFormsContainer = document.getElementById('authFormsContainer');
             
             if (user) {
                 if(loginBtnText) loginBtnText.innerText = "Your account";
-                
-                if(dashboardView) dashboardView.classList.remove('hidden');
-                if(authForms) authForms.classList.add('hidden');
+                if(userDashboardView) userDashboardView.classList.remove('hidden');
+                if(authFormsContainer) authFormsContainer.classList.add('hidden');
 
                 const checkoutEmailInput = document.getElementById('checkoutEmail');
                 if (checkoutEmailInput && !checkoutEmailInput.value) {
@@ -144,13 +136,11 @@
                         adminSection.classList.add('hidden');
                     }
                 }
-
                 loadDashboardStats(user.email);
             } else {
                 if(loginBtnText) loginBtnText.innerText = "Log in";
-                
-                if(dashboardView) dashboardView.classList.add('hidden');
-                if(authForms) authForms.classList.remove('hidden');
+                if(userDashboardView) userDashboardView.classList.add('hidden');
+                if(authFormsContainer) authFormsContainer.classList.remove('hidden');
                 if(adminSection) adminSection.classList.add('hidden');
             }
         });
@@ -232,7 +222,7 @@
     <div class="hero-glow"></div>
     <div id="toast">Notification</div>
 
-    <!-- Announcement Bar -->
+    <!-- Announcement Bar mit VAL3NTINO : 30% off -->
     <div class="w-full bg-gradient-to-r from-accent via-pink-600 to-accentSky text-white border-b border-white/10 py-3 px-6 text-center text-xs md:text-sm font-extrabold tracking-wide absolute top-0 left-0 right-0 z-50 shadow-lg">
         🔥 VAL3NTINO : 30% OFF — LIMITED TIME SALE ACTIVE NOW! ⚡
     </div>
@@ -318,56 +308,6 @@
     </header>
 
     <main class="max-w-6xl mx-auto px-6 md:px-12 pb-32">
-        <!-- Skills Sektion -->
-        <section id="skills" class="mb-32">
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="nivex-card p-8 md:p-10 rounded-3xl flex flex-col justify-between group">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-code text-accent text-2xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Coding & Dev</h3>
-                        <p class="text-gray-300 text-base mb-8 leading-relaxed font-light">Passion for programming, modern web development, and game scripting.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2.5">
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">HTML & CSS</span>
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">C++</span>
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Python</span>
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Luau</span>
-                    </div>
-                </div>
-
-                <div class="nivex-card p-8 md:p-10 rounded-3xl flex flex-col justify-between group">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-microchip text-accent text-2xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">PC Tuning</h3>
-                        <p class="text-gray-300 text-base mb-8 leading-relaxed font-light">Maximum performance, custom tweaks, and uncompromising hardware optimization.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2.5">
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">0 Input Delay</span>
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Windows Tweaks</span>
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">BIOS Edits</span>
-                    </div>
-                </div>
-
-                <div class="nivex-card p-8 md:p-10 rounded-3xl flex flex-col justify-between group">
-                    <div>
-                        <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
-                            <i class="fa-solid fa-headphones-simple text-accent text-2xl"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Vibe Coding</h3>
-                        <p class="text-gray-300 text-base mb-8 leading-relaxed font-light">Coding in the perfect flow state. Focusing on clean solutions in a relaxed atmosphere.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2.5">
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Flow State</span>
-                        <span class="px-3.5 py-1.5 bg-white/5 rounded-xl text-sm font-medium text-gray-300 border border-white/5">Creative</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- Store Sektion -->
         <section id="booking" class="mb-32">
             <div class="text-center mb-16">
@@ -397,10 +337,10 @@
                             <button onclick="adjustQty('basic', 1)" class="w-11 h-11 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-sm"></i></button>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
-                            <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic', 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=100&h=100&fit=crop')" class="py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
+                            <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic')" class="py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-cart-plus text-accent"></i> Cart
                             </button>
-                            <button onclick="redirectToSellAuth('Basic PC-Tuning', 15.00)" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
+                            <button onclick="addItemToCart('Basic PC-Tuning', 15.00, 'basic'); proceedToCheckout();" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
                                 <i class="fa-solid fa-bolt"></i> Buy Now
                             </button>
                         </div>
@@ -430,10 +370,10 @@
                             <button onclick="adjustQty('pro', 1)" class="w-11 h-11 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-sm"></i></button>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
-                            <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro', 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=100&h=100&fit=crop')" class="py-4 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
+                            <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro')" class="py-4 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-cart-plus text-accent"></i> Cart
                             </button>
-                            <button onclick="redirectToSellAuth('Pro Tuning (0 Delay)', 35.00)" class="py-4 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
+                            <button onclick="addItemToCart('Pro Tuning (0 Delay)', 35.00, 'pro'); proceedToCheckout();" class="py-4 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
                                 <i class="fa-solid fa-bolt"></i> Buy Now
                             </button>
                         </div>
@@ -462,10 +402,10 @@
                             <button onclick="adjustQty('web', 1)" class="w-11 h-11 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center transition"><i class="fa-solid fa-plus text-sm"></i></button>
                         </div>
                         <div class="grid grid-cols-2 gap-3">
-                            <button onclick="addItemToCart('Website Build', 25.00, 'web', 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=100&h=100&fit=crop')" class="py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
+                            <button onclick="addItemToCart('Website Build', 25.00, 'web')" class="py-3.5 text-center bg-white/5 hover:bg-white/10 border border-white/10 rounded-2xl transition font-bold text-white text-xs md:text-sm flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-cart-plus text-accent"></i> Cart
                             </button>
-                            <button onclick="redirectToSellAuth('Website Build', 25.00)" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
+                            <button onclick="addItemToCart('Website Build', 25.00, 'web'); proceedToCheckout();" class="py-3.5 text-center bg-accent hover:opacity-90 text-white rounded-2xl transition font-bold text-xs md:text-sm flex items-center justify-center gap-2 shadow-lg">
                                 <i class="fa-solid fa-bolt"></i> Buy Now
                             </button>
                         </div>
@@ -550,41 +490,174 @@
         Copyright © Val3ntino 2026
     </div>
 
-    <!-- Impressum Modal -->
-    <div id="impressumModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
-        <div class="nivex-card p-8 rounded-3xl max-w-lg w-full relative shadow-2xl">
-            <button onclick="toggleImpressum()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
-            <h2 class="text-2xl font-bold text-white mb-6">Imprint</h2>
-            <div class="text-gray-300 text-base space-y-4 font-light leading-relaxed">
-                <p><strong>Angaben gemäß § 5 TMG:</strong></p>
-                <p>Valentino Lopez</p>
-                <p>Europa-Allee 2<br>60327 Frankfurt am Main</p>
-                <p class="mt-6 text-white font-medium">Kontakt:</p>
-                <p>E-Mail: L@valentinolopez.de</p>
-            </div>
-        </div>
-    </div>
-
     <!-- Warenkorb Modal -->
     <div id="cartModal" class="modal fixed inset-0 bg-black/80 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-8 rounded-3xl max-w-lg w-full relative space-y-6 shadow-2xl">
             <button onclick="toggleCartModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
             <h2 class="text-2xl font-extrabold text-white">Shopping Cart</h2>
             <div id="cartItemsContainer" class="space-y-3 max-h-64 overflow-y-auto pr-1">
-                <p class="text-sm text-gray-400 text-center py-8">Your cart is empty.</p>
+                <p class="text-xs text-gray-400 text-center py-6">Your cart is empty.</p>
             </div>
-            <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 flex justify-between items-center text-base">
-                <span class="text-white font-bold">Total</span>
-                <span class="text-accent font-bold text-lg" id="cartSubtotalDisplay">€0.00</span>
+            <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 space-y-3 text-sm">
+                <div class="flex justify-between text-gray-400">
+                    <span>Subtotal</span>
+                    <span id="cartSubtotalOnly">€0.00</span>
+                </div>
+                <div id="discountRow" class="flex justify-between text-emerald-400" style="display: none;">
+                    <span>Discount (<span id="discountName"></span>)</span>
+                    <span id="discountAmount">€0.00</span>
+                </div>
+                <div class="flex justify-between items-center text-base pt-2 border-t border-white/10">
+                    <span class="text-white font-bold">Total</span>
+                    <span class="text-accent font-bold text-lg" id="cartSubtotalDisplay">€0.00</span>
+                </div>
             </div>
-            <button onclick="proceedToSellAuthCheckout()" id="checkoutBtn" class="w-full py-4 text-center bg-accent text-white font-extrabold rounded-2xl text-sm opacity-50 cursor-not-allowed shadow-lg" disabled>Checkout with SellAuth</button>
+
+            <!-- Gutschein Eingabe -->
+            <div class="flex gap-2">
+                <input type="text" id="couponInput" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs" placeholder="Gutscheincode eingeben...">
+                <button onclick="applyCoupon()" class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-2xl text-xs transition">Einlösen</button>
+            </div>
+            <div id="couponMsg" class="text-[10px]"></div>
+
+            <div class="flex items-center gap-3 text-xs text-gray-400 pt-1">
+                <input type="checkbox" id="agbCheck" class="accent-accent w-4 h-4">
+                <span>Ich stimme den AGB zu.</span>
+            </div>
+
+            <button onclick="proceedToCheckout()" id="checkoutBtn" class="w-full py-4 text-center bg-accent text-white font-extrabold rounded-2xl text-xs opacity-50 cursor-not-allowed shadow-lg" disabled>Checkout</button>
+        </div>
+    </div>
+
+    <!-- ResellEm Style Checkout Modal -->
+    <div id="paymentModal" class="modal fixed inset-0 bg-black/85 backdrop-blur-md z-50 items-center justify-center p-4 sm:p-6">
+        <div class="bg-[#050508] border border-white/10 rounded-3xl max-w-5xl w-full relative grid md:grid-cols-2 shadow-2xl overflow-hidden max-h-[92vh] overflow-y-auto">
+            <div class="bg-[#09090f] p-8 md:p-10 border-b md:border-b-0 md:border-r border-white/10 flex flex-col justify-between space-y-6">
+                <div>
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-bold mb-2">ORDER TOTAL</p>
+                    <p class="text-4xl font-black text-white" id="checkoutSummaryTotal">€0.00</p>
+                </div>
+                <div class="bg-[#030305] p-5 rounded-2xl border border-white/10 space-y-2.5 text-sm">
+                    <p class="font-bold text-white">Need help with this order?</p>
+                    <p class="text-gray-400 text-xs">Open a support ticket or join our Discord.</p>
+                    <a href="https://discord.gg/YE2jHSwM7" target="_blank" class="inline-block px-4 py-2 bg-white/10 hover:bg-white/20 text-accent rounded-xl font-bold text-xs transition">Join Discord (dri.c) ↗</a>
+                </div>
+            </div>
+            <div class="p-8 md:p-10 flex flex-col justify-between space-y-8">
+                <button onclick="togglePaymentModal()" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+                <div class="space-y-6">
+                    <div class="flex items-center gap-3 text-sm font-bold text-accent">
+                        <span>1. Order Information</span>
+                        <span class="text-gray-600">—</span>
+                        <span class="text-gray-500">2. Confirm & Pay</span>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">E-mail Address *</label>
+                        <input type="email" id="checkoutEmail" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-5 py-4 text-white text-sm focus:outline-none focus:border-accent" placeholder="you@example.com">
+                    </div>
+                    
+                    <div class="space-y-4 pt-2">
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Payment Method</p>
+                        
+                        <!-- PayPal Button -->
+                        <button onclick="openPayPalProofModal()" class="w-full p-5 bg-[#030305] border border-sky-500/40 rounded-2xl flex items-center justify-between text-left hover:border-sky-400 transition">
+                            <div class="flex items-center gap-4">
+                                <i class="fa-brands fa-paypal text-sky-400 text-xl"></i>
+                                <div>
+                                    <span class="text-sm font-bold text-white block">PayPal Friends & Family</span>
+                                    <span class="text-xs text-sky-400">Bezahlung via PayPal</span>
+                                </div>
+                            </div>
+                            <span class="text-xs text-sky-400 font-bold">Select →</span>
+                        </button>
+
+                        <!-- Crypto Kachel mit Dropdown -->
+                        <div class="bg-[#030305] border border-accent/40 rounded-2xl p-4 space-y-3">
+                            <div onclick="toggleCryptoSelection()" class="flex items-center justify-between cursor-pointer">
+                                <div class="flex items-center gap-3">
+                                    <i class="fa-solid fa-coins text-amber-400 text-lg"></i>
+                                    <span class="text-xs font-bold text-white">Cryptocurrency (LTC, ETH, SOL, BTC)</span>
+                                </div>
+                                <span id="cryptoToggleText" class="text-[10px] text-accent font-bold">Ausklappen ▼</span>
+                            </div>
+                            <div id="cryptoListContainer" class="hidden grid grid-cols-2 gap-2 pt-2 border-t border-white/10">
+                                <button onclick="selectCryptoCoin('Litecoin (LTC)', 'LTC1QVAL3NTINOCRYPTOADDRESS998877')" class="p-3 bg-[#09090f] border border-white/10 hover:border-accent rounded-xl text-xs text-left font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-litecoin-sign text-sky-400"></i> Litecoin
+                                </button>
+                                <button onclick="selectCryptoCoin('Ethereum (ETH)', '0xVAL3NTINOETHEREUMWALLETADDRESS998877')" class="p-3 bg-[#09090f] border border-white/10 hover:border-accent rounded-xl text-xs text-left font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-ethereum text-indigo-400"></i> Ethereum
+                                </button>
+                                <button onclick="selectCryptoCoin('Solana (SOL)', 'SOL_VAL3NTINO_STORE_BLOCKCHAIN_ADDR_1122')" class="p-3 bg-[#09090f] border border-white/10 hover:border-accent rounded-xl text-xs text-left font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-bolt text-purple-400"></i> Solana
+                                </button>
+                                <button onclick="selectCryptoCoin('Bitcoin (BTC)', 'bc1qval3ntinobitcoinaddresswalletxyz4455')" class="p-3 bg-[#09090f] border border-white/10 hover:border-accent rounded-xl text-xs text-left font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-bitcoin-sign text-amber-400"></i> Bitcoin
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Account Balance Button -->
+                        <button onclick="payWithBalance()" class="w-full p-5 bg-[#030305] border border-white/10 rounded-2xl flex items-center justify-between text-left hover:border-white/20 transition">
+                            <div class="flex items-center gap-4">
+                                <i class="fa-solid fa-wallet text-emerald-400 text-xl"></i>
+                                <div>
+                                    <span class="text-sm font-bold text-white block">Account Balance</span>
+                                    <span class="text-xs text-gray-400">Pay directly with balance</span>
+                                </div>
+                            </div>
+                            <span class="text-xs text-emerald-400 font-bold">Pay Now →</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PayPal Proof Modal -->
+    <div id="paypalProofModal" class="modal fixed inset-0 bg-black/90 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
+            <button onclick="document.getElementById('paypalProofModal').classList.remove('active')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="w-14 h-14 rounded-2xl bg-sky-500/20 border border-sky-500/40 flex items-center justify-center mx-auto text-sky-400 text-2xl">
+                <i class="fa-brands fa-paypal"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white">PayPal Bezahlung</h2>
+            <p class="text-sm text-gray-400">Überweise <span id="paypalPayAmount" class="text-sky-400 font-bold">€0.00</span> an:</p>
+            <a href="https://paypal.me/valentinolopez1e" target="_blank" class="text-sky-400 underline font-mono text-sm block">paypal.me/valentinolopez1e</a>
+            
+            <div class="text-left space-y-2 pt-2">
+                <label class="block text-xs font-medium text-gray-300">PayPal Name / Transaktions-ID *</label>
+                <input type="text" id="paypalProofInput" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs" placeholder="z.B. Max Mustermann...">
+            </div>
+            <button onclick="confirmPayPalPending()" class="w-full py-4 text-center bg-emerald-500 text-black font-extrabold rounded-2xl text-xs shadow-lg hover:bg-emerald-400 transition">Zahlung eingereicht (Pending) ✓</button>
+        </div>
+    </div>
+
+    <!-- Crypto Address Modal -->
+    <div id="cryptoAddressModal" class="modal fixed inset-0 bg-black/90 backdrop-blur-md z-50 items-center justify-center p-4">
+        <div class="nivex-card p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
+            <button onclick="document.getElementById('cryptoAddressModal').classList.remove('active')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center mx-auto text-amber-400 text-2xl">
+                <i class="fa-solid fa-coins"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white" id="cryptoCoinTitle">Crypto Payment</h2>
+            <p class="text-sm text-gray-400">Sende genau <span id="cryptoPayAmount" class="text-accent font-bold">€0.00</span> an folgende Adresse:</p>
+            
+            <div class="bg-[#030305] p-4 rounded-2xl border border-white/10 text-left">
+                <p class="font-mono text-[11px] text-gray-300 select-all bg-[#0d0d14] p-3 rounded-xl break-all" id="cryptoAddressBox"></p>
+            </div>
+
+            <div class="text-left space-y-2 pt-1">
+                <label class="block text-xs font-medium text-gray-300">Transaction ID / Hash *</label>
+                <input type="text" id="cryptoProofInput" class="w-full bg-[#030305] border border-white/10 rounded-2xl px-4 py-3 text-white text-xs" placeholder="Crypto Hash eingeben...">
+            </div>
+            <button onclick="confirmCryptoPending()" class="w-full py-4 text-center bg-emerald-500 text-black font-extrabold rounded-2xl text-xs shadow-lg hover:bg-emerald-400 transition">Crypto Zahlung bestätigen ✓</button>
         </div>
     </div>
 
     <!-- Feedback Modal -->
     <div id="feedbackModal" class="modal fixed inset-0 bg-black/90 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
-            <button onclick="document.getElementById('feedbackModal').classList.toggle('active')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="document.getElementById('feedbackModal').classList.remove('active')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
             <h2 class="text-xl font-bold text-white">Leave Feedback</h2>
             <p class="text-sm text-gray-400">How was your experience with order <span id="feedbackInvoiceNum" class="text-accent font-mono"></span>?</p>
             
@@ -604,7 +677,7 @@
     <!-- Support Ticket Modal -->
     <div id="supportTicketModal" class="modal fixed inset-0 bg-black/90 backdrop-blur-md z-50 items-center justify-center p-4">
         <div class="nivex-card p-8 rounded-3xl max-w-md w-full relative space-y-5 shadow-2xl text-center">
-            <button onclick="document.getElementById('supportTicketModal').classList.toggle('active')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <button onclick="document.getElementById('supportTicketModal').classList.remove('active')" class="absolute top-6 right-6 text-gray-400 hover:text-white text-xl"><i class="fa-solid fa-xmark"></i></button>
             <h2 class="text-xl font-bold text-white">Open Support Ticket</h2>
             <p class="text-sm text-gray-400">Describe your issue regarding your order.</p>
             
@@ -679,14 +752,13 @@
                         </div>
                     </div>
 
-                    <!-- Admin Kontrollzentrum im Dashboard -->
+                    <!-- Admin Kontrollzentrum -->
                     <div id="adminControlCenter" class="hidden bg-[#09090f] p-6 rounded-2xl border border-accent/40 space-y-6 shadow-xl">
                         <div class="flex items-center justify-between border-b border-white/10 pb-3">
                             <p class="text-sm font-extrabold text-accent uppercase tracking-wider"><i class="fa-solid fa-shield-halved mr-1.5"></i> Admin Control Center</p>
                             <span class="text-[10px] bg-accent/20 text-white px-2.5 py-1 rounded font-bold">L@valentinolopez.de</span>
                         </div>
                         
-                        <!-- Pending Payments -->
                         <div class="space-y-3">
                             <p class="text-xs font-bold text-white">Ausstehende Zahlungen (Pending)</p>
                             <div id="adminPendingList" class="space-y-3 max-h-48 overflow-y-auto text-sm">
@@ -694,15 +766,14 @@
                             </div>
                         </div>
 
-                        <!-- Coupon Generator -->
                         <div class="border-t border-white/10 pt-4 space-y-3">
                             <p class="text-xs font-bold text-white"><i class="fa-solid fa-ticket text-accent mr-1"></i> Gutscheine verwalten (Coupons)</p>
                             <div class="grid grid-cols-2 gap-3">
-                                <input type="text" id="newCouponCode" class="bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Code (z.B. VAL3NTINO)">
-                                <input type="number" id="newCouponPercent" class="bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Rabatt in % (z.B. 15)">
+                                <input type="text" id="newAdminCoupon" class="bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Code (z.B. SALE20)">
+                                <input type="number" id="newAdminDiscount" class="bg-[#030305] border border-white/10 rounded-xl px-3 py-2 text-white text-xs" placeholder="Rabatt in € (z.B. 5)">
                             </div>
-                            <button onclick="adminCreateCoupon()" class="w-full py-2.5 bg-accent text-white font-bold rounded-xl text-xs shadow">Gutschein erstellen +</button>
-                            <div id="adminCouponList" class="space-y-2 text-xs pt-1 max-h-32 overflow-y-auto"></div>
+                            <button onclick="createAdminCoupon()" class="w-full py-2.5 bg-accent text-white font-bold rounded-xl text-xs shadow">Gutschein erstellen +</button>
+                            <div id="adminCouponsList" class="space-y-2 text-xs pt-1 max-h-32 overflow-y-auto"></div>
                         </div>
                     </div>
 
@@ -760,15 +831,15 @@
                             <p class="text-sm font-bold text-white">Top up</p>
                             <p class="text-xs text-gray-400">Pick an amount to add to your balance.</p>
                             <div class="grid grid-cols-3 gap-3">
-                                <button onclick="selectTopUpAmount(10)" class="py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-white hover:bg-white/10">€10.00</button>
-                                <button onclick="selectTopUpAmount(25)" class="py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-white hover:bg-white/10">€25.00</button>
-                                <button onclick="selectTopUpAmount(50)" class="py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-white hover:bg-white/10">€50.00</button>
+                                <button onclick="selectedTopUpValue = 10; isTopUpFlow = true; togglePaymentModal();" class="py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-white hover:bg-white/10">€10.00</button>
+                                <button onclick="selectedTopUpValue = 25; isTopUpFlow = true; togglePaymentModal();" class="py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-white hover:bg-white/10">€25.00</button>
+                                <button onclick="selectedTopUpValue = 50; isTopUpFlow = true; togglePaymentModal();" class="py-3 bg-white/5 border border-white/10 rounded-xl text-sm font-bold text-white hover:bg-white/10">€50.00</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Fallback Auth Forms wenn nicht eingeloggt -->
+                <!-- Fallback Auth Forms -->
                 <div id="authFormsContainer" class="space-y-6">
                     <h3 class="text-xl font-bold text-white text-center">Sign In / Register</h3>
                     <div class="space-y-3">
@@ -795,16 +866,28 @@
 
     <!-- JavaScript Steuerung -->
     <script>
-        let quantities = { basic: 1, pro: 1, web: 1 };
-        let cart = [];
         let currentLang = 'en';
-        let appliedDiscount = 0;
+        const translations = {
+            en: { cartEmptyText: "Your cart is empty." },
+            de: { cartEmptyText: "Dein Warenkorb ist leer." }
+        };
 
-        function showToast(msg) {
-            let t = document.getElementById("toast");
-            t.innerText = msg;
-            t.className = "show";
-            setTimeout(() => { t.className = t.className.replace("show", ""); }, 3000);
+        // ============ GLOBALE VARIABLEN & CHECKOUT LOGIK ============
+        let coupons = { "VAL3NTINO": 5.00, "PRO10": 10.00 };
+        let appliedDiscount = 0;
+        let appliedCouponName = "";
+        let cart = [];
+        let quantities = { basic: 1, pro: 1, web: 1 };
+        let pendingCryptoCoin = "";
+        let pendingCryptoAddress = "";
+        let isTopUpFlow = false;
+        let selectedTopUpValue = 0;
+
+        function showToast(message) {
+            let toast = document.getElementById("toast");
+            toast.innerText = message;
+            toast.className = "show";
+            setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
         }
 
         function toggleLangDropdown() {
@@ -827,6 +910,7 @@
                 document.getElementById('checkDe').classList.add('hidden');
                 showToast("Language switched to English");
             }
+            updateCartUI();
         }
 
         function openDashboardTab(tabName) {
@@ -870,253 +954,298 @@
             }
         }
 
-        // Admin Coupon System
-        function adminCreateCoupon() {
-            let code = document.getElementById('newCouponCode').value.trim().toUpperCase();
-            let percent = parseFloat(document.getElementById('newCouponPercent').value);
-            if(!code || isNaN(percent)) { showToast('Please enter valid coupon code & percent!'); return; }
-
-            let coupons = JSON.parse(localStorage.getItem('admin_coupons') || '{}');
-            coupons[code] = percent;
-            localStorage.setItem('admin_coupons', JSON.stringify(coupons));
-            showToast('Coupon ' + code + ' created (' + percent + '%)!');
-            document.getElementById('newCouponCode').value = '';
-            document.getElementById('newCouponPercent').value = '';
-            renderAdminCoupons();
-        }
-
-        function renderAdminCoupons() {
-            let list = document.getElementById('adminCouponList');
-            if(!list) return;
-            let coupons = JSON.parse(localStorage.getItem('admin_coupons') || '{}');
-            list.innerHTML = '';
-            for(let code in coupons) {
-                list.innerHTML += `
-                    <div class="bg-[#030305] p-2.5 rounded-xl border border-white/5 flex justify-between items-center text-white">
-                        <span><b>${code}</b> : ${coupons[code]}% off</span>
-                        <button onclick="adminDeleteCoupon('${code}')" class="text-red-400 hover:text-red-300"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-            }
-        }
-
-        function adminDeleteCoupon(code) {
-            let coupons = JSON.parse(localStorage.getItem('admin_coupons') || '{}');
-            delete coupons[code];
-            localStorage.setItem('admin_coupons', JSON.stringify(coupons));
-            showToast('Coupon deleted.');
-            renderAdminCoupons();
-        }
-
-        function renderAdminPanelData() {
-            const pendingList = document.getElementById('adminPendingList');
-            if(!pendingList) return;
-            pendingList.innerHTML = '';
-            let found = false;
-
-            for (let i = 0; i < localStorage.length; i++) {
-                let key = localStorage.key(i);
-                if (key && key.startsWith('orders_')) {
-                    let userEmail = key.replace('orders_', '');
-                    let orders = JSON.parse(localStorage.getItem(key) || '[]');
-                    orders.forEach((ord, index) => {
-                        if (ord.status === 'Pending') {
-                            found = true;
-                            pendingList.innerHTML += `
-                                <div class="bg-[#12121c] p-4 rounded-2xl border border-white/5 space-y-3">
-                                    <div class="flex justify-between text-white font-bold text-sm">
-                                        <span>${ord.items}</span>
-                                        <span class="text-accent">${ord.total}</span>
-                                    </div>
-                                    <p class="text-xs text-gray-400">User: ${userEmail} • Proof: ${ord.proof || 'Keiner'}</p>
-                                    <button onclick="adminApproveOrder('${userEmail}', ${index})" class="w-full py-2 bg-emerald-500 text-black font-extrabold rounded-xl text-xs">Approve ✓</button>
-                                </div>
-                            `;
-                        }
-                    });
-                }
-            }
-            if(!found) pendingList.innerHTML = '<p class="text-gray-500 text-center py-4 text-sm">No pending payments.</p>';
-            renderAdminCoupons();
-        }
-
-        function adminApproveOrder(email, index) {
-            let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
-            if(orders[index]) {
-                orders[index].status = 'Completed';
-                if(orders[index].isTopUp) {
-                    let bal = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
-                    localStorage.setItem('balance_' + email, (bal + orders[index].topUpValue).toFixed(2));
-                }
-                localStorage.setItem('orders_' + email, JSON.stringify(orders));
-                showToast('Order approved!');
-                renderAdminPanelData();
-                if(window.firebaseAuth.currentUser && window.firebaseAuth.currentUser.email.toLowerCase() === email.toLowerCase()) loadDashboardStats(email);
-            }
-        }
-
-        function loadDashboardStats(email) {
-            const container = document.getElementById('userOrdersContainer');
-            const fullContainer = document.getElementById('fullOrdersListContainer');
-            const latestContainer = document.getElementById('latestOrderContainer');
-            if(!container) return;
-
-            let orders = JSON.parse(localStorage.getItem('orders_' + email) || '[]');
-            let balance = parseFloat(localStorage.getItem('balance_' + email) || '0.00');
-            let totalSpent = orders.filter(o => o.status === 'Completed' && !o.isTopUp).reduce((sum, o) => sum + parseFloat(o.rawTotal || 0), 0);
-            
-            document.getElementById('userAvatarLetter').innerText = email.charAt(0).toUpperCase();
-            document.getElementById('userEmailDisplay').innerText = email;
-            document.getElementById('statOrdersCount').innerText = orders.filter(o => o.status === 'Completed' && !o.isTopUp).length;
-            document.getElementById('statSpentAmount').innerText = '€' + totalSpent.toFixed(2);
-            document.getElementById('statBalanceAmount').innerText = '€' + balance.toFixed(2);
-            document.getElementById('balanceTabAmount').innerText = '€' + balance.toFixed(2);
-            document.getElementById('sidebarBalanceDisplay').innerText = '€' + balance.toFixed(2);
-            
-            if (orders.length === 0) {
-                fullContainer.innerHTML = '<p class="text-sm text-gray-400 text-center py-12">No orders yet.</p>';
-                latestContainer.innerHTML = 'No orders yet.';
-            } else {
-                let latest = orders[0];
-                latestContainer.innerHTML = `
-                    <div class="flex justify-between items-center text-sm">
-                        <div>
-                            <p class="font-bold text-white">${latest.items}</p>
-                            <p class="text-xs text-gray-400">Invoice <span class="text-accent font-mono">#${latest.invoice}</span> - ${latest.date}</p>
-                        </div>
-                        <span class="text-accent font-bold">${latest.total}</span>
-                    </div>
-                `;
-
-                fullContainer.innerHTML = '';
-                orders.forEach((ord, idx) => {
-                    let statusBadge = ord.status === 'Pending' ? '<span class="px-3 py-1 rounded-full text-xs font-bold bg-amber-500/10 text-amber-400 border border-amber-500/30">Pending</span>' : '<span class="px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">Completed</span>';
-                    
-                    fullContainer.innerHTML += `
-                        <div class="bg-[#09090f] p-5 rounded-2xl border border-white/10 space-y-4">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <p class="text-base font-bold text-white">${ord.items}</p>
-                                    <p class="text-xs text-gray-400 font-mono mt-1">#${ord.invoice} • <span class="text-accent font-bold">${ord.total}</span> via ${ord.method} • ${ord.date}</p>
-                                </div>
-                                <div>${statusBadge}</div>
-                            </div>
-                            <div class="flex flex-wrap gap-3 pt-3 border-t border-white/5">
-                                <button onclick="viewInvoice('${ord.invoice}', '${ord.items}', '${ord.total}', '${ord.date}')" class="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-accent flex items-center gap-2 transition">
-                                    <i class="fa-solid fa-file-invoice"></i> View invoice ↗
-                                </button>
-                                <button onclick="openSupportTicketModal()" class="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-gray-300 flex items-center gap-2 transition">
-                                    <i class="fa-solid fa-headset"></i> Open ticket
-                                </button>
-                                <button onclick="openFeedbackModal('${ord.invoice}')" class="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-xs font-semibold text-gray-300 flex items-center gap-2 transition">
-                                    <i class="fa-solid fa-star text-amber-400"></i> Leave feedback
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-        }
-
-        function viewInvoice(invoice, items, total, date) {
-            alert("INVOICE #" + invoice + "\nItems: " + items + "\nTotal: " + total + "\nDate: " + date + "\nStatus: Valid & Verified");
-        }
-
-        function openFeedbackModal(invoice) {
-            document.getElementById('feedbackInvoiceNum').innerText = "#" + invoice;
-            document.getElementById('feedbackModal').classList.add('active');
-        }
-
-        function submitUserFeedback() {
-            showToast("Feedback submitted successfully! Thank you.");
-            document.getElementById('feedbackModal').classList.remove('active');
-        }
-
-        function openSupportTicketModal() {
-            document.getElementById('supportTicketModal').classList.add('active');
-        }
-
-        function submitSupportTicket() {
-            showToast("Support ticket created successfully!");
-            document.getElementById('supportTicketModal').classList.remove('active');
-        }
-
+        // ============ WARENKORB FUNKTIONEN ============
         function adjustQty(type, change) {
             quantities[type] = Math.max(1, quantities[type] + change);
             document.getElementById('qty-' + type).innerText = quantities[type];
         }
 
-        function addItemToCart(name, price, type, imgUrl) {
+        function addItemToCart(name, price, type) {
             let qty = quantities[type];
-            let existing = cart.find(i => i.name === name);
+            let existing = cart.find(item => item.name === name);
             if (existing) existing.qty += qty;
-            else cart.push({ name, price, qty, img: imgUrl });
+            else cart.push({ name, price, qty });
             updateCartUI();
-            showToast("Added to cart!");
+            toggleCartModal();
         }
 
-        // Direkte Weiterleitung zum SellAuth Checkout Gateway
-        function redirectToSellAuth(productName, price) {
-            showToast("Redirecting to secure SellAuth checkout...");
-            setTimeout(() => {
-                window.open("https://sellauth.com", "_blank");
-            }, 800);
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
+        function removeFromCart(index) { 
+            cart.splice(index, 1); 
+            updateCartUI(); 
         }
 
         function updateCartUI() {
+            const badge = document.getElementById('cartBadge');
+            const badgeMobile = document.getElementById('cartBadgeMobile');
+            const container = document.getElementById('cartItemsContainer');
+            const subtotalOnly = document.getElementById('cartSubtotalOnly');
+            const subtotalDisplay = document.getElementById('cartSubtotalDisplay');
+            const discountRow = document.getElementById('discountRow');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            const agbCheck = document.getElementById('agbCheck');
             let totalCount = 0, subtotal = 0;
-            let listHTML = '';
-            cart.forEach((item, index) => {
-                totalCount += item.qty;
-                subtotal += item.price * item.qty;
-                listHTML += `
-                    <div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex items-center justify-between text-sm text-white">
-                        <div class="flex items-center gap-3.5">
-                            <img src="${item.img}" class="w-12 h-12 rounded-xl object-cover border border-white/10">
-                            <div>
-                                <p class="font-bold">${item.name}</p>
-                                <p class="text-xs text-gray-400">Qty: ${item.qty} • €${(item.price * item.qty).toFixed(2)}</p>
-                            </div>
-                        </div>
-                        <button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 p-2"><i class="fa-solid fa-trash text-sm"></i></button>
-                    </div>`;
-            });
 
-            document.getElementById('cartBadge').innerText = totalCount;
-            document.getElementById('cartBadgeMobile').innerText = totalCount;
-            document.getElementById('cartItemsContainer').innerHTML = listHTML || '<p class="text-sm text-gray-400 text-center py-8">Your cart is empty.</p>';
-            document.getElementById('cartSubtotalDisplay').innerText = '€' + subtotal.toFixed(2);
-            
-            let btn = document.getElementById('checkoutBtn');
-            if(cart.length > 0) {
-                btn.disabled = false;
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-400 text-center py-6">${translations[currentLang].cartEmptyText}</p>`;
+                subtotalOnly.innerText = '€0.00';
+                subtotalDisplay.innerText = '€0.00';
+                discountRow.style.display = 'none';
+                checkoutBtn.disabled = true;
+                checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
             } else {
-                btn.disabled = true;
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                container.innerHTML = '';
+                cart.forEach((item, index) => {
+                    totalCount += item.qty;
+                    let itemTotal = item.price * item.qty;
+                    subtotal += itemTotal;
+                    container.innerHTML += `<div class="bg-[#030305] p-3.5 rounded-2xl border border-white/10 flex justify-between items-center text-xs"><div><p class="font-bold text-white">${item.name}</p><p class="text-gray-400 mt-0.5">${currentLang === 'de' ? 'Menge' : 'Qty'}: ${item.qty}</p></div><div class="flex items-center gap-3"><span class="text-accent font-bold">€${itemTotal.toFixed(2)}</span><button onclick="removeFromCart(${index})" class="text-red-400 hover:text-red-300 p-1"><i class="fa-solid fa-xmark"></i></button></div></div>`;
+                });
+                subtotalOnly.innerText = '€' + subtotal.toFixed(2);
+                let finalTotal = Math.max(0, subtotal - appliedDiscount);
+
+                if (appliedDiscount > 0) {
+                    discountRow.style.display = 'flex';
+                    document.getElementById('discountName').innerText = appliedCouponName;
+                    document.getElementById('discountAmount').innerText = '-€' + appliedDiscount.toFixed(2);
+                } else {
+                    discountRow.style.display = 'none';
+                }
+
+                subtotalDisplay.innerText = '€' + finalTotal.toFixed(2);
+                document.getElementById('checkoutSummaryTotal').innerText = '€' + finalTotal.toFixed(2);
+                
+                if(agbCheck.checked) {
+                    checkoutBtn.disabled = false;
+                    checkoutBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                } else {
+                    checkoutBtn.disabled = true;
+                    checkoutBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            }
+            badge.innerText = totalCount;
+            badgeMobile.innerText = totalCount;
+        }
+
+        document.addEventListener('change', function(e) {
+            if(e.target && e.target.id === 'agbCheck') {
+                updateCartUI();
+            }
+        });
+
+        // ============ GUTSCHEIN FUNKTION ============
+        function applyCoupon() {
+            let code = document.getElementById('couponInput').value.trim().toUpperCase();
+            let msg = document.getElementById('couponMsg');
+            if (coupons[code]) {
+                appliedDiscount = coupons[code];
+                appliedCouponName = code;
+                msg.innerText = currentLang === 'de' ? "Gutschein eingelöst (-€" + appliedDiscount.toFixed(2) + ")" : "Coupon applied (-€" + appliedDiscount.toFixed(2) + ")";
+                msg.className = "text-[10px] text-emerald-400";
+                updateCartUI();
+            } else {
+                msg.innerText = currentLang === 'de' ? "Ungültiger Gutscheincode!" : "Invalid coupon code!";
+                msg.className = "text-[10px] text-red-400";
             }
         }
 
-        function toggleCartModal() { document.getElementById('cartModal').classList.toggle('active'); }
-        
-        function proceedToSellAuthCheckout() {
-            toggleCartModal();
-            showToast("Redirecting to SellAuth Checkout...");
-            setTimeout(() => {
-                window.open("https://sellauth.com", "_blank");
-            }, 800);
+        // ============ ADMIN: GUTSCHEIN ERSTELLEN ============
+        function createAdminCoupon() {
+            let code = document.getElementById('newAdminCoupon').value.trim().toUpperCase();
+            let discount = parseFloat(document.getElementById('newAdminDiscount').value);
+            let list = document.getElementById('adminCouponsList');
+            
+            if(!code || isNaN(discount) || discount <= 0) {
+                showToast("Bitte gültigen Code und Betrag eingeben!");
+                return;
+            }
+            
+            coupons[code] = discount;
+            document.getElementById('newAdminCoupon').value = '';
+            document.getElementById('newAdminDiscount').value = '';
+            
+            let html = '';
+            for(let c in coupons) {
+                html += `<div class="flex justify-between bg-white/5 p-1.5 rounded"><span>${c}</span><span class="text-emerald-400">-€${coupons[c].toFixed(2)}</span></div>`;
+            }
+            list.innerHTML = html;
+            showToast("Gutschein " + code + " erstellt!");
         }
 
-        function selectTopUpAmount(amount) {
-            showToast("Redirecting to SellAuth Top Up...");
-            setTimeout(() => {
-                window.open("https://sellauth.com", "_blank");
-            }, 800);
+        // ============ MODAL TOGGLES ============
+        function toggleCartModal() { 
+            document.getElementById('cartModal').classList.toggle('active'); 
+        }
+        function proceedToCheckout() { 
+            toggleCartModal(); 
+            togglePaymentModal(); 
+        }
+        function togglePaymentModal() { 
+            document.getElementById('paymentModal').classList.toggle('active'); 
+        }
+        function toggleCryptoSelection() {
+            const list = document.getElementById('cryptoListContainer');
+            const text = document.getElementById('cryptoToggleText');
+            list.classList.toggle('hidden');
+            if(list.classList.contains('hidden')) {
+                text.innerText = currentLang === 'de' ? "Ausklappen ▼" : "Expand ▼";
+            } else {
+                text.innerText = currentLang === 'de' ? "Einklappen ▲" : "Hide ▲";
+            }
+        }
+
+        // ============ PAYPAL PAYMENT ============
+        function openPayPalProofModal() {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            if (!emailInput || !emailInput.includes('@')) {
+                showToast('Bitte zuerst E-Mail Adresse eingeben!');
+                return;
+            }
+            isTopUpFlow = false;
+            let totalAmount = isTopUpFlow ? '€' + selectedTopUpValue.toFixed(2) : document.getElementById('checkoutSummaryTotal').innerText;
+            document.getElementById('paypalPayAmount').innerText = totalAmount;
+            document.getElementById('paymentModal').classList.remove('active');
+            document.getElementById('paypalProofModal').classList.add('active');
+        }
+
+        function confirmPayPalPending() {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            const proof = document.getElementById('paypalProofInput').value.trim();
+
+            if(!proof) {
+                showToast('Bitte gib einen Zahlungsnachweis (ID / Name) ein!');
+                return;
+            }
+
+            let orderSummary = isTopUpFlow ? `Top Up Guthaben (€${selectedTopUpValue.toFixed(2)})` : cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let totalAmount = isTopUpFlow ? '€' + selectedTopUpValue.toFixed(2) : document.getElementById('checkoutSummaryTotal').innerText;
+            let rawNum = totalAmount.replace('€', '');
+
+            let newOrder = {
+                items: orderSummary,
+                total: totalAmount,
+                rawTotal: rawNum,
+                method: 'PayPal (Pending Proof)',
+                status: 'Pending',
+                proof: proof,
+                isTopUp: isTopUpFlow,
+                topUpValue: isTopUpFlow ? selectedTopUpValue : 0,
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+
+            showToast('PayPal Bestellung als Pending eingereicht!');
+            document.getElementById('paypalProofModal').classList.remove('active');
+            document.getElementById('paypalProofInput').value = '';
+            cart = [];
+            selectedTopUpValue = 0;
+            isTopUpFlow = false;
+            appliedDiscount = 0;
+            updateCartUI();
+            if(window.firebaseAuth && window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
+        }
+
+        // ============ CRYPTO PAYMENT ============
+        function selectCryptoCoin(coinName, address) {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            if (!emailInput || !emailInput.includes('@')) {
+                showToast('Bitte E-Mail angeben!');
+                return;
+            }
+            pendingCryptoCoin = coinName;
+            pendingCryptoAddress = address;
+            let totalAmount = isTopUpFlow ? '€' + selectedTopUpValue.toFixed(2) : document.getElementById('checkoutSummaryTotal').innerText;
+            document.getElementById('cryptoCoinTitle').innerText = coinName;
+            document.getElementById('cryptoPayAmount').innerText = totalAmount;
+            document.getElementById('cryptoAddressBox').innerText = address;
+            document.getElementById('paymentModal').classList.remove('active');
+            document.getElementById('cryptoAddressModal').classList.add('active');
+        }
+
+        function confirmCryptoPending() {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            const proof = document.getElementById('cryptoProofInput').value.trim();
+
+            if(!proof) {
+                showToast('Bitte gib einen Zahlungsnachweis (TxID / Hash) ein!');
+                return;
+            }
+
+            let orderSummary = isTopUpFlow ? `Top Up Guthaben (€${selectedTopUpValue.toFixed(2)}) via ${pendingCryptoCoin}` : cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let totalAmount = isTopUpFlow ? '€' + selectedTopUpValue.toFixed(2) : document.getElementById('checkoutSummaryTotal').innerText;
+            let rawNum = totalAmount.replace('€', '');
+
+            let newOrder = {
+                items: orderSummary,
+                total: totalAmount,
+                rawTotal: rawNum,
+                method: `Crypto (${pendingCryptoCoin})`,
+                status: 'Pending',
+                proof: proof,
+                isTopUp: isTopUpFlow,
+                topUpValue: isTopUpFlow ? selectedTopUpValue : 0,
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+
+            showToast('Bestellung/Top Up als Pending eingereicht mit Beweis!');
+            document.getElementById('cryptoAddressModal').classList.remove('active');
+            document.getElementById('cryptoProofInput').value = '';
+            cart = [];
+            selectedTopUpValue = 0;
+            isTopUpFlow = false;
+            appliedDiscount = 0;
+            updateCartUI();
+            if(window.firebaseAuth && window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
+        }
+
+        // ============ BALANCE PAYMENT (SOFORT) ============
+        function payWithBalance() {
+            const emailInput = document.getElementById('checkoutEmail').value;
+            if (!emailInput || !emailInput.includes('@')) {
+                showToast('Bitte E-Mail eingeben!');
+                return;
+            }
+            let balance = parseFloat(localStorage.getItem('balance_' + emailInput) || '0.00');
+            let totalAmountNum = parseFloat(document.getElementById('checkoutSummaryTotal').innerText.replace('€',''));
+
+            if(balance < totalAmountNum) {
+                showToast('Nicht genügend Guthaben auf dem Account! Bitte vorher Top Up nutzen.');
+                return;
+            }
+
+            let newBalance = balance - totalAmountNum;
+            localStorage.setItem('balance_' + emailInput, newBalance.toFixed(2));
+
+            let orderSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+            let totalAmount = document.getElementById('checkoutSummaryTotal').innerText;
+
+            let newOrder = {
+                items: orderSummary,
+                total: totalAmount,
+                rawTotal: totalAmountNum,
+                method: 'Customer Balance',
+                status: 'Completed',
+                invoice: Math.floor(100000000000 + Math.random() * 900000000000),
+                date: new Date().toLocaleDateString('de-DE')
+            };
+            let existingOrders = JSON.parse(localStorage.getItem('orders_' + emailInput) || '[]');
+            existingOrders.unshift(newOrder);
+            localStorage.setItem('orders_' + emailInput, JSON.stringify(existingOrders));
+
+            showToast('Erfolgreich mit Guthaben bezahlt!');
+            cart = [];
+            appliedDiscount = 0;
+            updateCartUI();
+            togglePaymentModal();
+            if(window.firebaseAuth && window.firebaseAuth.currentUser) loadDashboardStats(emailInput);
         }
 
         function toggleLogin() { document.getElementById('loginModal').classList.toggle('active'); }
